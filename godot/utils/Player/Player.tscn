@@ -1,17 +1,27 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://utils/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/images/jumper.png" type="Texture" id=2]
+
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 29.6712, 31.5271 )
+scale = Vector2( 0.59, 0.59 )
 texture = ExtResource( 2 )
+centered = false
+offset = Vector2( -50.2902, -53.4358 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0.0245895, 5.2757 )
+visible = false
+position = Vector2( 49.0246, 54.2757 )
 scale = Vector2( 2.2661, 2.54267 )
 shape = SubResource( 1 )
+
