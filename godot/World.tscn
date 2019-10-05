@@ -6,6 +6,7 @@
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
+PIECE_DEF_JSON = "res://logic/piece_def.gd"
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 370.806, 214.042 )

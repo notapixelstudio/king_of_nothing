@@ -20,11 +20,13 @@ func _ready():
 	for k in piece_defs.keys():
 		if k != "king":
 			list_pieces.append(k)
+			
+	print(list_pieces)
 
 func load_JSON(file_path):
 	# example of file path: "res://Ress/panelTextn2.json"
 	# ref: https://godotengine.org/qa/8291/how-to-parse-a-json-file-i-wrote-myself
-	var dict = {}	
+	var dict = {}
 	var file = File.new()
 	file.open(file_path, file.READ)
 	var text = file.get_as_text()
