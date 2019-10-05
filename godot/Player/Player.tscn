@@ -7,11 +7,18 @@
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 50.2902, 53.4358 )
 texture = ExtResource( 2 )
+centered = false
+offset = Vector2( -50.2902, -53.4358 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0.0245895, 5.2757 )
+visible = false
+position = Vector2( 49.0246, 54.2757 )
 scale = Vector2( 2.2661, 2.54267 )
 shape = SubResource( 1 )

@@ -1,32 +1,42 @@
 extends KinematicBody2D
 
 # variables
-var MAX_SPEED = 500
-var ACCELERATION = 2000
-var MOTION = Vector2.ZERO
+var speed = 250
+
+export var tile_size = 64
+
+var last_pos = Vector2()
+var target_pos = Vector2()
+var move_dir = Vector2()
 
 # functions
+func _ready():
+	position = position.snapped(Vector2(tile_size, tile_size))
+	last_pos = position
+	target_pos = position
 
-func _physics_process(delta):
-	var axis = get_input_axis()
-	if axis == Vector2.ZERO:
-		apply_friction(ACCELERATION * delta)
-	else:
-		apply_movement(axis * ACCELERATION * delta)
-	MOTION = move_and_slide(MOTION)
+func _process(delta):
+	# movement
+	position += speed * move_dir * delta
+	
+	if position.distance_to(last_pos) >= tile_size - speed * delta:
+		position = target_pos
+		
+	# idle
+	if position == target_pos:
+		get_movedir()
+		last_pos = position
+		target_pos += move_dir * tile_size
 
-func get_input_axis():
-	var axis = Vector2.ZERO
-	axis.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
-	axis.y = int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up"))
-	return axis.normalized()
-
-func apply_friction(amount):
-	if MOTION.length() > amount:
-		MOTION -= MOTION.normalized() * amount
-	else:
-		MOTION = Vector2.ZERO
-
-func apply_movement(acceleration):
-	MOTION += acceleration
-	MOTION = MOTION.clamped(MAX_SPEED)
+# CONTROL KEYS
+func get_movedir():
+	var LEFT = Input.is_action_pressed("ui_left")
+	var RIGHT = Input.is_action_pressed("ui_right")
+	var UP = Input.is_action_pressed("ui_up")
+	var DOWN = Input.is_action_pressed("ui_down")
+	
+	move_dir.x = -int(LEFT) + int(RIGHT)
+	move_dir.y = -int(UP) + int(DOWN)
+	
+	if move_dir.x != 0 && move_dir.y != 0:
+		move_dir = Vector2.ZERO
