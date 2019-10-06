@@ -17,8 +17,12 @@ __meta__ = {
 margin_right = 64.0
 margin_bottom = 64.0
 texture = ExtResource( 2 )
+<<<<<<< HEAD
 expand = true
 stretch_mode = 6
+=======
+offset = Vector2( -0.217939, -5.96046e-07 )
+>>>>>>> 36d8f9efe74db1d7e6756eb366dd65bc444b1a85
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
