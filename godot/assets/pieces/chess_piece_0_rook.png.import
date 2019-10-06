@@ -2,18 +2,22 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/chess_piece_0_rook.png-e70e022d67204eb649f4acb5dc576ccb.stex"
+path="res://.import/chess_piece_0_rook.png-80433de10e270e18e3907b716254b183.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://assets/chess/pieces/chess_piece_0_rook.png"
-dest_files=[ "res://.import/chess_piece_0_rook.png-e70e022d67204eb649f4acb5dc576ccb.stex" ]
+source_file="res://assets/pieces/chess_piece_0_rook.png"
+dest_files=[ "res://.import/chess_piece_0_rook.png-80433de10e270e18e3907b716254b183.stex" ]
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
+compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
@@ -23,6 +27,7 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
+process/invert_color=false
 stream=false
 size_limit=0
 detect_3d=true

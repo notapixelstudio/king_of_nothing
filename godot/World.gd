@@ -33,4 +33,17 @@ func load_JSON(file_path):
 	dict = parse_json(text)
 	file.close()
 	return dict
-			
+
+func get_legal_moves(piece):
+	# check which are the legal piece in the board of a given piece
+	# return array of legal cells
+	return 
+
+func is_cell_vacant(pos_in_the_grid, direction):
+	# return the piece that occupies the cell, if hit the boundaries, return null
+	var grid_pos = pos_in_the_grid + direction
+
+func get_moves(piece_name):
+	# function that get the json for the legal moves. 
+	# return array of cells where the piece can move.
+	return piece_defs[piece_name][MOVES]

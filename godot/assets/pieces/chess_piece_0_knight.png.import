@@ -2,18 +2,22 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/chess_piece_0_knight.png-6a2699784d973eb9363ec8c491cf1eba.stex"
+path="res://.import/chess_piece_0_knight.png-298a9c965265319a277b5fb1331a23fc.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://assets/chess/pieces/chess_piece_0_knight.png"
-dest_files=[ "res://.import/chess_piece_0_knight.png-6a2699784d973eb9363ec8c491cf1eba.stex" ]
+source_file="res://assets/pieces/chess_piece_0_knight.png"
+dest_files=[ "res://.import/chess_piece_0_knight.png-298a9c965265319a277b5fb1331a23fc.stex" ]
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
+compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
@@ -23,6 +27,7 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
+process/invert_color=false
 stream=false
 size_limit=0
 detect_3d=true
