@@ -30,7 +30,7 @@ func _ready():
 			
 	print(list_pieces)
 	
-	get_legal_moves("king", get_grid_pos($Player))
+	get_legal_moves("king", $Player.position/64)
 
 func _process(delta: float) -> void:
 	get_grid_pos($Player)
@@ -46,17 +46,20 @@ func load_JSON(file_path):
 	file.close()
 	return dict
 	
-func get_legal_moves(piece, current_grid_pos):
+func get_legal_moves(piece_type: String, current_grid_pos: Vector2):
 	#return the cells where the piece can move
 	var piece_moves = []
 	var valid_moves = []
-	piece_moves = get_moves(piece)
+	piece_moves = get_moves(piece_type)
 
 	for move in piece_moves:
 		if move.get("repeat"):
-			while current_grid_pos < target_grid_pos:
-				if is_cell_vacant(move["step"], current_grid_pos):
-					pass
+			var target_grid_pos = current_grid_pos
+			var i = 1
+			while target_grid_pos.x < grid_size.x and target_grid_pos.x >= 0 and target_grid_pos.y < grid_size.y and target_grid_pos.y >= 0:
+				target_grid_pos += Vector2(move.step[0], move.step[1])
+				valid_moves.append(target_grid_pos)
+				i+=1
 		else:
 			print("no repeat")
 		if is_cell_vacant(move["step"], current_grid_pos):
@@ -72,7 +75,7 @@ func is_cell_vacant(move, current_grid_pos) -> bool:
 		return false
 	return true
 
-func get_moves(piece):
+func get_moves(piece: String):
 	#return an array of dictionaries containing the moves of the parameter piece
 	return piece_defs[piece]["moves"]
 
@@ -83,9 +86,3 @@ func get_grid_pos(piece):
 func _on_piece_moved(pos, dir, piece):
 	var pos_in_thegrid = pos/64
 	print(pos_in_thegrid, " and ", dir, " for ", piece.piece_name)
-	piece.target_pos = is_it_legal(piece, dir)
-
-
-
-
-
