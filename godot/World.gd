@@ -6,6 +6,9 @@ var piece_defs = {}
 export var PIECE_DEF_JSON : String
 var list_pieces: Array = []
 
+# keys string in data json
+const MOVES = "moves"
+
 func _ready():
 	randomize()
 	# list characters
