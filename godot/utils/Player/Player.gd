@@ -11,7 +11,7 @@ var move_dir = Vector2()
 
 # functions
 func _ready():
-	position = position.snapped(Vector2(tile_size, tile_size))
+	position = position.snapped(Vector2(tile_size / 2, tile_size / 2))
 	last_pos = position
 	target_pos = position
 
