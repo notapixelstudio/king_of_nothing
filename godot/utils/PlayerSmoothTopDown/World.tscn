@@ -2,9 +2,7 @@
 
 [ext_resource path="res://utils/Player/Player.tscn" type="PackedScene" id=1]
 
-
 [node name="World" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 370.806, 214.042 )
-
