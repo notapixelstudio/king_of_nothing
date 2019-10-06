@@ -1,27 +1,28 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://utils/Player/Player.gd" type="Script" id=1]
-[ext_resource path="res://assets/point.png" type="Texture" id=2]
+[ext_resource path="res://assets/pieces/chess_piece_0_king.png" type="Texture" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 12.9988
 height = 0.0946388
 
 [node name="Player" type="KinematicBody2D"]
-position = Vector2( 0.0762215, -0.0102173 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -0.00994682, 0.00336045 )
-scale = Vector2( 0.888827, 0.862064 )
+[node name="Sprite" type="TextureRect" parent="."]
+margin_right = 64.0
+margin_bottom = 64.0
 texture = ExtResource( 2 )
-offset = Vector2( -0.33831, -0.492935 )
+expand = true
+stretch_mode = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0.328964, 0.264893 )
 scale = Vector2( 2.2661, 2.54267 )
 shape = SubResource( 1 )
+

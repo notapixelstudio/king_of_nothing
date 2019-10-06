@@ -10,6 +10,8 @@ var list_pieces: Array = []
 const MOVES = "moves"
 
 func _ready():
+	
+	$Player.connect("move", self, "_on_piece_moved", [$Player])
 	randomize()
 	# list characters
 	# Create the grid Array with null in it.
@@ -42,6 +44,11 @@ func get_legal_moves(piece):
 	# return array of legal cells
 	return 
 
+func is_it_legal(piece, dir):
+	if dir == Vector2(1,0):
+		return Vector2()
+	else: return dir
+	
 func is_cell_vacant(pos_in_the_grid, direction):
 	# return the piece that occupies the cell, if hit the boundaries, return null
 	var grid_pos = pos_in_the_grid + direction
@@ -50,3 +57,9 @@ func get_moves(piece_name):
 	# function that get the json for the legal moves. 
 	# return array of cells where the piece can move.
 	return piece_defs[piece_name][MOVES]
+
+func _on_piece_moved(pos, dir, piece):
+	var pos_in_thegrid = pos/64
+	print(pos_in_thegrid, " and ", dir, " for ", piece.piece_name)
+	piece.target_pos = is_it_legal(piece, dir)
+	pass # Replace with function body.

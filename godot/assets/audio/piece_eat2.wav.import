@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/piece_eat2.wav-86889ef73e3e02e78e2a320c0f39e38f.sample"
+
+[deps]
+
+source_file="res://assets/audio/piece_eat2.wav"
+dest_files=[ "res://.import/piece_eat2.wav-86889ef73e3e02e78e2a320c0f39e38f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

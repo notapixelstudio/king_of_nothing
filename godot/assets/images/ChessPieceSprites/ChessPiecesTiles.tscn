@@ -9,6 +9,7 @@
 
 [node name="TileMap" type="TileMap"]
 scale = Vector2( 0.0274479, 0.0224037 )
+format = 1
 
 [node name="Bishop-Sprite" type="Sprite" parent="."]
 position = Vector2( 747.053, 2568.57 )
@@ -33,3 +34,4 @@ texture = ExtResource( 5 )
 [node name="Rook-Sprite" type="Sprite" parent="."]
 position = Vector2( 772.52, 3980.51 )
 texture = ExtResource( 6 )
+
