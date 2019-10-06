@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/images/tiles/ChessTile.png" type="Texture" id=1]
+
+[node name="TileMap" type="TileMap"]
+format = 1
+
+[node name="TileSprite" type="Sprite" parent="."]
+position = Vector2( 34.0334, 31.8192 )
+texture = ExtResource( 1 )
