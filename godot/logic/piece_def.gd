@@ -61,11 +61,12 @@
         {"step": [ 1, 1]}
       ]
     },
-    "shogi_pawn": {
-      "name": "shogi_pawn",
+    "pawn": {
+      "name": "pawn",
       "symbol": "🜘",
       "moves": [
-        {"step": [ 0, 1]}
+        {"step": [ 1,-1],
+		 "step": [-1,-1]}
       ]
     },
     "wall": {

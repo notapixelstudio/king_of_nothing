@@ -33,6 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="King of Nothing"
+run/main_scene="res://Main.tscn"
 boot_splash/bg_color=Color( 0.223529, 0.219608, 0.219608, 1 )
 config/icon="res://icon.png"
 
@@ -43,8 +44,8 @@ global="*res://globals/global.gd"
 
 [display]
 
-window/size/width=512
-window/size/height=832
+window/size/width=384
+window/size/height=624
 window/dpi/allow_hidpi=true
 
 [gui]

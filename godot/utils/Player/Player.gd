@@ -18,17 +18,38 @@ func _process(delta):
 			emit_signal("move", last_pos, move_dir)
 """
 
+var keys = {
+	'left': false,
+	'right': false,
+	'up': false,
+	'down': false
+}
+
+const tolerance = 0.2
+
 func _ready():
 	remove_from_group("moving")
 	
+func _input(event):
+	check_key(event, 'left')
+	check_key(event, 'right')
+	check_key(event, 'up')
+	check_key(event, 'down')
+	
+func check_key(event, k):
+	if event.is_action_pressed('ui_'+k):
+		keys[k] = true
+		yield(get_tree().create_timer(tolerance*2), 'timeout')
+		keys[k] = false
+	elif event.is_action_released('ui_'+k):
+		yield(get_tree().create_timer(tolerance), 'timeout')
+		keys[k] = false
+	
 # CONTROL KEYS
 func get_movedir():
-	var LEFT = Input.is_action_pressed("ui_left")
-	var RIGHT = Input.is_action_pressed("ui_right")
-	var UP = Input.is_action_pressed("ui_up")
-	var DOWN = Input.is_action_pressed("ui_down")
+	move_dir.y = -int(keys['left']) + int(keys['right'])
+	move_dir.x = -int(keys['down']) + int(keys['up'])
 	
-	move_dir.y = -int(LEFT) + int(RIGHT)
-	move_dir.x = -int(UP) + int(DOWN)
+	move(grid_pos + move_dir, 'input')
 	
 	return move_dir

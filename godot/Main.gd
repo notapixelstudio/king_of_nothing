@@ -21,8 +21,6 @@ func _on_Options_focus(focus_node):
 
 
 func _on_Play_pressed():
-	$Selected.play()
-	yield($Selected, "finished")
 	get_tree().change_scene_to(game_scene)
 
 
