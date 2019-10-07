@@ -34,19 +34,24 @@ func _ready():
 	add_to_group("moving")
 	position = position.snapped(Vector2(tile_size, tile_size))
 	last_pos = position
-	update_pos()
+	move()
 
 func update_pos():
 	var last_pos = grid_pos
 	self.grid_pos += move_dir
+	if type == "bishop":
+		print(grid_pos)
 	emit_signal("move", last_pos, grid_pos)
 	
 func move():
 	move_dir = Vector2.ZERO
+	($Tween as Tween).interpolate_property(self, "position", position, Vector2(grid_pos.y, grid_pos.x)*64, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN) 
+	$Tween.start()
 	
 func capture(piece: Piece):
 	var type_captured = piece.type
 	captured[type_captured] += 1
+	print(captured)
 	
 func nope():
 	print("YOU SHALL NOT PASS")
@@ -54,7 +59,7 @@ func nope():
 func _process(delta):
 	get_movedir()
 	# movement
-	position = Vector2(grid_pos.y, grid_pos.x)*64
+	#position = Vector2(grid_pos.y, grid_pos.x)*64
 	
 func get_movedir():
 	pass

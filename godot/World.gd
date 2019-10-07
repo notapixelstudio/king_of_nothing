@@ -8,13 +8,15 @@ var grid = []
 var list_pieces: Array = []
 var piece_defs : Dictionary = {}
 
+
+onready var timer = $Timer
 # keys string in data json
 const MOVES = "moves"
 
 var dic_tiles = {
 	"move": 3,
 	"take": 2,
-	"preview":3
+	"preview":2
 	}
 
 onready var player = $Player
@@ -107,15 +109,15 @@ func get_grid_pos(piece):
 
 func _on_piece_moved(last_pos, grid_pos, piece):
 	if is_within_the_grid(grid_pos):
-		print(grid_pos)
 		if grid[grid_pos.x][grid_pos.y] is Piece and grid[grid_pos.x][grid_pos.y] != piece:
-			print("CAPUTRED")
 			var captured = grid[grid_pos.x][grid_pos.y]
+			print("CAPUTRED", captured.type)
 			piece.capture(captured)
 			captured.queue_free()
-		piece.move()
+		
 		grid[last_pos.x][last_pos.y] = null
 		grid[grid_pos.x][grid_pos.y] = piece
+		piece.move()
 	else: 
 		piece.grid_pos = last_pos
 	
@@ -144,9 +146,10 @@ func show_legal_moves(piece: Piece, legal_moves, map_to_show = $ChessBoard/Curso
 		map_to_show.set_cell(target_grid.y, target_grid.x-count_scroll, dic_tiles[action])
 
 var count_tick = 0
+const SCROLL_TICK = 5
 func _on_tick():
 	count_tick+=1
-	if not count_tick % 5:
+	if not count_tick % SCROLL_TICK:
 		scroll()
 		yield(self, "scrolled")
 	for piece in get_tree().get_nodes_in_group("moving"):
@@ -162,24 +165,29 @@ func scroll():
 	for i in grid_size.y:
 		new_row.append(null)
 	var new_piece = piece_scene.instance()
-	new_piece.type = "shogi_pawn"
 	
-	new_row[randi()%int(grid_size.y)] = new_piece
+	new_piece.connect("move", self, "_on_piece_moved", [new_piece])
+	new_piece.type = "bishop"
+	var column = randi()%int(grid_size.y)
+	new_row[column] = new_piece
+	new_piece.position = Vector2(64*column, -64)
 	grid.pop_back()
-	grid.insert(0, new_row)
+	grid.insert(0, new_row)	
+	add_child(new_piece)
 	for i in len(grid):
 		for j in len(grid[i])-1:
 			var cell = grid[i][j]
 			if cell is Piece:
 				cell.grid_pos = Vector2(i, j)
 				show_legal_moves(new_piece, get_legal_moves(new_piece))
-	add_child(new_piece)
 	
+	emit_signal("scrolled")
 	
 	var pos = $ChessBoard.position
-	$ChessBoard/Tween.interpolate_property($ChessBoard, "position", pos, pos+Vector2(0, tile_size), 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN) 
+	$ChessBoard/Tween.interpolate_property($ChessBoard, "position", pos, pos+Vector2(0, tile_size), timer.wait_time, Tween.TRANS_LINEAR, Tween.EASE_IN) 
 	$ChessBoard/Tween.start()
-	emit_signal("scrolled")
+	
+
 	for i in grid_size.x:
 		$ChessBoard/TileMap.set_cell(i, -count_scroll, (count_scroll+i)%2)
 	
