@@ -1,6 +1,6 @@
 extends Node2D
 
-export var grid_size: Vector2 = Vector2(11, 8)
+export var grid_size: Vector2 = Vector2(12, 8)
 export var PIECE_DEF_JSON : String
 export var piece_scene : PackedScene
 export var tile_size = 64
@@ -118,7 +118,7 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 		
 		grid[last_pos.x][last_pos.y] = null
 		grid[grid_pos.x][grid_pos.y] = piece
-		piece.move()
+		#piece.move(grid_pos, 'other')
 	else: 
 		piece.grid_pos = last_pos
 	
@@ -128,7 +128,7 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 
 func reset_cells(map_to_reset):
 	map_to_reset.clear()
-			
+	
 func is_within_the_grid(pos):
 	return pos.x >= 0 and pos.x < grid_size.x and pos.y >= 0 and pos.y < grid_size.y
 
@@ -151,12 +151,63 @@ func _on_tick():
 		scroll()
 		yield(self, "scrolled")
 	
-	player.update_pos()
+	player.get_movedir()
+	#player.update_pos()
 	yield(get_tree(), "idle_frame")
 	for piece in get_tree().get_nodes_in_group("moving"):
 		piece.update_pos()
+		
+	kill_last_line()
 
 signal scrolled
+
+var script_i = 0
+var script = [
+	'pawn',
+	'pawn',
+	'pawn',
+	'pawn',
+	'pawn',
+	'knight',
+	'pawn',
+	'pawn',
+	'knight',
+	'pawn',
+	'pawn',
+	'pawn',
+	'bishop',
+	'pawn',
+	'pawn',
+	'pawn',
+	'knight',
+	'pawn',
+	'bishop',
+	'pawn',
+	'bishop',
+	'knight',
+	'pawn',
+	'pawn',
+	'rook',
+	'pawn',
+	'knight',
+	'rook',
+	'pawn',
+	'bishop',
+	'rook',
+	'pawn',
+	'rook',
+	'pawn',
+	'queen',
+	'pawn'
+]
+
+var pieces = [
+	'pawn',
+	'knight',
+	'bishop',
+	'rook',
+	'queen'
+]
 
 var count_scroll = 0
 func scroll():
@@ -168,18 +219,24 @@ func scroll():
 	var new_piece = piece_scene.instance()
 	
 	new_piece.connect("move", self, "_on_piece_moved", [new_piece])
-	new_piece.type = "bishop"
+	
+	if script_i < len(script):
+		new_piece.type = script[script_i]
+		script_i += 1
+	else:
+		new_piece.type = pieces[randi()%len(pieces)]
+		
 	var column = randi()%int(grid_size.y)
 	new_row[column] = new_piece
 	new_piece.position = Vector2(64*column, -64)
 	grid.pop_back()
-	grid.insert(0, new_row)	
+	grid.insert(0, new_row)
 	add_child(new_piece)
 	for i in len(grid):
 		for j in len(grid[i])-1:
 			var cell = grid[i][j]
 			if cell is Piece:
-				cell.grid_pos = Vector2(i, j)
+				cell.move(Vector2(i, j), 'scroll')
 				show_legal_moves(new_piece, get_legal_moves(new_piece))
 	
 	emit_signal("scrolled")
@@ -188,10 +245,18 @@ func scroll():
 	$ChessBoard/Tween.interpolate_property($ChessBoard, "position", pos, pos+Vector2(0, tile_size), timer.wait_time, Tween.TRANS_LINEAR, Tween.EASE_IN) 
 	$ChessBoard/Tween.start()
 	
-
 	for i in grid_size.x:
 		$ChessBoard/TileMap.set_cell(i, -count_scroll, (count_scroll+i)%2)
 	
+	kill_last_line()
+	
+func kill_last_line():
+	for cell in grid[11]:
+		if cell is Piece:
+			if cell.type != 'king':
+				cell.queue_free()
+			else:
+				print('gameover')
 
 func _on_Player_capture(type, index):
 	for score_piece in get_tree().get_nodes_in_group('score_piece'):
