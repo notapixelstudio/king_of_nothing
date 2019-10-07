@@ -45,8 +45,10 @@ func move():
 	($Tween as Tween).interpolate_property(self, "position", position, Vector2(grid_pos.y, grid_pos.x)*64, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN) 
 	$Tween.start()
 	
+signal capture
 func capture(piece: Piece):
 	var type_captured = piece.type
+	emit_signal('capture', type_captured, captured[type_captured])
 	captured[type_captured] += 1
 	print(captured)
 	

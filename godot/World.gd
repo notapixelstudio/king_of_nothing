@@ -192,3 +192,9 @@ func scroll():
 	for i in grid_size.x:
 		$ChessBoard/TileMap.set_cell(i, -count_scroll, (count_scroll+i)%2)
 	
+
+func _on_Player_capture(type, index):
+	for score_piece in get_tree().get_nodes_in_group('score_piece'):
+		if score_piece.piece_type == type and score_piece.piece_index == index:
+			score_piece.taken = true
+			
