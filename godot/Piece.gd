@@ -6,7 +6,11 @@ class_name Piece
 var speed = 250
 
 export var tile_size = 64
-export var type = "king"
+export var type = "king" setget set_type
+
+func set_type(value):
+	type = value
+	$Sprite.texture = load('res://assets/pieces/black_'+type+'.png')
 
 var last_pos = Vector2()
 var target_pos = Vector2() setget change_pos
