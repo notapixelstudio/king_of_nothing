@@ -7,10 +7,18 @@ var speed = 250
 
 export var tile_size = 64
 export var type = "king" setget set_type
+export var color = "black" setget set_color
 
 func set_type(value):
 	type = value
-	$Sprite.texture = load('res://assets/pieces/black_'+type+'.png')
+	refresh()
+	
+func set_color(value):
+	color = value
+	refresh()
+	
+func refresh():
+	$Sprite.texture = load('res://assets/pieces/'+color+'_'+type+'.png')
 
 var last_pos = Vector2()
 var target_pos = Vector2() setget change_pos
@@ -39,14 +47,21 @@ func _ready():
 
 func update_pos():
 	var last_pos = grid_pos
-	self.grid_pos += move_dir
 	if type == "bishop":
 		print(type, " " , grid_pos)
 	emit_signal("move", last_pos, grid_pos)
 	
-func move():
+func move(pos, move_type):
+	grid_pos = pos
+	
+	var delta
+	if move_type == 'scroll':
+		delta = 0.5
+	else:
+		delta = 0.15
+		
 	move_dir = Vector2.ZERO
-	($Tween as Tween).interpolate_property(self, "position", position, Vector2(grid_pos.y, grid_pos.x)*64, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN) 
+	($Tween as Tween).interpolate_property(self, "position", position, Vector2(grid_pos.y, grid_pos.x)*64, delta, Tween.TRANS_LINEAR, Tween.EASE_IN) 
 	$Tween.start()
 	
 signal capture
@@ -59,8 +74,8 @@ func capture(piece: Piece):
 func nope():
 	print("YOU SHALL NOT PASS")
 	
-func _process(delta):
-	get_movedir()
+#func _process(delta):
+#	get_movedir()
 	# movement
 	#position = Vector2(grid_pos.y, grid_pos.x)*64
 	

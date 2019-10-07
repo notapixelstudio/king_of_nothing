@@ -118,7 +118,7 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 		
 		grid[last_pos.x][last_pos.y] = null
 		grid[grid_pos.x][grid_pos.y] = piece
-		piece.move()
+		#piece.move(grid_pos, 'other')
 	else: 
 		piece.grid_pos = last_pos
 	
@@ -155,7 +155,8 @@ func _on_tick():
 		scroll()
 		yield(self, "scrolled")
 	
-	player.update_pos()
+	player.get_movedir()
+	#player.update_pos()
 	yield(get_tree(), "idle_frame")
 	for piece in get_tree().get_nodes_in_group("moving"):
 		piece.update_pos()
@@ -239,7 +240,7 @@ func scroll():
 		for j in len(grid[i])-1:
 			var cell = grid[i][j]
 			if cell is Piece:
-				cell.grid_pos = Vector2(i, j)
+				cell.move(Vector2(i, j), 'scroll')
 				show_legal_moves(new_piece, get_legal_moves(new_piece))
 	
 	emit_signal("scrolled")

@@ -27,4 +27,3 @@ scale = Vector2( 2.2661, 2.54267 )
 shape = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="."]
-

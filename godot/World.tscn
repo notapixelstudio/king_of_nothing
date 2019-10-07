@@ -3,13 +3,13 @@
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://Piece.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/TileSet/ChessTileSetBoard.tres" type="TileSet" id=3]
-[ext_resource path="res://utils/Player/Player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://ScorePiece.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/pieces/outline_rook.png" type="Texture" id=6]
-[ext_resource path="res://assets/pieces/outline_knight.png" type="Texture" id=7]
-[ext_resource path="res://assets/pieces/outline_bishop.png" type="Texture" id=8]
-[ext_resource path="res://assets/pieces/outline_queen.png" type="Texture" id=9]
-[ext_resource path="res://assets/pieces/white_king.png" type="Texture" id=10]
+[ext_resource path="res://ScorePiece.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/pieces/outline_rook.png" type="Texture" id=5]
+[ext_resource path="res://assets/pieces/outline_knight.png" type="Texture" id=6]
+[ext_resource path="res://assets/pieces/outline_bishop.png" type="Texture" id=7]
+[ext_resource path="res://assets/pieces/outline_queen.png" type="Texture" id=8]
+[ext_resource path="res://assets/pieces/white_king.png" type="Texture" id=9]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=10]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -33,14 +33,12 @@ format = 1
 
 [node name="Tween" type="Tween" parent="ChessBoard"]
 
-[node name="Player" parent="." instance=ExtResource( 4 )]
-grid_pos = Vector2( 4, 4 )
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+editor/display_folded = true
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 anchor_right = 1.0
@@ -53,79 +51,82 @@ margin_bottom = 846.0
 [node name="ScoreBoard" type="Node2D" parent="CanvasLayer"]
 position = Vector2( 0, 704 )
 
-[node name="Pawn0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Pawn0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 0, 2 )
 
-[node name="Pawn1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Pawn1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 64, 0 )
 piece_index = 1
 
-[node name="Pawn2" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Pawn2" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 128, 0 )
 piece_index = 2
 
-[node name="Pawn3" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Pawn3" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 192, 0 )
 piece_index = 3
 
-[node name="Pawn4" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Pawn4" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 256, 0 )
 piece_index = 4
 
-[node name="Pawn5" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Pawn5" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 320, 0 )
 piece_index = 5
 
-[node name="Pawn6" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Pawn6" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 384, 0 )
 piece_index = 6
 
-[node name="Pawn7" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Pawn7" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 448, 0 )
 piece_index = 7
 
-[node name="Rook0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Rook0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 0, 64 )
-texture = ExtResource( 6 )
+texture = ExtResource( 5 )
 piece_type = "rook"
 
-[node name="Knight0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Knight0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 64, 64 )
-texture = ExtResource( 7 )
+texture = ExtResource( 6 )
 piece_type = "knight"
 
-[node name="Bishop0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Bishop0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 128, 64 )
-texture = ExtResource( 8 )
+texture = ExtResource( 7 )
 piece_type = "bishop"
 
-[node name="Queen0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Queen0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 192, 64 )
-texture = ExtResource( 9 )
+texture = ExtResource( 8 )
 piece_type = "queen"
 
-[node name="King0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="King0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 256, 64 )
-texture = ExtResource( 10 )
+texture = ExtResource( 9 )
 piece_type = "king"
 taken = true
 
-[node name="Bishop1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Bishop1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 320, 64 )
-texture = ExtResource( 8 )
+texture = ExtResource( 7 )
 piece_type = "bishop"
 piece_index = 1
 
-[node name="Knight1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Knight1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 384, 64 )
-texture = ExtResource( 7 )
+texture = ExtResource( 6 )
 piece_type = "knight"
 piece_index = 1
 
-[node name="Rook1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
+[node name="Rook1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 4 )]
 position = Vector2( 448, 64 )
-texture = ExtResource( 6 )
+texture = ExtResource( 5 )
 piece_type = "rook"
 piece_index = 1
-[connection signal="capture" from="Player" to="." method="_on_Player_capture"]
+
+[node name="Player" parent="." instance=ExtResource( 10 )]
+color = "white"
 [connection signal="timeout" from="Timer" to="." method="_on_tick"]
+[connection signal="capture" from="Player" to="." method="_on_Player_capture"]
