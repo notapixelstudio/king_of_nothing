@@ -32,15 +32,12 @@ func change_pos(new_value):
 # functions
 func _ready():
 	add_to_group("moving")
-	position = position.snapped(Vector2(tile_size, tile_size))
-	last_pos = position
-	move()
 
 func update_pos():
 	var last_pos = grid_pos
 	self.grid_pos += move_dir
 	if type == "bishop":
-		print(grid_pos)
+		print(type, " " , grid_pos)
 	emit_signal("move", last_pos, grid_pos)
 	
 func move():

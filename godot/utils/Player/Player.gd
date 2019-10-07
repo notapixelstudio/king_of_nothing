@@ -18,6 +18,9 @@ func _process(delta):
 			emit_signal("move", last_pos, move_dir)
 """
 
+func _ready():
+	remove_from_group("moving")
+	
 # CONTROL KEYS
 func get_movedir():
 	var LEFT = Input.is_action_pressed("ui_left")

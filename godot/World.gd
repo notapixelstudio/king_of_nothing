@@ -76,11 +76,12 @@ func get_legal_moves(piece: Piece):
 	piece_moves = get_moves(piece_type)
 
 	for move in piece_moves:
+		
 		if move.get("repeat"):
 			var target_grid_pos = current_grid_pos
 			var i = 1
-			while target_grid_pos.x < grid_size.x and target_grid_pos.x >= 0 and target_grid_pos.y < grid_size.y and target_grid_pos.y >= 0:
-				target_grid_pos += Vector2(move.step[0], move.step[1])
+			while is_within_the_grid(target_grid_pos):
+				target_grid_pos += Vector2(move.step[0]*i, move.step[1]*i)
 				valid_moves.append(move)
 				i+=1
 		else:
@@ -140,6 +141,8 @@ func show_legal_moves(piece: Piece, legal_moves, map_to_show = $ChessBoard/Curso
 		# cell[action] could be move, attack
 		if  "action" in cell:
 			action = cell["action"]
+		if "repeat" in cell:
+			print(cell)
 		var pos = Vector2(cell["step"][1], cell["step"][0])
 		var target_grid = pos + grid_pos
 		# count scroll is just to consider the scrolling
@@ -147,11 +150,15 @@ func show_legal_moves(piece: Piece, legal_moves, map_to_show = $ChessBoard/Curso
 
 var count_tick = 0
 const SCROLL_TICK = 5
+
 func _on_tick():
 	count_tick+=1
 	if not count_tick % SCROLL_TICK:
 		scroll()
 		yield(self, "scrolled")
+	
+	player.update_pos()
+	yield(get_tree(), "idle_frame")
 	for piece in get_tree().get_nodes_in_group("moving"):
 		piece.update_pos()
 
