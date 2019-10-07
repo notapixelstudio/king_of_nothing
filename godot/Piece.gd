@@ -22,7 +22,6 @@ func change_grid(new_value):
 	
 func change_pos(new_value):
 	target_pos = new_value
-	print_debug(target_pos/64)
 
 # functions
 func _ready():

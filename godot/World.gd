@@ -141,7 +141,10 @@ func _on_tick():
 		piece.update_pos()
 
 signal scrolled
+
+var count_scroll = 0
 func scroll():
+	count_scroll +=1
 	var new_row = []
 	for i in grid_size.y:
 		new_row.append(null)
@@ -159,5 +162,10 @@ func scroll():
 				print("scrolling ? for ", cell.type)
 	add_child(new_piece)
 	emit_signal("scrolled")
-		
+	var pos = $ChessBoard.position
+	$ChessBoard/Tween.interpolate_property($ChessBoard, "position", pos, pos+Vector2(0, tile_size), 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN) 
+	$ChessBoard/Tween.start()
+	
+	for i in grid_size.x:
+		$ChessBoard/TileMap.set_cell(i, -count_scroll, (count_scroll+i)%2)
 	

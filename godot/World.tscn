@@ -25,6 +25,8 @@ format = 1
 tile_set = ExtResource( 3 )
 format = 1
 
+[node name="Tween" type="Tween" parent="ChessBoard"]
+
 [node name="Player" parent="." instance=ExtResource( 4 )]
 
 [node name="Timer" type="Timer" parent="."]
