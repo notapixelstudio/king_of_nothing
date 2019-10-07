@@ -1,6 +1,6 @@
 extends Node2D
 
-export var grid_size: Vector2 = Vector2(11, 8)
+export var grid_size: Vector2 = Vector2(12, 8)
 export var PIECE_DEF_JSON : String
 export var piece_scene : PackedScene
 export var tile_size = 64
@@ -127,10 +127,8 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 	# print(pos_in_thegrid, " and ", dir, " for ", piece.piece_name)
 
 func reset_cells(map_to_reset):
-	for x in range(grid_size.x):
-		for y in range(grid_size.y):
-			map_to_reset.set_cellv(Vector2(x,y), -1)
-			
+	map_to_reset.clear()
+	
 func is_within_the_grid(pos):
 	return pos.x >= 0 and pos.x < grid_size.x and pos.y >= 0 and pos.y < grid_size.y
 
@@ -161,6 +159,8 @@ func _on_tick():
 	yield(get_tree(), "idle_frame")
 	for piece in get_tree().get_nodes_in_group("moving"):
 		piece.update_pos()
+		
+	kill_last_line()
 
 signal scrolled
 
@@ -248,10 +248,18 @@ func scroll():
 	$ChessBoard/Tween.interpolate_property($ChessBoard, "position", pos, pos+Vector2(0, tile_size), timer.wait_time, Tween.TRANS_LINEAR, Tween.EASE_IN) 
 	$ChessBoard/Tween.start()
 	
-
 	for i in grid_size.x:
 		$ChessBoard/TileMap.set_cell(i, -count_scroll, (count_scroll+i)%2)
 	
+	kill_last_line()
+	
+func kill_last_line():
+	for cell in grid[11]:
+		if cell is Piece:
+			if cell.type != 'king':
+				cell.queue_free()
+			else:
+				print('gameover')
 
 func _on_Player_capture(type, index):
 	for score_piece in get_tree().get_nodes_in_group('score_piece'):
