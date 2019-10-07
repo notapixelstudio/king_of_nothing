@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/chess_piece_1_shogi_pawn.png-f38b8e436f4c8c8482c34654d36ac080.stex"
+path="res://.import/black_king.png-006d8e68468ff0766a8534ba1313ba4f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/pieces/chess_piece_1_shogi_pawn.png"
-dest_files=[ "res://.import/chess_piece_1_shogi_pawn.png-f38b8e436f4c8c8482c34654d36ac080.stex" ]
+source_file="res://assets/pieces/black_king.png"
+dest_files=[ "res://.import/black_king.png-006d8e68468ff0766a8534ba1313ba4f.stex" ]
 
 [params]
 

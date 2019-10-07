@@ -2,8 +2,8 @@ extends Node2D
 
 export var grid_size: Vector2 = Vector2(8, 8)
 export var PIECE_DEF_JSON : String
-
-var tile_size = 64
+export var piece_scene : PackedScene
+export var tile_size = 64
 var grid = []
 var list_pieces: Array = []
 var piece_defs : Dictionary = {}
@@ -11,9 +11,15 @@ var piece_defs : Dictionary = {}
 # keys string in data json
 const MOVES = "moves"
 
+var dic_tiles = {
+	"move": 3,
+	"take": 2,
+	"preview":3
+	}
+
 func _ready():
-	
 	$Player.connect("move", self, "_on_piece_moved", [$Player])
+	
 	randomize()
 	# list characters
 	# Create the grid Array with null in it.
@@ -30,7 +36,21 @@ func _ready():
 			
 	print(list_pieces)
 	
-	get_legal_moves("king", $Player.position/64)
+	get_legal_moves($Player)
+
+func _input(event):
+	
+	# GAME OVER CONDITION
+	
+	var pos = Vector2()
+	# this handles the preview when you hover on cells
+	
+	if Input.is_action_pressed("pause"):
+		if get_tree().is_paused():
+			get_tree().set_pause(false)
+		else:
+			get_tree().set_pause(true)
+
 
 func _process(delta: float) -> void:
 	get_grid_pos($Player)
@@ -46,7 +66,9 @@ func load_JSON(file_path):
 	file.close()
 	return dict
 	
-func get_legal_moves(piece_type: String, current_grid_pos: Vector2):
+func get_legal_moves(piece: Piece):
+	var current_grid_pos = piece.position/tile_size
+	var piece_type = piece.type
 	#return the cells where the piece can move
 	var piece_moves = []
 	var valid_moves = []
@@ -64,7 +86,7 @@ func get_legal_moves(piece_type: String, current_grid_pos: Vector2):
 			print("no repeat")
 		if is_cell_vacant(move["step"], current_grid_pos):
 			valid_moves.append(move["step"])
-	return valid_moves #placeholder
+	return valid_moves 
 
 func is_cell_vacant(move, current_grid_pos) -> bool:
 	#check if the cell where the piece wants to move is empty or not
@@ -83,6 +105,59 @@ func get_grid_pos(piece):
 	#return the position's array of the piece
 	return [ceil(piece.position.x / tile_size), ceil(piece.position.y / tile_size)]
 
-func _on_piece_moved(pos, dir, piece):
-	var pos_in_thegrid = pos/64
-	print(pos_in_thegrid, " and ", dir, " for ", piece.piece_name)
+func _on_piece_moved(last_pos, grid_pos, piece):
+
+	grid[last_pos.x][last_pos.y] = null
+	grid[grid_pos.x][grid_pos.y] = piece
+	
+	
+	
+	# print(pos_in_thegrid, " and ", dir, " for ", piece.piece_name)
+
+func reset_cells(map_to_reset):
+	for x in range(grid_size.x):
+		for y in range(grid_size.y):
+			map_to_reset.set_cellv(Vector2(x,y), -1)
+			
+func is_within_the_grid(pos):
+	return pos.x >= 0 and pos.x < grid_size.x and pos.y >= 0 and pos.y < grid_size.y
+
+func show_legal_moves(piece, legal_moves, map_to_show = $ChessBoard/CursorMap):
+	var grid_pos = piece.pos_in_the_grid
+	var action = "preview"
+	for cell in legal_moves:
+		# cell[action] could be move, attack
+		if map_to_show == $ChessBoard/CursorMap:
+			action = cell["action"]
+		map_to_show.set_cellv(cell["step"] + grid_pos, dic_tiles[action])
+
+var count_tick = 0
+func _on_tick():
+	count_tick+=1
+	if not count_tick % 5:
+		scroll()
+		yield(self, "scrolled")
+	for piece in get_tree().get_nodes_in_group("moving"):
+		piece.update_pos()
+
+signal scrolled
+func scroll():
+	var new_row = []
+	for i in grid_size.y:
+		new_row.append(null)
+	var new_piece = piece_scene.instance()
+	new_piece.type = "bishop"
+	
+	new_row[randi()%int(grid_size.x)] = new_piece
+	grid.pop_back()
+	grid.insert(0, new_row)
+	for i in len(grid):
+		for j in len(grid[i])-1:
+			var cell = grid[i][j]
+			if cell is Piece:
+				cell.grid_pos = Vector2(i, j)
+				print("scrolling ? for ", cell.type)
+	add_child(new_piece)
+	emit_signal("scrolled")
+		
+	

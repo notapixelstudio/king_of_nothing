@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/chess_piece_0_gold_general.png-7f4a2355cdda3fb1c74a46db868c609e.stex"
+path="res://.import/attack.png-81b7618c2a6e30c4ccb8998455e87e53.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/pieces/chess_piece_0_gold_general.png"
-dest_files=[ "res://.import/chess_piece_0_gold_general.png-7f4a2355cdda3fb1c74a46db868c609e.stex" ]
+source_file="res://assets/images/tiles/attack.png"
+dest_files=[ "res://.import/attack.png-81b7618c2a6e30c4ccb8998455e87e53.stex" ]
 
 [params]
 

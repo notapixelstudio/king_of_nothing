@@ -18,15 +18,21 @@ _global_script_classes=[ {
 "class": "GenericOption",
 "language": "GDScript",
 "path": "res://HUD/option_screen/GenericOption.gd"
+}, {
+"base": "Node2D",
+"class": "Piece",
+"language": "GDScript",
+"path": "res://Piece.gd"
 } ]
 _global_script_class_icons={
 "ElementOption": "",
-"GenericOption": ""
+"GenericOption": "",
+"Piece": ""
 }
 
 [application]
 
-config/name="LD45-Chess Game"
+config/name="King of Nothing"
 boot_splash/bg_color=Color( 0.223529, 0.219608, 0.219608, 1 )
 config/icon="res://icon.png"
 
@@ -37,8 +43,8 @@ global="*res://globals/global.gd"
 
 [display]
 
-window/size/width=480
-window/size/height=850
+window/size/width=512
+window/size/height=832
 window/dpi/allow_hidpi=true
 
 [gui]
