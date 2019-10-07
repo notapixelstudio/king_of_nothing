@@ -48,8 +48,8 @@ func move():
 signal capture
 func capture(piece: Piece):
 	var type_captured = piece.type
-	captured[type_captured] += 1
 	emit_signal('capture', type_captured, captured[type_captured])
+	captured[type_captured] += 1
 	print(captured)
 	
 func nope():
