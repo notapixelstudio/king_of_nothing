@@ -68,7 +68,7 @@ func load_JSON(file_path):
 	return dict
 	
 func get_legal_moves(piece: Piece):
-	var current_grid_pos = piece.position/tile_size
+	var current_grid_pos = piece.grid_pos
 	var piece_type = piece.type
 	#return the cells where the piece can move
 	var piece_moves = []
@@ -77,18 +77,18 @@ func get_legal_moves(piece: Piece):
 
 	for move in piece_moves:
 		
-		if move.get("repeat"):
-			var target_grid_pos = current_grid_pos
+		if "repeat" in move:
+			var target_grid_pos = piece.grid_pos
 			var i = 1
 			while is_within_the_grid(target_grid_pos):
-				target_grid_pos += Vector2(move.step[0]*i, move.step[1]*i)
-				valid_moves.append(move)
+				target_grid_pos = piece.grid_pos + Vector2(move.step[0]*i, move.step[1]*i)
+				valid_moves.append(target_grid_pos)
 				i+=1
 		else:
 			# print("no repeat")
 			pass
 		if is_cell_vacant(move["step"], current_grid_pos):
-			valid_moves.append(move)
+			valid_moves.append(Vector2(move["step"][0]+current_grid_pos.x, move["step"][1]+current_grid_pos.y))
 	return valid_moves 
 
 func is_cell_vacant(move, current_grid_pos) -> bool:
@@ -127,9 +127,7 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 	# print(pos_in_thegrid, " and ", dir, " for ", piece.piece_name)
 
 func reset_cells(map_to_reset):
-	for x in range(grid_size.x):
-		for y in range(grid_size.y):
-			map_to_reset.set_cellv(Vector2(x,y), -1)
+	map_to_reset.clear()
 			
 func is_within_the_grid(pos):
 	return pos.x >= 0 and pos.x < grid_size.x and pos.y >= 0 and pos.y < grid_size.y
@@ -137,16 +135,12 @@ func is_within_the_grid(pos):
 func show_legal_moves(piece: Piece, legal_moves, map_to_show = $ChessBoard/CursorMap):
 	var grid_pos = piece.grid_pos
 	var action = "preview"
+	print(piece.type, " ", legal_moves)
 	for cell in legal_moves:
 		# cell[action] could be move, attack
-		if  "action" in cell:
-			action = cell["action"]
-		if "repeat" in cell:
-			print(cell)
-		var pos = Vector2(cell["step"][1], cell["step"][0])
-		var target_grid = pos + grid_pos
-		# count scroll is just to consider the scrolling
-		map_to_show.set_cell(target_grid.y, target_grid.x-count_scroll, dic_tiles[action])
+		
+		map_to_show.set_cell(cell[1], cell[0]-count_scroll, dic_tiles[action])
+		
 
 var count_tick = 0
 const SCROLL_TICK = 5
