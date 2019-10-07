@@ -1,6 +1,6 @@
 extends Node2D
 
-export var grid_size: Vector2 = Vector2(8, 8)
+export var grid_size: Vector2 = Vector2(11, 8)
 export var PIECE_DEF_JSON : String
 export var piece_scene : PackedScene
 export var tile_size = 64
@@ -17,8 +17,9 @@ var dic_tiles = {
 	"preview":3
 	}
 
+onready var player = $Player
 func _ready():
-	$Player.connect("move", self, "_on_piece_moved", [$Player])
+	player.connect("move", self, "_on_piece_moved", [player])
 	
 	randomize()
 	# list characters
@@ -36,7 +37,7 @@ func _ready():
 			
 	print(list_pieces)
 	
-	get_legal_moves($Player)
+	get_legal_moves(player)
 
 func _input(event):
 	
@@ -52,8 +53,6 @@ func _input(event):
 			get_tree().set_pause(true)
 
 
-func _process(delta: float) -> void:
-	get_grid_pos($Player)
 
 func load_JSON(file_path):
 	# example of file path: "res://Ress/panelTextn2.json"
@@ -80,12 +79,13 @@ func get_legal_moves(piece: Piece):
 			var i = 1
 			while target_grid_pos.x < grid_size.x and target_grid_pos.x >= 0 and target_grid_pos.y < grid_size.y and target_grid_pos.y >= 0:
 				target_grid_pos += Vector2(move.step[0], move.step[1])
-				valid_moves.append(target_grid_pos)
+				valid_moves.append(move)
 				i+=1
 		else:
-			print("no repeat")
+			# print("no repeat")
+			pass
 		if is_cell_vacant(move["step"], current_grid_pos):
-			valid_moves.append(move["step"])
+			valid_moves.append(move)
 	return valid_moves 
 
 func is_cell_vacant(move, current_grid_pos) -> bool:
@@ -106,9 +106,18 @@ func get_grid_pos(piece):
 	return [ceil(piece.position.x / tile_size), ceil(piece.position.y / tile_size)]
 
 func _on_piece_moved(last_pos, grid_pos, piece):
-
-	grid[last_pos.x][last_pos.y] = null
-	grid[grid_pos.x][grid_pos.y] = piece
+	if is_within_the_grid(grid_pos):
+		print(grid_pos)
+		if grid[grid_pos.x][grid_pos.y] is Piece and grid[grid_pos.x][grid_pos.y] != piece:
+			print("CAPUTRED")
+			var captured = grid[grid_pos.x][grid_pos.y]
+			piece.capture(captured)
+			captured.queue_free()
+		piece.move()
+		grid[last_pos.x][last_pos.y] = null
+		grid[grid_pos.x][grid_pos.y] = piece
+	else: 
+		piece.grid_pos = last_pos
 	
 	
 	
@@ -122,14 +131,17 @@ func reset_cells(map_to_reset):
 func is_within_the_grid(pos):
 	return pos.x >= 0 and pos.x < grid_size.x and pos.y >= 0 and pos.y < grid_size.y
 
-func show_legal_moves(piece, legal_moves, map_to_show = $ChessBoard/CursorMap):
-	var grid_pos = piece.pos_in_the_grid
+func show_legal_moves(piece: Piece, legal_moves, map_to_show = $ChessBoard/CursorMap):
+	var grid_pos = piece.grid_pos
 	var action = "preview"
 	for cell in legal_moves:
 		# cell[action] could be move, attack
-		if map_to_show == $ChessBoard/CursorMap:
+		if  "action" in cell:
 			action = cell["action"]
-		map_to_show.set_cellv(cell["step"] + grid_pos, dic_tiles[action])
+		var pos = Vector2(cell["step"][1], cell["step"][0])
+		var target_grid = pos + grid_pos
+		# count scroll is just to consider the scrolling
+		map_to_show.set_cell(target_grid.y, target_grid.x-count_scroll, dic_tiles[action])
 
 var count_tick = 0
 func _on_tick():
@@ -144,14 +156,15 @@ signal scrolled
 
 var count_scroll = 0
 func scroll():
+	reset_cells($ChessBoard/CursorMap)
 	count_scroll +=1
 	var new_row = []
 	for i in grid_size.y:
 		new_row.append(null)
 	var new_piece = piece_scene.instance()
-	new_piece.type = "bishop"
+	new_piece.type = "shogi_pawn"
 	
-	new_row[randi()%int(grid_size.x)] = new_piece
+	new_row[randi()%int(grid_size.y)] = new_piece
 	grid.pop_back()
 	grid.insert(0, new_row)
 	for i in len(grid):
@@ -159,13 +172,14 @@ func scroll():
 			var cell = grid[i][j]
 			if cell is Piece:
 				cell.grid_pos = Vector2(i, j)
-				print("scrolling ? for ", cell.type)
+				show_legal_moves(new_piece, get_legal_moves(new_piece))
 	add_child(new_piece)
-	emit_signal("scrolled")
+	
+	
 	var pos = $ChessBoard.position
 	$ChessBoard/Tween.interpolate_property($ChessBoard, "position", pos, pos+Vector2(0, tile_size), 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN) 
 	$ChessBoard/Tween.start()
-	
+	emit_signal("scrolled")
 	for i in grid_size.x:
 		$ChessBoard/TileMap.set_cell(i, -count_scroll, (count_scroll+i)%2)
 	

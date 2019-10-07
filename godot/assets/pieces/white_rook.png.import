@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Pawn-Sprite.png-d663748051f1c067e44f6e3a8586d28c.stex"
+path="res://.import/white_rook.png-8964e2394689682a1beb16aedcdc812e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/ChessPieceSprites/Pawn-Sprite.png"
-dest_files=[ "res://.import/Pawn-Sprite.png-d663748051f1c067e44f6e3a8586d28c.stex" ]
+source_file="res://assets/pieces/white_rook.png"
+dest_files=[ "res://.import/white_rook.png-8964e2394689682a1beb16aedcdc812e.stex" ]
 
 [params]
 

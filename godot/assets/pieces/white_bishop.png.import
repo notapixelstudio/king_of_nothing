@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Wall-Sprite.png-d5149d1b1a0792cc4e8cc2cc0d537a6b.stex"
+path="res://.import/white_bishop.png-84acf643ec20b32f49a2a66dca25efa4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/ChessPieceSprites/Wall-Sprite.png"
-dest_files=[ "res://.import/Wall-Sprite.png-d5149d1b1a0792cc4e8cc2cc0d537a6b.stex" ]
+source_file="res://assets/pieces/white_bishop.png"
+dest_files=[ "res://.import/white_bishop.png-84acf643ec20b32f49a2a66dca25efa4.stex" ]
 
 [params]
 

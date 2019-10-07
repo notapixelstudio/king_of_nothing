@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Knight-Sprite.png-133590e8e58037d08e067794f9c1be82.stex"
+path="res://.import/legal.png-5e6021e535d80c9edc40e04973c3ebb3.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/ChessPieceSprites/Knight-Sprite.png"
-dest_files=[ "res://.import/Knight-Sprite.png-133590e8e58037d08e067794f9c1be82.stex" ]
+source_file="res://assets/pieces/tiles/legal.png"
+dest_files=[ "res://.import/legal.png-5e6021e535d80c9edc40e04973c3ebb3.stex" ]
 
 [params]
 

@@ -13,12 +13,18 @@ var target_pos = Vector2() setget change_pos
 var move_dir = Vector2()
 export var grid_pos = Vector2() setget change_grid
 
-
+var captured = {
+	"shogi_pawn": 0,
+	"bishop": 0,
+	"knight": 0,
+	"rook": 0,
+	"queen": 0
+	}
 signal move
 
 func change_grid(new_value):
 	grid_pos = new_value # Vector2(new_value.y, new_value.x)
-	self.target_pos = Vector2(grid_pos.y, grid_pos.x)*64
+	
 	
 func change_pos(new_value):
 	target_pos = new_value
@@ -32,15 +38,23 @@ func _ready():
 
 func update_pos():
 	var last_pos = grid_pos
-	self.grid_pos += move_dir 
-	move_dir = Vector2.ZERO
+	self.grid_pos += move_dir
 	emit_signal("move", last_pos, grid_pos)
 	
+func move():
+	move_dir = Vector2.ZERO
+	
+func capture(piece: Piece):
+	var type_captured = piece.type
+	captured[type_captured] += 1
+	
+func nope():
+	print("YOU SHALL NOT PASS")
 	
 func _process(delta):
 	get_movedir()
 	# movement
-	position = target_pos
+	position = Vector2(grid_pos.y, grid_pos.x)*64
 	
 func get_movedir():
 	pass

@@ -28,9 +28,20 @@ format = 1
 [node name="Tween" type="Tween" parent="ChessBoard"]
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
+grid_pos = Vector2( 4, 4 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -74.0
+margin_top = 704.0
+margin_right = 565.0
+margin_bottom = 846.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_tick"]

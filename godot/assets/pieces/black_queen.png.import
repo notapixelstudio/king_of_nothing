@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/King-sprite.png-250534cada5c495dc112c11f207c7b3f.stex"
+path="res://.import/black_queen.png-813cf2100b8ca32c8f245210e206b1c3.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/ChessPieceSprites/King-sprite.png"
-dest_files=[ "res://.import/King-sprite.png-250534cada5c495dc112c11f207c7b3f.stex" ]
+source_file="res://assets/pieces/black_queen.png"
+dest_files=[ "res://.import/black_queen.png-813cf2100b8ca32c8f245210e206b1c3.stex" ]
 
 [params]
 
