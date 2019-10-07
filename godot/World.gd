@@ -164,6 +164,54 @@ func _on_tick():
 
 signal scrolled
 
+var script_i = 0
+var script = [
+	'pawn',
+	'pawn',
+	'pawn',
+	'pawn',
+	'pawn',
+	'knight',
+	'pawn',
+	'pawn',
+	'knight',
+	'pawn',
+	'pawn',
+	'pawn',
+	'bishop',
+	'pawn',
+	'pawn',
+	'pawn',
+	'knight',
+	'pawn',
+	'bishop',
+	'pawn',
+	'bishop',
+	'knight',
+	'pawn',
+	'pawn',
+	'rook',
+	'pawn',
+	'knight',
+	'rook',
+	'pawn',
+	'bishop',
+	'rook',
+	'pawn',
+	'rook',
+	'pawn',
+	'queen',
+	'pawn'
+]
+
+var pieces = [
+	'pawn',
+	'knight',
+	'bishop',
+	'rook',
+	'queen'
+]
+
 var count_scroll = 0
 func scroll():
 	reset_cells($ChessBoard/CursorMap)
@@ -174,12 +222,18 @@ func scroll():
 	var new_piece = piece_scene.instance()
 	
 	new_piece.connect("move", self, "_on_piece_moved", [new_piece])
-	new_piece.type = "bishop"
+	
+	if script_i < len(script):
+		new_piece.type = script[script_i]
+		script_i += 1
+	else:
+		new_piece.type = pieces[randi()%len(pieces)]
+		
 	var column = randi()%int(grid_size.y)
 	new_row[column] = new_piece
 	new_piece.position = Vector2(64*column, -64)
 	grid.pop_back()
-	grid.insert(0, new_row)	
+	grid.insert(0, new_row)
 	add_child(new_piece)
 	for i in len(grid):
 		for j in len(grid[i])-1:

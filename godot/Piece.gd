@@ -18,7 +18,7 @@ var move_dir = Vector2()
 export var grid_pos = Vector2() setget change_grid
 
 var captured = {
-	"shogi_pawn": 0,
+	"pawn": 0,
 	"bishop": 0,
 	"knight": 0,
 	"rook": 0,
