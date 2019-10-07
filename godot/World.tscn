@@ -55,59 +55,85 @@ position = Vector2( 0, 704 )
 
 [node name="Pawn0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 0, 2 )
+piece_type = "pawn"
+piece_index = 0
+taken = false
 
 [node name="Pawn1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 64, 0 )
+piece_type = "pawn"
 piece_index = 1
+taken = false
 
 [node name="Pawn2" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
+piece_type = "pawn"
 piece_index = 2
+taken = false
 
 [node name="Pawn3" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 192, 0 )
+piece_type = "pawn"
 piece_index = 3
+taken = false
 
 [node name="Pawn4" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 256, 0 )
+piece_type = "pawn"
 piece_index = 4
+taken = false
 
 [node name="Pawn5" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 320, 0 )
+piece_type = "pawn"
 piece_index = 5
+taken = false
 
 [node name="Pawn6" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 384, 0 )
+piece_type = "pawn"
 piece_index = 6
+taken = false
 
 [node name="Pawn7" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 448, 0 )
+piece_type = "pawn"
 piece_index = 7
+taken = false
 
 [node name="Rook0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 0, 64 )
 texture = ExtResource( 6 )
 piece_type = "rook"
+piece_index = 0
+taken = false
 
 [node name="Knight0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 64, 64 )
 texture = ExtResource( 7 )
 piece_type = "knight"
+piece_index = 0
+taken = false
 
 [node name="Bishop0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 128, 64 )
 texture = ExtResource( 8 )
 piece_type = "bishop"
+piece_index = 0
+taken = false
 
 [node name="Queen0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 192, 64 )
 texture = ExtResource( 9 )
 piece_type = "queen"
+piece_index = 0
+taken = false
 
 [node name="King0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 256, 64 )
 texture = ExtResource( 10 )
 piece_type = "king"
+piece_index = 0
 taken = true
 
 [node name="Bishop1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
@@ -115,17 +141,21 @@ position = Vector2( 320, 64 )
 texture = ExtResource( 8 )
 piece_type = "bishop"
 piece_index = 1
+taken = false
 
 [node name="Knight1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 384, 64 )
 texture = ExtResource( 7 )
 piece_type = "knight"
 piece_index = 1
+taken = false
 
 [node name="Rook1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
 position = Vector2( 448, 64 )
 texture = ExtResource( 6 )
 piece_type = "rook"
 piece_index = 1
+taken = false
+
 [connection signal="capture" from="Player" to="." method="_on_Player_capture"]
 [connection signal="timeout" from="Timer" to="." method="_on_tick"]
