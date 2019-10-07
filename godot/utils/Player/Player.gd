@@ -48,7 +48,7 @@ func check_key(event, k):
 # CONTROL KEYS
 func get_movedir():
 	move_dir.y = -int(keys['left']) + int(keys['right'])
-	move_dir.x = -int(keys['up']) + int(keys['down'])
+	move_dir.x = -int(keys['down']) + int(keys['up'])
 	
 	move(grid_pos + move_dir, 'input')
 	

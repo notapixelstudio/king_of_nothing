@@ -46,12 +46,11 @@ func _ready():
 	add_to_group("moving")
 
 func update_pos():
-	var last_pos = grid_pos
-	if type == "bishop":
-		print(type, " " , grid_pos)
-	emit_signal("move", last_pos, grid_pos)
+	
+	print(type, " " , grid_pos)
 	
 func move(pos, move_type):
+	var last_pos = grid_pos
 	grid_pos = pos
 	
 	var delta
@@ -61,7 +60,9 @@ func move(pos, move_type):
 		delta = 0.15
 		
 	move_dir = Vector2.ZERO
-	($Tween as Tween).interpolate_property(self, "position", position, Vector2(grid_pos.y, grid_pos.x)*64, delta, Tween.TRANS_LINEAR, Tween.EASE_IN) 
+	emit_signal("move", last_pos, grid_pos)
+	print(grid_pos)
+	($Tween as Tween).interpolate_property(self, "position", position, get_parent().get_parent().ij2xy(grid_pos.x, grid_pos.y), delta, Tween.TRANS_LINEAR, Tween.EASE_IN) 
 	$Tween.start()
 	
 signal capture
@@ -73,11 +74,6 @@ func capture(piece: Piece):
 	
 func nope():
 	print("YOU SHALL NOT PASS")
-	
-#func _process(delta):
-#	get_movedir()
-	# movement
-	#position = Vector2(grid_pos.y, grid_pos.x)*64
 	
 func get_movedir():
 	pass

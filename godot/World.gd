@@ -19,9 +19,10 @@ var dic_tiles = {
 	"preview":2
 	}
 
-onready var player = $Player
+onready var player = $ChessBoard/Player
 func _ready():
 	player.connect("move", self, "_on_piece_moved", [player])
+	print(player.position)
 	
 	randomize()
 	# list characters
@@ -38,8 +39,12 @@ func _ready():
 			list_pieces.append(k)
 			
 	print(list_pieces)
+	player.position = ij2xy(player.grid_pos.x, player.grid_pos.y)
 	
 	get_legal_moves(player)
+	scroll()
+	print(grid)
+
 
 func _input(event):
 	
@@ -91,12 +96,21 @@ func get_legal_moves(piece: Piece):
 			valid_moves.append(Vector2(move["step"][0]+current_grid_pos.x, move["step"][1]+current_grid_pos.y))
 	return valid_moves 
 
+func get_row(i):
+	return grid[int(i)%len(grid)]
+	
+func get_cell(i,j):
+	return get_row(i)[int(j)]
+
+func set_cell(i,j, what):
+	grid[int(i)%len(grid)][int(j)] = what
+	
 func is_cell_vacant(move, current_grid_pos) -> bool:
 	#check if the cell where the piece wants to move is empty or not
 	var next_grid_pos = []
 	next_grid_pos.append(current_grid_pos[0] + move[0])
 	next_grid_pos.append(current_grid_pos[1] + move[1])
-	if grid[next_grid_pos[0]][next_grid_pos[1]] != null:
+	if get_cell(next_grid_pos[0],next_grid_pos[1]) != null:
 		return false
 	return true
 
@@ -110,15 +124,15 @@ func get_grid_pos(piece):
 
 func _on_piece_moved(last_pos, grid_pos, piece):
 	if is_within_the_grid(grid_pos):
-		if grid[grid_pos.x][grid_pos.y] is Piece and grid[grid_pos.x][grid_pos.y] != piece:
-			var captured = grid[grid_pos.x][grid_pos.y]
+		if get_cell(grid_pos.x,grid_pos.y) is Piece and get_cell(grid_pos.x,grid_pos.y) != piece:
+			var captured = get_cell(grid_pos.x,grid_pos.y)
 			print("CAPUTRED", captured.type)
 			piece.capture(captured)
 			captured.queue_free()
 		
-		grid[last_pos.x][last_pos.y] = null
-		grid[grid_pos.x][grid_pos.y] = piece
-		#piece.move(grid_pos, 'other')
+		# TODO
+		set_cell(last_pos.x,last_pos.y, null) 
+		set_cell(grid_pos.x,grid_pos.y, piece)
 	else: 
 		piece.grid_pos = last_pos
 	
@@ -127,9 +141,11 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 	# print(pos_in_thegrid, " and ", dir, " for ", piece.piece_name)
 
 func reset_cells(map_to_reset):
+	return
 	map_to_reset.clear()
 	
 func is_within_the_grid(pos):
+	return true
 	return pos.x >= 0 and pos.x < grid_size.x and pos.y >= 0 and pos.y < grid_size.y
 
 func show_legal_moves(piece: Piece, legal_moves, map_to_show = $ChessBoard/CursorMap):
@@ -211,15 +227,10 @@ var pieces = [
 
 var count_scroll = 0
 func scroll():
-	reset_cells($ChessBoard/CursorMap)
+	# reset_cells($ChessBoard/CursorMap)
 	count_scroll +=1
-	var new_row = []
-	for i in grid_size.y:
-		new_row.append(null)
 	var new_piece = piece_scene.instance()
-	
 	new_piece.connect("move", self, "_on_piece_moved", [new_piece])
-	
 	if script_i < len(script):
 		new_piece.type = script[script_i]
 		script_i += 1
@@ -227,37 +238,45 @@ func scroll():
 		new_piece.type = pieces[randi()%len(pieces)]
 		
 	var column = randi()%int(grid_size.y)
-	new_row[column] = new_piece
-	new_piece.position = Vector2(64*column, -64)
-	grid.pop_back()
-	grid.insert(0, new_row)
-	add_child(new_piece)
+	# get first line
+	var row = count_scroll-1 + len(grid) 
+	set_cell(row,column,new_piece)
+	new_piece.grid_pos = Vector2(column, row)
+	new_piece.position = ij2xy(row, column)
+	$ChessBoard.add_child(new_piece)
+	"""
 	for i in len(grid):
 		for j in len(grid[i])-1:
 			var cell = grid[i][j]
 			if cell is Piece:
 				cell.move(Vector2(i, j), 'scroll')
 				show_legal_moves(new_piece, get_legal_moves(new_piece))
-	
+	"""
 	emit_signal("scrolled")
 	
 	var pos = $ChessBoard.position
-	$ChessBoard/Tween.interpolate_property($ChessBoard, "position", pos, pos+Vector2(0, tile_size), timer.wait_time, Tween.TRANS_LINEAR, Tween.EASE_IN) 
+	$ChessBoard/Tween.interpolate_property($ChessBoard, "position", pos, pos+Vector2(0, tile_size), timer.wait_time*SCROLL_TICK, Tween.TRANS_LINEAR, Tween.EASE_IN) 
 	$ChessBoard/Tween.start()
 	
 	for i in grid_size.x:
 		$ChessBoard/TileMap.set_cell(i, -count_scroll, (count_scroll+i)%2)
 	
 	kill_last_line()
-	
+
+func ij2xy(i,j):
+	return Vector2(64*j, -64*(i-len(grid)+1))
+
 func kill_last_line():
-	for cell in grid[11]:
+	# get last line
+	return
+	"""
+	for cell in get_row(count_scroll-1):
 		if cell is Piece:
 			if cell.type != 'king':
 				cell.queue_free()
 			else:
 				print('gameover')
-
+	"""
 func _on_Player_capture(type, index):
 	for score_piece in get_tree().get_nodes_in_group('score_piece'):
 		if score_piece.piece_type == type and score_piece.piece_index == index:
