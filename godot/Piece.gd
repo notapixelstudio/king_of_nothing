@@ -46,8 +46,7 @@ func _ready():
 	add_to_group("moving")
 
 func update_pos():
-	
-	print(type, " " , grid_pos)
+	pass
 	
 func move(pos, move_type):
 	var last_pos = grid_pos
@@ -61,7 +60,6 @@ func move(pos, move_type):
 		
 	move_dir = Vector2.ZERO
 	emit_signal("move", last_pos, grid_pos)
-	print(grid_pos)
 	($Tween as Tween).interpolate_property(self, "position", position, get_parent().get_parent().ij2xy(grid_pos.x, grid_pos.y), delta, Tween.TRANS_LINEAR, Tween.EASE_IN) 
 	$Tween.start()
 	
