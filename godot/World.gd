@@ -79,10 +79,12 @@ func get_legal_moves(piece: Piece):
 	var piece_type = piece.type
 	#return the cells where the piece can move
 	var piece_moves = []
-	var valid_moves = []
+	var valid_moves = {}
 	piece_moves = get_moves(piece_type)
 	
+	var type_attack = 0
 	for move in piece_moves:
+		valid_moves[str(type_attack)]= []
 		var target_grid_pos = piece.grid_pos + Vector2(move.step[1], move.step[0])
 		if not is_within_the_grid(target_grid_pos):
 			if piece.grid_pos.y < 1:
@@ -90,15 +92,19 @@ func get_legal_moves(piece: Piece):
 			# print(piece.type, target_grid_pos , "is not inside the grid. Starting from ", piece.grid_pos)
 			continue
 		if "repeat" in move:
-			target_grid_pos = piece.grid_pos
 			var i = 1
 			while is_within_the_grid(target_grid_pos):
-				target_grid_pos = piece.grid_pos + Vector2(move.step[1]*i, move.step[0]*i)
-				valid_moves.append(target_grid_pos)
+				valid_moves[str(type_attack)].append(target_grid_pos)
 				i+=1
-		
+				target_grid_pos = piece.grid_pos + Vector2(move.step[1]*i, move.step[0]*i)
+			type_attack += 1
+			continue
+			
 		# if is_cell_vacant(move["step"], current_grid_pos):
-		valid_moves.append(Vector2(move["step"][1]+current_grid_pos.x, move["step"][0]+current_grid_pos.y))
+		valid_moves[str(type_attack)].append(Vector2(move["step"][1]+current_grid_pos.x, move["step"][0]+current_grid_pos.y))
+		type_attack += 1
+	if piece.type == "bishop":
+		print(valid_moves)
 	return valid_moves 
 
 func get_row(i):
@@ -137,19 +143,21 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 			var captured = get_cell(grid_pos.x,grid_pos.y)
 			print("CAPUTRED", captured.type)
 			piece.capture(captured)
-			captured.queue_free()
+			$ChessBoard.remove_child(captured)
+			# captured).queue_free()
 		
 		# TODO
 		for enemy in get_tree().get_nodes_in_group("moving"):
 			var moves = get_legal_moves(enemy)
 			# print(enemy.type, " have this moves: ", moves)
-			for attack in moves:
-				if attack == player.grid_pos:
-					print("tick number ", count_tick, " this is moving: ", piece.type)
-					print(moves)
-					print(enemy.grid_pos, " wants to check ", player.grid_pos)
-					print("CHECKKKKKK")
-					enemy.check(player.grid_pos)
+			for attack_type in moves:
+				for attack in moves[attack_type]:
+					if attack[0] == int(player.grid_pos.x) and attack[1] == int(player.grid_pos.y):
+						print("tick number ", count_tick, " this is moving: ", piece.type)
+						print(moves)
+						print(enemy.grid_pos, " wants to check ", player.grid_pos)
+						print(moves[attack_type][len(moves[attack_type])-1])
+						enemy.check(moves[attack_type][len(moves[attack_type])-1])
 		set_cell(last_pos.x,last_pos.y, null) 
 		set_cell(grid_pos.x,grid_pos.y, piece)
 	else: 
@@ -165,7 +173,7 @@ func reset_cells(map_to_reset):
 	map_to_reset.clear()
 	
 func is_within_the_grid(pos):
-	return pos.y >= 0 and pos.x >= 0 and pos.y <= grid_size.y
+	return pos.y >= 0 and pos.x >= 0 and pos.x< count_scroll*grid_size.x and pos.y < grid_size.y
 
 func show_legal_moves(piece: Piece, legal_moves, map_to_show = $ChessBoard/CursorMap):
 	var grid_pos = piece.grid_pos
@@ -181,7 +189,6 @@ func _on_tick():
 	count_tick+=1
 	if not count_tick % SCROLL_TICK:
 		scroll()
-		yield(self, "scrolled")
 	
 	player.get_movedir()
 	#player.update_pos()
