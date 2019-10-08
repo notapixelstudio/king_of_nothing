@@ -49,8 +49,12 @@ func update_pos():
 	pass
 	
 func move(pos, move_type):
+	if move_dir == Vector2.ZERO:
+		return
 	var last_pos = grid_pos
 	grid_pos = pos
+	if type != "king":
+		print("I want to mooove")
 	
 	var delta
 	if move_type == 'scroll':
@@ -75,3 +79,12 @@ func nope():
 	
 func get_movedir():
 	pass
+
+func check(target_pos : Vector2):
+	$Label.visible = true
+	move_dir = target_pos - grid_pos
+	yield(get_tree().create_timer(0.51), "timeout")
+	move(target_pos, "attack")
+	yield(get_tree().create_timer(2), "timeout")
+	$Label.visible = false
+	

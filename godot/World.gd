@@ -17,7 +17,11 @@ var dic_tiles = {
 	"move": 3,
 	"take": 2,
 	"preview":2
-	}
+}
+
+var count_tick = 0
+const SCROLL_TICK = 5
+
 
 onready var player = $ChessBoard/Player
 func _ready():
@@ -39,7 +43,6 @@ func _ready():
 			
 	player.position = ij2xy(player.grid_pos.x, player.grid_pos.y)
 	
-	get_legal_moves(player)
 	scroll()
 
 
@@ -70,27 +73,32 @@ func load_JSON(file_path):
 	return dict
 	
 func get_legal_moves(piece: Piece):
+	# Will return the legal moves cell in the World (x: column, y: row)
+	# gridpos is world coordinate
 	var current_grid_pos = piece.grid_pos
 	var piece_type = piece.type
 	#return the cells where the piece can move
 	var piece_moves = []
 	var valid_moves = []
 	piece_moves = get_moves(piece_type)
+	
 	for move in piece_moves:
-		var target_grid_pos = piece.grid_pos + Vector2(move.step[0], move.step[1])
+		var target_grid_pos = piece.grid_pos + Vector2(move.step[1], move.step[0])
 		if not is_within_the_grid(target_grid_pos):
-			print(target_grid_pos , "is not inside the grid. It was ", piece.grid_pos)
+			if piece.grid_pos.y < 1:
+				print(piece.type , "in ", piece.grid_pos, ": ", move, "-", target_grid_pos)
+			# print(piece.type, target_grid_pos , "is not inside the grid. Starting from ", piece.grid_pos)
 			continue
 		if "repeat" in move:
 			target_grid_pos = piece.grid_pos
 			var i = 1
 			while is_within_the_grid(target_grid_pos):
-				target_grid_pos = piece.grid_pos + Vector2(move.step[0]*i, move.step[1]*i)
+				target_grid_pos = piece.grid_pos + Vector2(move.step[1]*i, move.step[0]*i)
 				valid_moves.append(target_grid_pos)
 				i+=1
 		
-		if is_cell_vacant(move["step"], current_grid_pos):
-			valid_moves.append(Vector2(move["step"][0]+current_grid_pos.x, move["step"][1]+current_grid_pos.y))
+		# if is_cell_vacant(move["step"], current_grid_pos):
+		valid_moves.append(Vector2(move["step"][1]+current_grid_pos.x, move["step"][0]+current_grid_pos.y))
 	return valid_moves 
 
 func get_row(i):
@@ -108,8 +116,9 @@ func is_cell_vacant(move, current_grid_pos) -> bool:
 	next_grid_pos.append(current_grid_pos[0] + move[0])
 	next_grid_pos.append(current_grid_pos[1] + move[1])
 	
-	if get_cell(next_grid_pos[1],next_grid_pos[0]) != null:
-		print("this cell ", next_grid_pos, "is occupied by ", get_cell(next_grid_pos[1],next_grid_pos[0]))
+	if get_cell(next_grid_pos[0],next_grid_pos[1]) != null:
+		print("I am in ", current_grid_pos , " and... ")
+		print("this cell ", next_grid_pos, "is occupied by ", get_cell(next_grid_pos[1],next_grid_pos[0]).type)
 		return false
 	return true
 
@@ -123,6 +132,7 @@ func get_grid_pos(piece):
 
 func _on_piece_moved(last_pos, grid_pos, piece):
 	if is_within_the_grid(grid_pos):
+		
 		if get_cell(grid_pos.x,grid_pos.y) is Piece and get_cell(grid_pos.x,grid_pos.y) != piece:
 			var captured = get_cell(grid_pos.x,grid_pos.y)
 			print("CAPUTRED", captured.type)
@@ -135,10 +145,15 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 			# print(enemy.type, " have this moves: ", moves)
 			for attack in moves:
 				if attack == player.grid_pos:
+					print("tick number ", count_tick, " this is moving: ", piece.type)
+					print(moves)
+					print(enemy.grid_pos, " wants to check ", player.grid_pos)
 					print("CHECKKKKKK")
+					enemy.check(player.grid_pos)
 		set_cell(last_pos.x,last_pos.y, null) 
 		set_cell(grid_pos.x,grid_pos.y, piece)
 	else: 
+		print(piece.type, " cannot move because ", grid_pos)
 		piece.grid_pos = last_pos
 	
 	
@@ -150,7 +165,7 @@ func reset_cells(map_to_reset):
 	map_to_reset.clear()
 	
 func is_within_the_grid(pos):
-	return pos.y >= 0 and pos.x >= 0 and pos.y < grid_size.y
+	return pos.y >= 0 and pos.x >= 0 and pos.y <= grid_size.y
 
 func show_legal_moves(piece: Piece, legal_moves, map_to_show = $ChessBoard/CursorMap):
 	var grid_pos = piece.grid_pos
@@ -161,8 +176,6 @@ func show_legal_moves(piece: Piece, legal_moves, map_to_show = $ChessBoard/Curso
 		map_to_show.set_cell(cell[1], cell[0]-count_scroll, dic_tiles[action])
 		
 
-var count_tick = 0
-const SCROLL_TICK = 5
 
 func _on_tick():
 	count_tick+=1
@@ -244,7 +257,7 @@ func scroll():
 	# get first line
 	var row = count_scroll-1 + len(grid) 
 	set_cell(row,column,new_piece)
-	new_piece.grid_pos = Vector2(column, row)
+	new_piece.grid_pos = Vector2(row, column)
 	new_piece.position = ij2xy(row, column)
 	$ChessBoard.add_child(new_piece)
 	"""
@@ -264,7 +277,6 @@ func scroll():
 	for i in grid_size.x:
 		$ChessBoard/TileMap.set_cell(i, -count_scroll, (count_scroll+i)%2)
 	
-	get_legal_moves(player)
 	kill_last_line()
 
 func ij2xy(i,j):
