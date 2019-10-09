@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://Piece.tscn" type="PackedScene" id=2]
@@ -10,6 +10,9 @@
 [ext_resource path="res://assets/pieces/outline_bishop.png" type="Texture" id=8]
 [ext_resource path="res://assets/pieces/outline_queen.png" type="Texture" id=9]
 [ext_resource path="res://assets/pieces/white_king.png" type="Texture" id=10]
+[ext_resource path="res://HUD/UIrhythm/RhythmControl.tscn" type="PackedScene" id=11]
+[ext_resource path="res://HUD/UIrhythm/Effects/hit confirm.tscn" type="PackedScene" id=12]
+[ext_resource path="res://HUD/UIrhythm/Effects/fail.tscn" type="PackedScene" id=13]
 
 [node name="World" type="Node2D"]
 scale = Vector2( 0.75, 0.75 )
@@ -54,7 +57,7 @@ margin_bottom = 670.0
 
 [node name="ScoreBoard" type="Node2D" parent="CanvasLayer"]
 editor/display_folded = true
-position = Vector2( 0, 528 )
+position = Vector2( 0, 558 )
 scale = Vector2( 0.75, 0.75 )
 
 [node name="Pawn0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 5 )]
@@ -161,5 +164,15 @@ piece_type = "rook"
 piece_index = 1
 taken = false
 
+[node name="RhythmControl" parent="CanvasLayer" instance=ExtResource( 11 )]
+margin_left = 0.0
+margin_top = -126.0
+margin_right = 0.0
+margin_bottom = -96.0
+hit_scene = ExtResource( 12 )
+fail_scene = ExtResource( 13 )
+
 [connection signal="capture" from="ChessBoard/Player" to="." method="_on_Player_capture"]
+[connection signal="fail" from="ChessBoard/Player" to="CanvasLayer/RhythmControl" method="_on_Player_fail"]
+[connection signal="hit" from="ChessBoard/Player" to="CanvasLayer/RhythmControl" method="_on_Player_hit"]
 [connection signal="timeout" from="Timer" to="." method="_on_tick"]

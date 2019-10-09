@@ -2,6 +2,9 @@ extends Node2D
 
 class_name Piece
 
+signal fail
+signal hit
+
 # variables
 var speed = 250
 
@@ -50,7 +53,9 @@ func update_pos():
 	
 func move(pos, move_type):
 	if move_dir == Vector2.ZERO:
+		emit_signal("fail")
 		return
+	emit_signal("hit")
 	var last_pos = grid_pos
 	grid_pos = pos
 	if type != "king":
