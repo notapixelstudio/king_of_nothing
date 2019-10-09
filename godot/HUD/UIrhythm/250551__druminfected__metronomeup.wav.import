@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/250551__druminfected__metronomeup.wav-e7ee740041ec4aba96fe1da2593235b7.sample"
+
+[deps]
+
+source_file="res://HUD/UIrhythm/250551__druminfected__metronomeup.wav"
+dest_files=[ "res://.import/250551__druminfected__metronomeup.wav-e7ee740041ec4aba96fe1da2593235b7.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Effects/Effect.gd" type="Script" id=1]
+[ext_resource path="res://Effects/Node2D.gd" type="Script" id=2]
+[ext_resource path="res://Theme.tres" type="Theme" id=3]
+[ext_resource path="res://Effects/Label.gd" type="Script" id=4]
+
+[node name="cross" type="Node2D"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Angular", "Linear" ]
+
+[node name="Node2D" type="Node2D" parent="." index="0"]
+
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="Node2D" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 3.0
+margin_top = -5.0
+margin_right = 43.0
+margin_bottom = 9.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+theme = ExtResource( 3 )
+text = "X"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script = ExtResource( 4 )
+_sections_unfolded = [ "Theme" ]
+
+[node name="Timer" type="Timer" parent="." index="1"]
+
+process_mode = 1
+wait_time = 5.0
+one_shot = false
+autostart = true
+
+
