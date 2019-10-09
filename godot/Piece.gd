@@ -12,6 +12,8 @@ export var tile_size = 64
 export var type = "king" setget set_type
 export var color = "black" setget set_color
 
+
+var check_moves = []
 func set_type(value):
 	type = value
 	refresh()
@@ -23,8 +25,8 @@ func set_color(value):
 func refresh():
 	$Sprite.texture = load('res://assets/pieces/'+color+'_'+type+'.png')
 
+onready var target = grid_pos
 var last_pos = Vector2()
-var target_pos = Vector2() setget change_pos
 var move_dir = Vector2()
 export var grid_pos = Vector2() setget change_grid
 
@@ -34,24 +36,23 @@ var captured = {
 	"knight": 0,
 	"rook": 0,
 	"queen": 0
-	}
+}
+
 signal move
+signal winner
 
 func change_grid(new_value):
 	grid_pos = new_value # Vector2(new_value.y, new_value.x)
 	
 	
-func change_pos(new_value):
-	target_pos = new_value
 
 # functions
 func _ready():
 	add_to_group("moving")
 
-func update_pos():
-	pass
 	
-func move(pos, move_type):
+func move(pos, move_type,  tick = 0):
+	
 	if move_dir == Vector2.ZERO:
 		emit_signal("fail")
 		return
@@ -66,6 +67,8 @@ func move(pos, move_type):
 		delta = 0.25
 	else:
 		delta = 0.15
+	if type != "king":
+		print("We are ", type, " and we are going to move from ", last_pos, " in ", grid_pos)
 		
 	emit_signal("move", last_pos, grid_pos)
 	if not get_parent():
@@ -74,11 +77,16 @@ func move(pos, move_type):
 	$Tween.start()
 	
 signal capture
+
 func capture(piece: Piece):
 	var type_captured = piece.type
 	emit_signal('capture', type_captured, captured[type_captured])
 	captured[type_captured] += 1
 	print(captured)
+	
+	# win condition
+	if captured["pawn"]>=8 and captured["bishop"]>=2 and captured["knight"]>=2 and captured["rook"]>=2 and captured["queen"]>=1:
+		emit_signal("winner")
 	
 func nope():
 	print("YOU SHALL NOT PASS")
@@ -86,11 +94,21 @@ func nope():
 func get_movedir():
 	pass
 
-func check(target_pos : Vector2):
+var check_pos = Vector2()
+
+var in_check = false
+
+func check(target_pos : Vector2, moves: Array):
+	
+	in_check = true
 	$Sprite/Check.visible = true
 	move_dir = target_pos - grid_pos
-	print("The check is there: ", target_pos)
-	yield(get_tree().create_timer(0.51), "timeout")
-	move(target_pos, "attack")
+	target = target_pos
+	
+	print("We are ", type , " and we are here: ", grid_pos, " The check is there: ", target_pos, " and we can hit there: ", moves)
+	check_moves = moves
+
+func uncheck():
 	$Sprite/Check.visible = false
+	in_check = false
 	
