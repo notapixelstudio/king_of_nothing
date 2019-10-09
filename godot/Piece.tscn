@@ -62,3 +62,9 @@ shape = SubResource( 2 )
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="Label" type="Label" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 29.0
+text = "CHECK"
+
