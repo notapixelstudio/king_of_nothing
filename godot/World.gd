@@ -5,7 +5,7 @@ export var PIECE_DEF_JSON : String
 export var piece_scene : PackedScene
 export var tile_size = 64
 
-export var max_range_attack = 3
+export var max_range_attack = 4
 
 var grid = []
 var list_pieces: Array = []
@@ -96,15 +96,16 @@ func get_legal_moves(piece: Piece):
 			continue
 		if "repeat" in move:
 			var i = 1
-			while is_within_the_grid(target_grid_pos) and i <= max_range_attack:
+			while is_within_the_grid(target_grid_pos) and i <= max_range_attack and is_cell_vacant(target_grid_pos[0], target_grid_pos[1]):
 				valid_moves[str(type_attack)].append(target_grid_pos)
 				i+=1
 				target_grid_pos = piece.grid_pos + Vector2(move.step[1]*i, move.step[0]*i)
 			type_attack += 1
 			continue
-			
-		# if is_cell_vacant(move["step"], current_grid_pos):
-		valid_moves[str(type_attack)].append(Vector2(move["step"][1]+current_grid_pos.x, move["step"][0]+current_grid_pos.y))
+		
+		
+		if is_cell_vacant(target_grid_pos[0], target_grid_pos[1]):
+			valid_moves[str(type_attack)].append(target_grid_pos)
 		type_attack += 1
 
 	return valid_moves 
@@ -118,15 +119,11 @@ func get_cell(i,j):
 func set_cell(i,j, what):
 	grid[int(i)%len(grid)][int(j)] = what
 	
-func is_cell_vacant(move, current_grid_pos) -> bool:
+func is_cell_vacant(i, j) -> bool:
 	#check if the cell where the piece wants to move is empty or not
-	var next_grid_pos = []
-	next_grid_pos.append(current_grid_pos[0] + move[0])
-	next_grid_pos.append(current_grid_pos[1] + move[1])
 	
-	if get_cell(next_grid_pos[0],next_grid_pos[1]) != null:
-		print("I am in ", current_grid_pos , " and... ")
-		print("this cell ", next_grid_pos, "is occupied by ", get_cell(next_grid_pos[1],next_grid_pos[0]).type)
+	if get_cell(i, j) != null:
+		print("this cell ", i, "-", j, "is occupied by ", get_cell(i, j).type)
 		return false
 	return true
 
@@ -141,6 +138,19 @@ func get_grid_pos(piece):
 
 func _on_piece_moved(last_pos, grid_pos, piece):
 	if is_within_the_grid(grid_pos):
+		# check if someone is on the way
+		for enemy in get_tree().get_nodes_in_group("moving"):
+			var moves = get_legal_moves(enemy)
+			# print(enemy.type, " have this moves: ", moves)
+			for attack_type in moves:
+				for attack in moves[attack_type]:
+					# check if there is the player in that
+					if attack[0] == int(player.grid_pos.x) and attack[1] == int(player.grid_pos.y):
+						print("tick number ", count_tick, " this is moving: ", piece.type)
+						print(moves)
+						print(enemy.grid_pos, " wants to check ", player.grid_pos)
+						print(moves[attack_type][len(moves[attack_type])-1])
+						enemy.check(moves[attack_type][len(moves[attack_type])-1])
 		
 		if get_cell(grid_pos.x,grid_pos.y) is Piece and get_cell(grid_pos.x,grid_pos.y) != piece:
 			var captured = get_cell(grid_pos.x,grid_pos.y)
@@ -150,18 +160,6 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 			# captured).queue_free()
 		
 		# TODO
-		for enemy in get_tree().get_nodes_in_group("moving"):
-			var moves = get_legal_moves(enemy)
-			# print(enemy.type, " have this moves: ", moves)
-			
-			for attack_type in moves:
-				for attack in moves[attack_type]:
-					if attack[0] == int(player.grid_pos.x) and attack[1] == int(player.grid_pos.y):
-						print("tick number ", count_tick, " this is moving: ", piece.type)
-						print(moves)
-						print(enemy.grid_pos, " wants to check ", player.grid_pos)
-						print(moves[attack_type][len(moves[attack_type])-1])
-						enemy.check(moves[attack_type][len(moves[attack_type])-1])
 		set_cell(last_pos.x,last_pos.y, null) 
 		set_cell(grid_pos.x,grid_pos.y, piece)
 	else: 

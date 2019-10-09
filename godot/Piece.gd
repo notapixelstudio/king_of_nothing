@@ -64,6 +64,8 @@ func move(pos, move_type):
 	var delta
 	if move_type == 'scroll':
 		delta = 0.5
+	elif move_type == "attack":
+		delta = 0.25
 	else:
 		delta = 0.15
 		
