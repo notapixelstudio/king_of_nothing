@@ -154,7 +154,7 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 				for attack in moves[attack_type]:
 					
 					# check if someone is on the way
-					if not is_cell_vacant(grid_pos.x, grid_pos.y):
+					if not is_cell_vacant(grid_pos.x, grid_pos.y) and piece != player:
 						print(piece.type, " is on the way ", grid_pos)
 						piece.grid_pos = last_pos
 						return
