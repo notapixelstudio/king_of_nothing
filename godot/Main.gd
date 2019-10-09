@@ -25,6 +25,4 @@ func _on_Play_pressed():
 
 
 func _on_Quit_pressed():
-	$Selected.play()
-	yield($Selected, "finished")
 	get_tree().quit()

@@ -29,6 +29,7 @@ signal gameover
 
 onready var player = $ChessBoard/Player
 func _ready():
+	
 	player.connect("move", self, "_on_piece_moved", [player])
 	
 	randomize()
@@ -46,7 +47,6 @@ func _ready():
 			list_pieces.append(k)
 			
 	player.position = ij2xy(player.grid_pos.x, player.grid_pos.y)
-	
 	scroll()
 
 
@@ -91,8 +91,8 @@ func get_legal_moves(piece: Piece):
 		valid_moves[str(type_attack)]= []
 		var target_grid_pos = piece.grid_pos + Vector2(move.step[1], move.step[0])
 		if not is_within_the_grid(target_grid_pos):
-			if piece.grid_pos.y < 1:
-				print(piece.type , "in ", piece.grid_pos, ": ", move, "-", target_grid_pos)
+			# if piece.grid_pos.y < 1:
+				# print(piece.type , "in ", piece.grid_pos, ": ", move, "-", target_grid_pos)
 			# print(piece.type, target_grid_pos , "is not inside the grid. Starting from ", piece.grid_pos)
 			continue
 		if "repeat" in move:
@@ -124,7 +124,6 @@ func is_cell_vacant(i, j) -> bool:
 	#check if the cell where the piece wants to move is empty or not
 	
 	if get_cell(i, j) != null and get_cell(i, j) != player:
-		print("this cell ", i, "-", j, "is occupied by ", get_cell(i, j).type)
 		return false
 	return true
 
@@ -143,9 +142,13 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 			var moves = get_legal_moves(piece)
 			for attack_type in moves:
 				for attack in moves[attack_type]:
-					if attack[0] == int(player.grid_pos.x) and attack[1] == int(player.grid_pos.y):
+					if piece.is_inside_tree() and attack[0] == int(player.grid_pos.x) and attack[1] == int(player.grid_pos.y):
+						print(grid_pos, attack, player.grid_pos)
+						piece.grid_pos = attack
 						print("GAME OVER")
 						emit_signal("gameover")
+						set_cell(last_pos.x, last_pos.y, null) 
+						set_cell(attack[0], attack[1], piece)
 						return 
 		for enemy in get_tree().get_nodes_in_group("moving"):
 			var moves = get_legal_moves(enemy)
@@ -155,15 +158,10 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 					
 					# check if someone is on the way
 					if not is_cell_vacant(grid_pos.x, grid_pos.y) and piece != player:
-						print(piece.type, " is on the way ", grid_pos)
 						piece.grid_pos = last_pos
 						return
 					# check if there is the player in that cell so we can make a "CHECK"
 					if attack[0] == int(player.grid_pos.x) and attack[1] == int(player.grid_pos.y):
-						print("tick number ", count_tick, " this is moving: ", piece.type)
-						print(moves)
-						print(enemy.grid_pos, " wants to check ", player.grid_pos)
-						print(moves[attack_type][len(moves[attack_type])-1])
 						enemy.check(moves[attack_type][len(moves[attack_type])-1])
 		
 		if get_cell(grid_pos.x,grid_pos.y) is Piece and get_cell(grid_pos.x,grid_pos.y) != piece:
@@ -172,7 +170,6 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 				print("GAME OVER")
 				emit_signal("gameover")
 			else:
-				print("CAPUTRED", captured.type)
 				piece.capture(captured)
 				$ChessBoard.remove_child(captured)
 				# captured).queue_free()
@@ -181,7 +178,6 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 		set_cell(last_pos.x,last_pos.y, null) 
 		set_cell(grid_pos.x,grid_pos.y, piece)
 	else: 
-		print(piece.type, " cannot move because ", grid_pos)
 		piece.grid_pos = last_pos
 	
 	
@@ -222,7 +218,24 @@ signal scrolled
 
 var script_i = 0
 var script = [
-	
+	'pawn',
+	'pawn',
+	'pawn',
+	'knight',
+	'pawn',
+	'pawn',
+	'knight',
+	'pawn',
+	'bishop',
+	'pawn',
+	'pawn',
+	'knight',
+	'pawn',
+	'bishop',
+	'pawn',
+	'bishop',
+	'knight',
+	'pawn',
 	'rook',
 	'pawn',
 	'knight',
@@ -288,15 +301,13 @@ func ij2xy(i,j):
 
 func kill_last_line():
 	# get last line
-	return
-	"""
-	for cell in get_row(count_scroll-1):
-		if cell is Piece:
-			if cell.type != 'king':
-				cell.queue_free()
-			else:
-				print('gameover')
-	"""
+	for cell in get_row(count_scroll):
+			if cell is Piece:
+				if cell.type != 'king':
+					cell.queue_free()
+				else:
+					emit_signal("gameover")
+	
 func _on_Player_capture(type, index):
 	for score_piece in get_tree().get_nodes_in_group('score_piece'):
 		if score_piece.piece_type == type and score_piece.piece_index == index:
@@ -305,7 +316,8 @@ func _on_Player_capture(type, index):
 
 
 func _on_World_gameover():
+	$ChessBoard.remove_child(player)
 	timer.stop()
 	$CanvasLayer/RhythmControl.stop()
 	var gameoverr = gameover_scene.instance()
-	add_child(gameoverr)
+	$CanvasLayer.add_child(gameoverr)

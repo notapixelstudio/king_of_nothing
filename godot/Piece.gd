@@ -58,8 +58,6 @@ func move(pos, move_type):
 	emit_signal("hit")
 	var last_pos = grid_pos
 	grid_pos = pos
-	if type != "king":
-		print("I want to mooove")
 	
 	var delta
 	if move_type == 'scroll':
@@ -70,6 +68,8 @@ func move(pos, move_type):
 		delta = 0.15
 		
 	emit_signal("move", last_pos, grid_pos)
+	if not get_parent():
+		return
 	($Tween as Tween).interpolate_property(self, "position", position, get_parent().get_parent().ij2xy(grid_pos.x, grid_pos.y), delta, Tween.TRANS_LINEAR, Tween.EASE_IN) 
 	$Tween.start()
 	

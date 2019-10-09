@@ -1,12 +1,12 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://World.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/font/TESTN___.TTF" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/panel_score.png" type="Texture" id=4]
 [ext_resource path="res://assets/animations/wiggle.tres" type="Animation" id=5]
-[ext_resource path="res://icon.png" type="Texture" id=6]
-[ext_resource path="res://ScoreBoard.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ScoreBoard.tscn" type="PackedScene" id=6]
+[ext_resource path="res://icon.png" type="Texture" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
@@ -40,6 +40,12 @@ func _ready():
 
 func _on_focus(node: Control):
 	emit_signal(\"focus\", node)"
+
+[sub_resource type="DynamicFont" id=5]
+size = 30
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
 
 [sub_resource type="Animation" id=4]
 tracks/0/type = "value"
@@ -91,6 +97,36 @@ tracks/3/keys = {
 "values": [ Vector2( 710, 400 ), Vector2( 710, 350 ) ]
 }
 
+[sub_resource type="Animation" id=6]
+resource_name = "Dance"
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1.25, 0.75 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.25, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( -4, 8 ), Vector2( 0, 0 ) ]
+}
+
 [node name="Control" type="Control"]
 margin_right = 507.0
 margin_bottom = 846.0
@@ -102,9 +138,9 @@ game_scene = ExtResource( 2 )
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_top = -160.0
+margin_top = -226.667
 margin_right = -2.0
-margin_bottom = -75.0
+margin_bottom = -141.667
 custom_fonts/font = SubResource( 1 )
 text = "King Of Nothing"
 align = 1
@@ -172,41 +208,37 @@ size_flags_vertical = 3
 text = ">"
 
 [node name="Options" type="GridContainer" parent="."]
-editor/display_folded = true
-anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -224.5
-margin_top = 167.5
-margin_right = 224.5
-margin_bottom = 212.5
+margin_top = 196.0
+margin_bottom = 272.0
 custom_constants/vseparation = 23
 columns = 3
 script = SubResource( 3 )
 
 [node name="Play" type="Button" parent="Options"]
-margin_right = 147.0
-margin_bottom = 45.0
+margin_right = 166.0
+margin_bottom = 76.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 5 )
 text = "Play"
-flat = true
 
 [node name="Control" type="Control" parent="Options"]
-margin_left = 151.0
-margin_right = 298.0
-margin_bottom = 45.0
+margin_left = 170.0
+margin_right = 336.0
+margin_bottom = 76.0
 size_flags_horizontal = 3
 
 [node name="Quit" type="Button" parent="Options"]
-margin_left = 302.0
-margin_right = 449.0
-margin_bottom = 45.0
+margin_left = 340.0
+margin_right = 506.0
+margin_bottom = 76.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 5 )
 text = "Quit"
-flat = true
 
 [node name="anim" type="AnimationPlayer" parent="."]
 playback_speed = 1.5
@@ -218,13 +250,21 @@ anims/show = SubResource( 4 )
 
 [node name="Selected" type="AudioStreamPlayer" parent="."]
 
-[node name="icon" type="Sprite" parent="."]
-position = Vector2( 249.256, 463.187 )
-texture = ExtResource( 6 )
-
-[node name="ScoreBoard" parent="." instance=ExtResource( 7 )]
+[node name="ScoreBoard" parent="." instance=ExtResource( 6 )]
 position = Vector2( 0, 744.667 )
 scale = Vector2( 1, 1 )
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2( 250, 445 )
+
+[node name="icon" type="Sprite" parent="Node2D"]
+position = Vector2( -1.5809, 3.16179 )
+scale = Vector2( 1.09881, 0.901194 )
+texture = ExtResource( 7 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D/icon"]
+autoplay = "Dance"
+anims/Dance = SubResource( 6 )
 
 [connection signal="focus" from="Options" to="." method="_on_Options_focus"]
 [connection signal="pressed" from="Options/Play" to="." method="_on_Play_pressed"]

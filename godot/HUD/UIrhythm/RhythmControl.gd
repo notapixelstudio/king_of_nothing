@@ -100,4 +100,6 @@ func _on_Player_hit():
 	confirm.modulate = modulate
 
 func stop():
+	$left.visible = false
+	$right.visible = false
 	metronome_timer.stop()
