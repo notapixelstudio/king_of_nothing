@@ -44,7 +44,7 @@ func _ready():
 			grid[x].append(null)
 	
 	# load the piece definition
-	piece_defs = load_JSON(PIECE_DEF_JSON)
+	piece_defs = global.piece_def
 	for k in piece_defs.keys():
 		if k != "king":
 			list_pieces.append(k)
@@ -143,7 +143,6 @@ func _on_enemy_moved(last_pos, grid_pos, piece):
 		var moves = piece.check_moves
 		for attack in moves:
 			if piece.is_inside_tree() and attack[0] == int(player.grid_pos.x) and attack[1] == int(player.grid_pos.y):
-				print(grid_pos, attack, player.grid_pos)
 				piece.grid_pos = attack
 				print("GAME OVER")
 				emit_signal("gameover")
@@ -152,7 +151,6 @@ func _on_enemy_moved(last_pos, grid_pos, piece):
 				return 
 			
 			# check if someone is on the way
-			print(not is_cell_vacant(grid_pos.x, grid_pos.y) and piece != player)
 			if not is_cell_vacant(grid_pos.x, grid_pos.y) and piece != player:
 				piece.grid_pos = last_pos
 				return
@@ -167,7 +165,6 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 	if is_within_the_grid(grid_pos):
 		var captured = get_cell(grid_pos.x, grid_pos.y)
 		if captured is Piece and piece != captured:
-			print("CAPTURED", captured.type)
 			piece.capture(captured)
 			$ChessBoard.remove_child(captured)
 			captured.call_deferred("queue_free")
@@ -208,12 +205,11 @@ func _on_tick():
 		
 	kill_last_line()
 
-signal scrolled
 
 func check_piece(piece: Piece):
 	# check if the piece is ready to attack
 	if piece.in_check:
-		print(count_tick, " click")
+		# print(count_tick, " click")
 		piece.move(piece.target, "attack", count_tick)
 		piece.uncheck()
 	else:
@@ -227,8 +223,6 @@ func check_piece(piece: Piece):
 	
 var script_i = 0
 var script = [
-	'queen',
-	'rook',
 	'pawn',
 	'pawn',
 	'pawn',
@@ -296,7 +290,6 @@ func scroll():
 				cell.move(Vector2(i, j), 'scroll')
 				show_legal_moves(new_piece, get_legal_moves(new_piece))
 	"""
-	emit_signal("scrolled")
 	
 	var pos = $ChessBoard.position
 	$ChessBoard/Tween.interpolate_property($ChessBoard, "position", pos, pos+Vector2(0, tile_size), timer.wait_time*SCROLL_TICK, Tween.TRANS_LINEAR, Tween.EASE_IN) 
@@ -315,7 +308,7 @@ func kill_last_line():
 	for cell in get_row(count_scroll):
 			if cell is Piece:
 				if cell.type != 'king':
-					cell.queue_free()
+					pass
 				else:
 					emit_signal("gameover")
 	

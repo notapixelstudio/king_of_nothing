@@ -67,9 +67,6 @@ func move(pos, move_type,  tick = 0):
 		delta = 0.25
 	else:
 		delta = 0.15
-	if type != "king":
-		print("We are ", type, " and we are going to move from ", last_pos, " in ", grid_pos)
-		
 	emit_signal("move", last_pos, grid_pos)
 	if not get_parent():
 		return
@@ -82,7 +79,6 @@ func capture(piece: Piece):
 	var type_captured = piece.type
 	emit_signal('capture', type_captured, captured[type_captured])
 	captured[type_captured] += 1
-	print(captured)
 	
 	# win condition
 	if captured["pawn"]>=8 and captured["bishop"]>=2 and captured["knight"]>=2 and captured["rook"]>=2 and captured["queen"]>=1:
@@ -105,7 +101,7 @@ func check(target_pos : Vector2, moves: Array):
 	move_dir = target_pos - grid_pos
 	target = target_pos
 	
-	print("We are ", type , " and we are here: ", grid_pos, " The check is there: ", target_pos, " and we can hit there: ", moves)
+	# print("We are ", type , " and we are here: ", grid_pos, " The check is there: ", target_pos, " and we can hit there: ", moves)
 	check_moves = moves
 
 func uncheck():

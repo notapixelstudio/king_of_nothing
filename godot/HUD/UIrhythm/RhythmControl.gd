@@ -70,7 +70,7 @@ func _process(delta):
 
 #Called every time a metronome would tick
 func _on_metronome_timer_timeout():
-	#metronome_timer.start()
+	metronome_timer.start()
 	metronome_sound.play()
 	time_since_last_tick = 0.0 #a dirty fix for metronome tick and the beatsliders being not in sync
 
