@@ -41,6 +41,7 @@ config/icon="res://icon.png"
 
 persistance="*res://globals/persistance.gd"
 global="*res://globals/global.gd"
+gameover="*res://gameover.tscn"
 
 [display]
 

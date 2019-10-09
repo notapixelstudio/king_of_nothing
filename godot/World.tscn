@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://Piece.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/pieces/outline_bishop.png" type="Texture" id=8]
 [ext_resource path="res://assets/pieces/outline_queen.png" type="Texture" id=9]
 [ext_resource path="res://assets/pieces/white_king.png" type="Texture" id=10]
+[ext_resource path="res://utils/Player/GameOver_detector.tscn" type="PackedScene" id=11]
 
 [node name="World" type="Node2D"]
 scale = Vector2( 0.75, 0.75 )
@@ -43,6 +44,7 @@ wait_time = 0.5
 autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+editor/display_folded = true
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 anchor_right = 1.0
@@ -161,5 +163,8 @@ piece_type = "rook"
 piece_index = 1
 taken = false
 
+[node name="GameOver_detector" parent="." instance=ExtResource( 11 )]
+position = Vector2( -3.29126, -129.201 )
+scale = Vector2( 1.33333, 1.33333 )
 [connection signal="capture" from="ChessBoard/Player" to="." method="_on_Player_capture"]
 [connection signal="timeout" from="Timer" to="." method="_on_tick"]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://utils/Player/GameOver_detector.gd" type="Script" id=1]
+[ext_resource path="res://assets/images/tiles/ChessTile.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 194.099, 32.2943 )
+
+[node name="GameOver_detector" type="Area2D"]
+position = Vector2( 0, -62.1053 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 194.174, 655.562 )
+scale = Vector2( 6.06372, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 194.537, 655.737 )
+shape = SubResource( 1 )
+[connection signal="body_entered" from="." to="." method="_on_GameOver_detector_body_entered"]
