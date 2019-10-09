@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://World.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/panel_score.png" type="Texture" id=4]
 [ext_resource path="res://assets/animations/wiggle.tres" type="Animation" id=5]
 [ext_resource path="res://icon.png" type="Texture" id=6]
+[ext_resource path="res://ScoreBoard.tscn" type="PackedScene" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
@@ -154,6 +155,7 @@ margin_bottom = 101.0
 text = "BEST"
 
 [node name="Cursor" type="Position2D" parent="."]
+editor/display_folded = true
 position = Vector2( 777, 710 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Cursor"]
@@ -170,6 +172,7 @@ size_flags_vertical = 3
 text = ">"
 
 [node name="Options" type="GridContainer" parent="."]
+editor/display_folded = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -218,6 +221,10 @@ anims/show = SubResource( 4 )
 [node name="icon" type="Sprite" parent="."]
 position = Vector2( 249.256, 463.187 )
 texture = ExtResource( 6 )
+
+[node name="ScoreBoard" parent="." instance=ExtResource( 7 )]
+position = Vector2( 0, 744.667 )
+scale = Vector2( 1, 1 )
 
 [connection signal="focus" from="Options" to="." method="_on_Options_focus"]
 [connection signal="pressed" from="Options/Play" to="." method="_on_Play_pressed"]
