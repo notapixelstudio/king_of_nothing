@@ -5,12 +5,13 @@ onready var cursor = $Cursor
 func _ready() -> void:
 	hide()
 	yield(get_tree().create_timer(1), "timeout")
-	# start()
+	start()
 
 func start() -> void:
 	$anim.play("show")
 	$AudioStreamPlayer.play()
-	
+	$Tween.interpolate_property($Tex, "rect_position", $Tex.rect_position, $Tex.rect_position + Vector2(0, 20), 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	$Tween.start()
 	yield($anim, "animation_finished")
 	$Options/Play.grab_focus()
 	
