@@ -87,10 +87,10 @@ func get_movedir():
 	pass
 
 func check(target_pos : Vector2):
-	$Label.visible = true
+	$Sprite/Check.visible = true
 	move_dir = target_pos - grid_pos
 	print("The check is there: ", target_pos)
 	yield(get_tree().create_timer(0.51), "timeout")
 	move(target_pos, "attack")
-	$Label.visible = false
+	$Sprite/Check.visible = false
 	
