@@ -173,6 +173,5 @@ hit_scene = ExtResource( 12 )
 fail_scene = ExtResource( 13 )
 
 [connection signal="capture" from="ChessBoard/Player" to="." method="_on_Player_capture"]
-[connection signal="fail" from="ChessBoard/Player" to="CanvasLayer/RhythmControl" method="_on_Player_fail"]
 [connection signal="hit" from="ChessBoard/Player" to="CanvasLayer/RhythmControl" method="_on_Player_hit"]
 [connection signal="timeout" from="Timer" to="." method="_on_tick"]

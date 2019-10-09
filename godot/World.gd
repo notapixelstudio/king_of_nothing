@@ -4,6 +4,9 @@ export var grid_size: Vector2 = Vector2(12, 8)
 export var PIECE_DEF_JSON : String
 export var piece_scene : PackedScene
 export var tile_size = 64
+
+export var max_range_attack = 3
+
 var grid = []
 var list_pieces: Array = []
 var piece_defs : Dictionary = {}
@@ -93,7 +96,7 @@ func get_legal_moves(piece: Piece):
 			continue
 		if "repeat" in move:
 			var i = 1
-			while is_within_the_grid(target_grid_pos):
+			while is_within_the_grid(target_grid_pos) and i <= max_range_attack:
 				valid_moves[str(type_attack)].append(target_grid_pos)
 				i+=1
 				target_grid_pos = piece.grid_pos + Vector2(move.step[1]*i, move.step[0]*i)
@@ -103,8 +106,7 @@ func get_legal_moves(piece: Piece):
 		# if is_cell_vacant(move["step"], current_grid_pos):
 		valid_moves[str(type_attack)].append(Vector2(move["step"][1]+current_grid_pos.x, move["step"][0]+current_grid_pos.y))
 		type_attack += 1
-	if piece.type == "bishop":
-		print(valid_moves)
+
 	return valid_moves 
 
 func get_row(i):
@@ -136,6 +138,7 @@ func get_grid_pos(piece):
 	#return the position's array of the piece
 	return [ceil(piece.position.x / tile_size), ceil(piece.position.y / tile_size)]
 
+
 func _on_piece_moved(last_pos, grid_pos, piece):
 	if is_within_the_grid(grid_pos):
 		
@@ -150,6 +153,7 @@ func _on_piece_moved(last_pos, grid_pos, piece):
 		for enemy in get_tree().get_nodes_in_group("moving"):
 			var moves = get_legal_moves(enemy)
 			# print(enemy.type, " have this moves: ", moves)
+			
 			for attack_type in moves:
 				for attack in moves[attack_type]:
 					if attack[0] == int(player.grid_pos.x) and attack[1] == int(player.grid_pos.y):
@@ -202,30 +206,7 @@ signal scrolled
 
 var script_i = 0
 var script = [
-	'pawn',
-	'pawn',
-	'pawn',
-	'pawn',
-	'pawn',
-	'knight',
-	'pawn',
-	'pawn',
-	'knight',
-	'pawn',
-	'pawn',
-	'pawn',
-	'bishop',
-	'pawn',
-	'pawn',
-	'pawn',
-	'knight',
-	'pawn',
-	'bishop',
-	'pawn',
-	'bishop',
-	'knight',
-	'pawn',
-	'pawn',
+	
 	'rook',
 	'pawn',
 	'knight',

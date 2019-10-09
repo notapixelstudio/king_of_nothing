@@ -17,6 +17,8 @@ onready var metronome_sound : AudioStreamPlayer = $Metronome
 export var hit_scene: PackedScene
 export var fail_scene: PackedScene
 
+const DELAY_TICK = 0.3
+
 func get_is_active() -> bool:
 	return is_active
 
@@ -32,6 +34,7 @@ func set_bpm(value : int):
 	else:
 		is_active = true
 		metronome_sound.volume_db = metronome_volume
+		yield(get_tree().create_timer(DELAY_TICK), "timeout")
 		metronome_sound.play()
 		metronome_timer.stop()
 		time_per_tick = 60 / float(value)

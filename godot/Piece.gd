@@ -67,7 +67,6 @@ func move(pos, move_type):
 	else:
 		delta = 0.15
 		
-	move_dir = Vector2.ZERO
 	emit_signal("move", last_pos, grid_pos)
 	($Tween as Tween).interpolate_property(self, "position", position, get_parent().get_parent().ij2xy(grid_pos.x, grid_pos.y), delta, Tween.TRANS_LINEAR, Tween.EASE_IN) 
 	$Tween.start()
