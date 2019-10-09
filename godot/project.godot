@@ -46,7 +46,7 @@ gameover="*res://gameover.tscn"
 [display]
 
 window/size/width=384
-window/size/height=624
+window/size/height=654
 window/dpi/allow_hidpi=true
 
 [gui]
