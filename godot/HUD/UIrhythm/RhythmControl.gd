@@ -98,3 +98,6 @@ func _on_Player_hit():
 	confirm.global_position = get_node("center").global_position
 	confirm.scale = rect_scale
 	confirm.modulate = modulate
+
+func stop():
+	metronome_timer.stop()
