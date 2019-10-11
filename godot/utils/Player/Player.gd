@@ -39,7 +39,7 @@ func _input(event):
 func check_key(event, k):
 	if event.is_action_pressed('ui_'+k):
 		keys[k] = true
-		yield(get_tree().create_timer(tolerance*2), 'timeout')
+		yield(get_tree().create_timer(tolerance*4), 'timeout')
 		keys[k] = false
 	elif event.is_action_released('ui_'+k):
 		yield(get_tree().create_timer(tolerance), 'timeout')
