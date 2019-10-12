@@ -5,7 +5,6 @@ var highscore
 func _ready():
 	add_to_group("persist")
 	persistance.load_game()
-	print(highscore)
 
 # utils
 func get_state():
@@ -21,7 +20,6 @@ func load_state(data:Dictionary):
 	"""
 	Set back everything we need to load
 	"""
-	print(data)
 	for attribute in data:
 		set(attribute, data[attribute])
 
