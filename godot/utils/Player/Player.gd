@@ -89,3 +89,35 @@ func get_movedir():
 	move(grid_pos + move_dir, 'input')
 	
 	return move_dir
+
+func _on_TouchScreenButton4_pressed():
+	keys["up"] = true
+	keys["left"] = true
+	yield(get_tree().create_timer(tolerance*2), 'timeout')
+	keys["up"] = false
+	keys["left"] = false
+	
+
+
+func _on_TouchScreenButton11_pressed():
+	keys["down"] = true
+	keys["left"] = true
+	yield(get_tree().create_timer(tolerance*2), 'timeout')
+	keys["down"] = false
+	keys["left"] = false
+
+
+func _on_TouchScreenButton6_pressed():
+	keys["up"] = true
+	keys["right"] = true
+	yield(get_tree().create_timer(tolerance*2), 'timeout')
+	keys["up"] = false
+	keys["right"] = false
+
+
+func _on_TouchScreenButton10_pressed():
+	keys["down"] = true
+	keys["right"] = true
+	yield(get_tree().create_timer(tolerance*2), 'timeout')
+	keys["down"] = false
+	keys["right"] = false
