@@ -46,10 +46,10 @@ func _unhandled_input(event):
 		_calculate_swipe(get_global_mouse_position())
 
 func wait_and_release(direction):
-	yield(get_tree().create_timer(tolerance*4), 'timeout')
+	yield(get_tree().create_timer(tolerance*2), 'timeout')
 	keys[direction] = false
 		
-const THRESHOLD = 50      
+const THRESHOLD = 50     
 func _calculate_swipe(swipe_end):
 	if swipe_start == null: 
 		return
@@ -65,18 +65,17 @@ func _calculate_swipe(swipe_end):
 			wait_and_release("left")
 	if abs(swipe.y) > minimum_drag:
 		if swipe.y < 0 :
-			print("up")
 			keys["up"] = true
 			wait_and_release("up")
 		elif swipe.y > 0 :
 			keys["down"] = true
 			wait_and_release("down")
 	print(keys)
-			
+
 func check_key(event, k):
 	if event.is_action_pressed('ui_'+k):
 		keys[k] = true
-		yield(get_tree().create_timer(tolerance*4), 'timeout')
+		yield(get_tree().create_timer(tolerance*2), 'timeout')
 		keys[k] = false
 	elif event.is_action_released('ui_'+k):
 		yield(get_tree().create_timer(tolerance), 'timeout')

@@ -191,7 +191,6 @@ margin_bottom = 101.0
 text = "BEST"
 
 [node name="Cursor" type="Position2D" parent="."]
-editor/display_folded = true
 position = Vector2( 777, 710 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Cursor"]

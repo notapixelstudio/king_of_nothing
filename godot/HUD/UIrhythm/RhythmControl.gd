@@ -45,7 +45,7 @@ func set_bpm(value : int):
 		show()
 	
 	set_physics_process(is_active)
-var count_tick = 0
+var count_tick = 1
 var seconds = 0.0
 func _process(delta):
 	seconds += delta
@@ -60,9 +60,9 @@ func _process(delta):
 	beat_slider_right.position.y = rect_size.y/2
 	beat_slider_right.position.x = rect_size.x
 	beat_slider_center.position = rect_size/2
+	time_since_last_tick+= delta
 	
-	time_since_last_tick += delta
-	if time_since_last_tick >= time_per_tick:
+	if $SoundtrackBeat.get_playback_position()/count_tick  >= time_per_tick:
 		emit_signal("tick")
 		_on_metronome_timer_timeout()
 		time_since_last_tick = 0.0

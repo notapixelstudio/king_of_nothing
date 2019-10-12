@@ -194,19 +194,21 @@ func show_legal_moves(piece: Piece, legal_moves, map_to_show = $ChessBoard/Curso
 
 
 func _on_tick():
-	yield(get_tree().create_timer(0.05), "timeout")
+	
 	count_tick+=1
 	if not count_tick % SCROLL_TICK:
 		scroll()
 	
-	player.get_movedir()
+	
 	player.tick()
 	#player.update_pos()
 	# yield(get_tree(), "idle_frame")
 	for piece in get_tree().get_nodes_in_group("moving"):
 		piece.tick()
+	yield(get_tree().create_timer(0.2), "timeout")
+	player.get_movedir()
+	for piece in get_tree().get_nodes_in_group("moving"):
 		check_piece(piece)
-		
 	kill_last_line()
 
 
@@ -297,7 +299,7 @@ func scroll():
 	"""
 	
 	var pos = $ChessBoard.position
-	$ChessBoard/Tween.interpolate_property($ChessBoard, "position", pos, pos+Vector2(0, tile_size), timer.wait_time*SCROLL_TICK, Tween.TRANS_LINEAR, Tween.EASE_IN) 
+	$ChessBoard/Tween.interpolate_property($ChessBoard, "position", pos, pos+Vector2(0, tile_size), time_per_tick*SCROLL_TICK, Tween.TRANS_LINEAR, Tween.EASE_IN) 
 	$ChessBoard/Tween.start()
 	
 	for i in grid_size.x:
@@ -326,14 +328,12 @@ func _on_Player_capture(type, index):
 
 func _on_World_gameover():
 	$ChessBoard.remove_child(player)
-	timer.stop()
 	$CanvasLayer/RhythmControl.stop()
 	var gameoverr = gameover_scene.instance()
 	$CanvasLayer.add_child(gameoverr)
 
 
 func _on_Player_winner():
-	timer.stop()
 	$CanvasLayer/RhythmControl.stop()
 	var winner = win_scene.instance()
 	$CanvasLayer.add_child(winner)
