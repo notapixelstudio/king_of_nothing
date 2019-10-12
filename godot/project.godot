@@ -47,6 +47,7 @@ global="*res://globals/global.gd"
 window/size/width=384
 window/size/height=654
 window/dpi/allow_hidpi=true
+window/handheld/orientation="portrait"
 
 [gui]
 
