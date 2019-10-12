@@ -14,6 +14,7 @@ var grid = []
 var list_pieces: Array = []
 var piece_defs : Dictionary = {}
 
+export var time_per_tick: float = 0.5
 
 onready var timer = $Timer
 # keys string in data json
@@ -193,14 +194,17 @@ func show_legal_moves(piece: Piece, legal_moves, map_to_show = $ChessBoard/Curso
 
 
 func _on_tick():
+	yield(get_tree().create_timer(0.05), "timeout")
 	count_tick+=1
 	if not count_tick % SCROLL_TICK:
 		scroll()
 	
 	player.get_movedir()
+	player.tick()
 	#player.update_pos()
 	# yield(get_tree(), "idle_frame")
 	for piece in get_tree().get_nodes_in_group("moving"):
+		piece.tick()
 		check_piece(piece)
 		
 	kill_last_line()
@@ -262,6 +266,7 @@ var pieces = [
 	'rook',
 	'queen'
 ]
+	
 
 var count_scroll = 0
 func scroll():

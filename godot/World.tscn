@@ -180,4 +180,4 @@ fail_scene = ExtResource( 15 )
 [connection signal="capture" from="ChessBoard/Player" to="." method="_on_Player_capture"]
 [connection signal="hit" from="ChessBoard/Player" to="CanvasLayer/RhythmControl" method="_on_Player_hit"]
 [connection signal="winner" from="ChessBoard/Player" to="." method="_on_Player_winner"]
-[connection signal="timeout" from="Timer" to="." method="_on_tick"]
+[connection signal="tick" from="CanvasLayer/RhythmControl" to="." method="_on_tick"]

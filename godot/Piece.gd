@@ -12,6 +12,8 @@ export var tile_size = 64
 export var type = "king" setget set_type
 export var color = "black" setget set_color
 
+func tick():
+	anim.play()
 
 var check_moves = []
 func set_type(value):
@@ -25,6 +27,7 @@ func set_color(value):
 func refresh():
 	$Sprite.texture = load('res://assets/pieces/'+color+'_'+type+'.png')
 
+onready var anim = $Sprite/AnimationPlayer
 onready var target = grid_pos
 var last_pos = Vector2()
 var move_dir = Vector2()
