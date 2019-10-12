@@ -14,6 +14,7 @@ var grid = []
 var list_pieces: Array = []
 var piece_defs : Dictionary = {}
 
+export var time_per_tick: float = 0.5
 
 onready var timer = $Timer
 # keys string in data json
@@ -198,9 +199,11 @@ func _on_tick():
 		scroll()
 	
 	player.get_movedir()
+	player.tick()
 	#player.update_pos()
 	# yield(get_tree(), "idle_frame")
 	for piece in get_tree().get_nodes_in_group("moving"):
+		piece.tick()
 		check_piece(piece)
 		
 	kill_last_line()
@@ -262,6 +265,8 @@ var pieces = [
 	'rook',
 	'queen'
 ]
+var time_since_last_tick = 0.0
+	
 
 var count_scroll = 0
 func scroll():

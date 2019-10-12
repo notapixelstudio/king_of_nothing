@@ -46,7 +46,7 @@ func _unhandled_input(event):
 		_calculate_swipe(get_global_mouse_position())
 
 func wait_and_release(direction):
-	yield(get_tree().create_timer(tolerance*2), 'timeout')
+	yield(get_tree().create_timer(tolerance*4), 'timeout')
 	keys[direction] = false
 		
 const THRESHOLD = 50      
