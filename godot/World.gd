@@ -194,6 +194,7 @@ func show_legal_moves(piece: Piece, legal_moves, map_to_show = $ChessBoard/Curso
 
 
 func _on_tick():
+	yield(get_tree().create_timer(0.05), "timeout")
 	count_tick+=1
 	if not count_tick % SCROLL_TICK:
 		scroll()
@@ -265,7 +266,6 @@ var pieces = [
 	'rook',
 	'queen'
 ]
-var time_since_last_tick = 0.0
 	
 
 var count_scroll = 0
