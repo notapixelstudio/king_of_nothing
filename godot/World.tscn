@@ -13,7 +13,7 @@
 [ext_resource path="res://assets/pieces/outline_queen.png" type="Texture" id=11]
 [ext_resource path="res://assets/pieces/white_king.png" type="Texture" id=12]
 [ext_resource path="res://HUD/UIrhythm/RhythmControl.tscn" type="PackedScene" id=13]
-[ext_resource path="res://HUD/UIrhythm/Effects/hit confirm.tscn" type="PackedScene" id=14]
+[ext_resource path="res://HUD/UIrhythm/Effects/hit_confirm.tscn" type="PackedScene" id=14]
 [ext_resource path="res://HUD/UIrhythm/Effects/fail.tscn" type="PackedScene" id=15]
 
 [node name="World" type="Node2D"]
@@ -180,4 +180,4 @@ fail_scene = ExtResource( 15 )
 [connection signal="capture" from="ChessBoard/Player" to="." method="_on_Player_capture"]
 [connection signal="hit" from="ChessBoard/Player" to="CanvasLayer/RhythmControl" method="_on_Player_hit"]
 [connection signal="winner" from="ChessBoard/Player" to="." method="_on_Player_winner"]
-[connection signal="timeout" from="Timer" to="." method="_on_tick"]
+[connection signal="tick" from="CanvasLayer/RhythmControl" to="." method="_on_tick"]

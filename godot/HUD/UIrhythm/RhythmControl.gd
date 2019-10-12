@@ -12,12 +12,14 @@ onready var beat_slider_left : Node2D = $left
 onready var beat_slider_right : Node2D = $right
 onready var beat_slider_center : Node2D = $center
 onready var metronome_timer : Timer = $MetronomeTimer
-onready var metronome_sound : AudioStreamPlayer = $Metronome
+onready var metronome_sound : AudioStreamPlayer = $SoundtrackBeat
 
 export var hit_scene: PackedScene
 export var fail_scene: PackedScene
 
 const DELAY_TICK = 0.3
+
+signal tick
 
 func get_is_active() -> bool:
 	return is_active
@@ -34,18 +36,19 @@ func set_bpm(value : int):
 	else:
 		is_active = true
 		metronome_sound.volume_db = metronome_volume
-		yield(get_tree().create_timer(DELAY_TICK), "timeout")
-		metronome_sound.play()
+		# yield(get_tree().create_timer(DELAY_TICK), "timeout")
 		metronome_timer.stop()
 		time_per_tick = 60 / float(value)
 		metronome_timer.wait_time = time_per_tick
-		metronome_timer.start()
+		metronome_sound.play()
 		time_since_last_tick = 0.0
 		show()
 	
 	set_physics_process(is_active)
-
+var count_tick = 0
+var seconds = 0.0
 func _process(delta):
+	seconds += delta
 	
 	var tick_percent = time_since_last_tick / time_per_tick
 	
@@ -60,7 +63,9 @@ func _process(delta):
 	
 	time_since_last_tick += delta
 	if time_since_last_tick >= time_per_tick:
-		time_since_last_tick -= time_per_tick
+		emit_signal("tick")
+		_on_metronome_timer_timeout()
+		time_since_last_tick = 0.0
 	
 	beat_slider_left.get_node("slider1").position = rect_size * Vector2(tick_percent / 4.0,0)
 	beat_slider_left.get_node("slider2").position = rect_size * Vector2(tick_percent / 4.0 + 0.25,0)
@@ -70,8 +75,8 @@ func _process(delta):
 
 #Called every time a metronome would tick
 func _on_metronome_timer_timeout():
-	metronome_timer.start()
-	metronome_sound.play()
+	count_tick+=1
+	print(time_since_last_tick, " ", count_tick, " ", OS.get_ticks_msec())
 	time_since_last_tick = 0.0 #a dirty fix for metronome tick and the beatsliders being not in sync
 
 #Returns whether you hit or not

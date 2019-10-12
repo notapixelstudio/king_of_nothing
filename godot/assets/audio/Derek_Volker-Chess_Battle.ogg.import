@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Derek_Volker-Chess_Battle.ogg-f977695b7816230abb6d0ea8ebc2784a.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/Derek_Volker-Chess_Battle.ogg"
+dest_files=[ "res://.import/Derek_Volker-Chess_Battle.ogg-f977695b7816230abb6d0ea8ebc2784a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

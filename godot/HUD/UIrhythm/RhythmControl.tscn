@@ -3,7 +3,7 @@
 [ext_resource path="res://HUD/UIrhythm/RhythmControl.gd" type="Script" id=1]
 [ext_resource path="res://HUD/UIrhythm/slider.png" type="Texture" id=2]
 [ext_resource path="res://HUD/UIrhythm/target.png" type="Texture" id=3]
-[ext_resource path="res://HUD/UIrhythm/250551__druminfected__metronomeup.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/audio/Derek_Volker-Chess_Battle.ogg" type="AudioStream" id=4]
 
 [node name="RhythmControl" type="Control"]
 anchor_top = 1.0
@@ -51,12 +51,10 @@ position = Vector2( 143.655, 42.132 )
 [node name="target" type="Sprite" parent="center"]
 texture = ExtResource( 3 )
 
-[node name="Metronome" type="AudioStreamPlayer" parent="."]
+[node name="SoundtrackBeat" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 volume_db = -10.0
 
 [node name="MetronomeTimer" type="Timer" parent="."]
-wait_time = 4096.0
 autostart = true
 
-[connection signal="timeout" from="MetronomeTimer" to="." method="_on_metronome_timer_timeout"]
