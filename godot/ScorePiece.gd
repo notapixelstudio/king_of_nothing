@@ -1,10 +1,10 @@
-tool
+@tool
 
-extends Sprite
+extends Sprite2D
 
-export var piece_type : String = 'pawn' setget set_piece_type
-export var piece_index : int = 0 setget set_piece_index
-export var taken : bool = false setget set_taken
+@export var piece_type : String = 'pawn': set = set_piece_type
+@export var piece_index : int = 0: set = set_piece_index
+@export var taken : bool = false: set = set_taken
 
 func set_piece_type(value):
 	piece_type = value

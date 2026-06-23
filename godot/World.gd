@@ -1,22 +1,21 @@
 extends Node2D
 
-export var grid_size: Vector2 = Vector2(12, 8)
-export var PIECE_DEF_JSON : String
-export var piece_scene : PackedScene
-export var tile_size = 64
+@export var grid_size: Vector2i = Vector2i(12, 8)
+@export var PIECE_DEF_JSON : String
+@export var piece_scene : PackedScene
+@export var tile_size = 64
 
-export var gameover_scene : PackedScene
-export var win_scene : PackedScene
+@export var gameover_scene : PackedScene
+@export var win_scene : PackedScene
 
-export var max_range_attack = 4
+@export var max_range_attack = 4
 
 var grid = []
 var list_pieces: Array = []
 var piece_defs : Dictionary = {}
 
-export var time_per_tick: float = 0.5
+@export var time_per_tick: float = 0.5
 
-onready var timer = $Timer
 # keys string in data json
 const MOVES = "moves"
 
@@ -30,11 +29,11 @@ var count_tick = 0
 const SCROLL_TICK = 5
 signal gameover
 
-onready var player = $ChessBoard/Player
+@onready var player = $ChessBoard/Player
 func _ready():
 	
 	
-	player.connect("move", self, "_on_piece_moved", [player])
+	player.connect("moved", Callable(self, "_on_piece_moved").bind(player))
 	
 	randomize()
 	# list characters
@@ -54,18 +53,18 @@ func _ready():
 	scroll()
 
 
-func _input(event):
-	
-	# GAME OVER CONDITION
-	
-	var pos = Vector2()
-	# this handles the preview when you hover on cells
-	
-	if Input.is_action_pressed("pause"):
-		if get_tree().is_paused():
-			get_tree().set_pause(false)
-		else:
-			get_tree().set_pause(true)
+#func _input(event):
+	#
+	## GAME OVER CONDITION
+	#
+	#var pos = Vector2()
+	## this handles the preview when you hover on cells
+	#
+	#if Input.is_action_pressed("pause"):
+		#if get_tree().is_paused():
+			#get_tree().set_pause(false)
+		#else:
+			#get_tree().set_pause(true)
 
 
 
@@ -73,10 +72,11 @@ func load_JSON(file_path):
 	# example of file path: "res://Ress/panelTextn2.json"
 	# ref: https://godotengine.org/qa/8291/how-to-parse-a-json-file-i-wrote-myself
 	var dict : Dictionary = {}
-	var file = File.new()
-	file.open(file_path, file.READ)
+	var file = FileAccess.open(file_path, FileAccess.READ)
 	var text = file.get_as_text()
-	dict = parse_json(text)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(text)
+	dict = test_json_conv.get_data()
 	file.close()
 	return dict
 	
@@ -205,11 +205,10 @@ func _on_tick():
 	# yield(get_tree(), "idle_frame")
 	for piece in get_tree().get_nodes_in_group("moving"):
 		piece.tick()
-	yield(get_tree().create_timer(0.2), "timeout")
+	await get_tree().create_timer(0.2).timeout
 	player.get_movedir()
 	for piece in get_tree().get_nodes_in_group("moving"):
 		check_piece(piece)
-	kill_last_line()
 
 
 func check_piece(piece: Piece):
@@ -227,8 +226,8 @@ func check_piece(piece: Piece):
 					piece.check(moves[attack_type][len(moves[attack_type])-1], moves[attack_type])
 		
 	
-var script_i = 0
-var script = [
+var level_script_i = 0
+var level_script = [
 	'pawn',
 	'pawn',
 	'pawn',
@@ -270,15 +269,15 @@ var pieces = [
 ]
 	
 
-var count_scroll = 0
+var count_scroll := 0
 func scroll():
 	# reset_cells($ChessBoard/CursorMap)
 	count_scroll +=1
-	var new_piece = piece_scene.instance()
-	new_piece.connect("move", self, "_on_enemy_moved", [new_piece])
-	if script_i < len(script):
-		new_piece.type = script[script_i]
-		script_i += 1
+	var new_piece = piece_scene.instantiate()
+	new_piece.connect("moved", Callable(self, "_on_enemy_moved").bind(new_piece))
+	if level_script_i < len(level_script):
+		new_piece.type = level_script[level_script_i]
+		level_script_i += 1
 	else:
 		new_piece.type = pieces[randi()%len(pieces)]
 		
@@ -298,42 +297,40 @@ func scroll():
 				show_legal_moves(new_piece, get_legal_moves(new_piece))
 	"""
 	
-	var pos = $ChessBoard.position
-	$ChessBoard/Tween.interpolate_property($ChessBoard, "position", pos, pos+Vector2(0, tile_size), time_per_tick*SCROLL_TICK, Tween.TRANS_LINEAR, Tween.EASE_IN) 
-	$ChessBoard/Tween.start()
-	
+	# new board tiles
 	for i in grid_size.x:
-		$ChessBoard/TileMap.set_cell(i, -count_scroll, (count_scroll+i)%2)
+		$ChessBoard/TileMap.set_cell(Vector2i(i, -count_scroll), (count_scroll+i)%2, Vector2i(0,0))
 	
-	kill_last_line()
+	var pos = $ChessBoard.position
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property($ChessBoard, "position", pos+Vector2(0, tile_size), time_per_tick*SCROLL_TICK)
 
 func ij2xy(i,j):
 	return Vector2(64*j, -64*(i-len(grid)+1))
 
 func kill_last_line():
-	# get last line
-	for cell in get_row(count_scroll):
-			if cell is Piece:
-				if cell.type != 'king':
-					pass
-				else:
-					emit_signal("gameover")
+	if is_instance_valid(%Player) and %Player.grid_pos.x < count_scroll: # WARNING x is row
+		emit_signal("gameover")
 	
-func _on_Player_capture(type, index):
+func _on_Player_captured(type, index): # WARNING terrible name, this means "the player captured a piece"
 	for score_piece in get_tree().get_nodes_in_group('score_piece'):
 		if score_piece.piece_type == type and score_piece.piece_index == index:
 			score_piece.taken = true
-			
-
 
 func _on_World_gameover():
 	$ChessBoard.remove_child(player)
 	$CanvasLayer/RhythmControl.stop()
-	var gameoverr = gameover_scene.instance()
+	var gameoverr = gameover_scene.instantiate()
 	$CanvasLayer.add_child(gameoverr)
 
 
 func _on_Player_winner():
 	$CanvasLayer/RhythmControl.stop()
-	var winner = win_scene.instance()
+	var winner = win_scene.instantiate()
 	$CanvasLayer.add_child(winner)
+
+
+func _on_kill_last_line_timer_timeout() -> void:
+	kill_last_line()

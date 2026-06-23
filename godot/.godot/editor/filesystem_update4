@@ -1,0 +1,9 @@
+res://Main.tscn
+res://globals/persistance.gd
+res://World.gd
+res://Piece.gd
+res://World.tscn
+res://gameover.gd
+res://Piece.tscn
+res://gameover.tscn
+res://utils/Player/Player.gd

@@ -15,27 +15,27 @@ func save_game():
 		save_dict[node.get_path()] = node.get_state()
 	
 	# Create a file
-	var save_file = File.new()
-	save_file.open(SAVE_PATH, File.WRITE)
+	var save_file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	print("We are going to save here: ", save_file.get_path_absolute(), " this JSON")
 	print(save_dict)
 	# Serialize the data dictionary to JSON
-	save_file.store_line(to_json(save_dict))
+	save_file.store_line(JSON.new().stringify(save_dict))
 	
 	# Write the JSON to the file and save to disk
 	save_file.close()
 
 func load_game() -> bool:
 	# When we load a file, we must check that it exists before we try to open it or it'll crash the game
-	var save_file = File.new()
-	if not save_file.file_exists(SAVE_PATH):
+	if not FileAccess.file_exists(SAVE_PATH):
 		print("The save file does not exist.")
 		return false
-	save_file.open(SAVE_PATH, File.READ)
+	var save_file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 
 	# parse file data - convert the JSON back to a dictionary
 	var data = {}
-	data = parse_json(save_file.get_as_text())
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(save_file.get_as_text())
+	data = test_json_conv.get_data()
 
 	# The dict keys on the first level are paths to the nodes
 	for node_path in data.keys():

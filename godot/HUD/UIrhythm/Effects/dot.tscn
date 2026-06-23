@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Effects/Effect.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://icon.png" type="Texture2D" id=2]
 
 [sub_resource type="Curve" id=1]
 
@@ -16,7 +16,7 @@ flags = 4
 width = 2048
 curve = SubResource( 1 )
 
-[sub_resource type="ParticlesMaterial" id=3]
+[sub_resource type="ParticleProcessMaterial" id=3]
 
 render_priority = 0
 trail_divisor = 1
@@ -68,13 +68,13 @@ wait_time = 1.0
 one_shot = false
 autostart = true
 
-[node name="Visual allign" type="Sprite" parent="." index="1"]
+[node name="Visual allign" type="Sprite2D" parent="." index="1"]
 
 visible = false
 scale = Vector2( 0.046875, 0.046875 )
 texture = ExtResource( 2 )
 
-[node name="Particles2D" type="Particles2D" parent="." index="2"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." index="2"]
 
 modulate = Color( 1, 0.773438, 0, 1 )
 emitting = true

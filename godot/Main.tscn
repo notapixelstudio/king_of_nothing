@@ -1,34 +1,51 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene format=3 uid="uid://wx7gqnv2hy41"]
 
-[ext_resource path="res://Main.gd" type="Script" id=1]
-[ext_resource path="res://World.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/font/TESTN___.TTF" type="DynamicFontData" id=3]
-[ext_resource path="res://assets/panel_score.png" type="Texture" id=4]
-[ext_resource path="res://assets/animations/wiggle.tres" type="Animation" id=5]
-[ext_resource path="res://ScoreBoard.tscn" type="PackedScene" id=6]
-[ext_resource path="res://icon.png" type="Texture" id=7]
+[ext_resource type="Script" uid="uid://dfnt3xeqpt0sm" path="res://Main.gd" id="1"]
+[ext_resource type="PackedScene" path="res://World.tscn" id="2"]
+[ext_resource type="FontFile" uid="uid://cb7x6q0afwk8s" path="res://assets/font/TESTN___.TTF" id="3"]
+[ext_resource type="Texture2D" uid="uid://dobgdr57kc7j7" path="res://assets/panel_score.png" id="4"]
+[ext_resource type="Animation" path="res://assets/animations/wiggle.tres" id="5"]
+[ext_resource type="PackedScene" path="res://ScoreBoard.tscn" id="6"]
+[ext_resource type="Texture2D" uid="uid://chk455hukdwy" path="res://icon.png" id="7"]
 
-[sub_resource type="DynamicFont" id=1]
-size = 60
-outline_size = 5
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 3 )
+[sub_resource type="FontFile" id="1"]
+fallbacks = Array[Font]([ExtResource("3")])
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id="2"]
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.8 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [ Vector2( 901.977, 702.806 ), Vector2( 903.255, 678.517 ) ]
+"values": [Vector2(901.977, 702.806), Vector2(903.255, 678.517)]
 }
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lgr22"]
+_data = {
+&"poasp": SubResource("2"),
+&"wiggle": ExtResource("5")
+}
+
+[sub_resource type="GDScript" id="3"]
 script/source = "extends Control
 
 signal focus
@@ -36,234 +53,248 @@ signal focus
 func _ready():
 	for option in get_children():
 		if option is Button:
-			option.connect(\"focus_entered\", self, \"_on_focus\", [option])
+			option.connect(\"focus_entered\", Callable(self, \"_on_focus\").bind(option))
 
 func _on_focus(node: Control):
 	emit_signal(\"focus\", node)"
 
-[sub_resource type="DynamicFont" id=4]
-size = 30
-outline_size = 2
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 3 )
+[sub_resource type="FontFile" id="4"]
+fallbacks = Array[Font]([ExtResource("3")])
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id="5"]
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ true ]
+"values": [true]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("Tex:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.7 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Tex:rect_position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
+tracks/2/path = NodePath("Tex:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.7 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [ Vector2( 0, 180 ), Vector2( 0, 200 ) ]
+"values": [Vector2(0, 180), Vector2(0, 200)]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("tex_panelscore:rect_position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
+tracks/3/path = NodePath("tex_panelscore:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 0.25, 1 ),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.25, 1),
 "update": 0,
-"values": [ Vector2( 710, 400 ), Vector2( 710, 350 ) ]
+"values": [Vector2(710, 400), Vector2(710, 350)]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_trn2v"]
+_data = {
+&"show": SubResource("5")
+}
+
+[sub_resource type="Animation" id="6"]
 resource_name = "Dance"
 length = 0.5
-loop = true
+loop_mode = 1
 step = 0.05
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.25, 0.3, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1.25, 0.75 ), Vector2( 1, 1 ) ]
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1.25, 0.75), Vector2(1, 1)]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath(".:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.25, 0.3, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( -4, 8 ), Vector2( 0, 0 ) ]
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(-4, 8), Vector2(0, 0)]
 }
 
-[node name="Control" type="Control"]
-margin_right = 507.0
-margin_bottom = 846.0
-rect_scale = Vector2( 0.75, 0.75 )
-script = ExtResource( 1 )
-game_scene = ExtResource( 2 )
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_03owx"]
+_data = {
+&"Dance": SubResource("6")
+}
 
-[node name="Tex" type="Label" parent="."]
+[node name="Control" type="Control" unique_id=933550200]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 507.0
+offset_bottom = 846.0
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1")
+game_scene = ExtResource("2")
+
+[node name="Tex" type="Label" parent="." unique_id=1451412546]
+layout_mode = 0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_top = -226.667
-margin_right = -2.0
-margin_bottom = -141.667
-custom_fonts/font = SubResource( 1 )
+offset_top = -226.667
+offset_right = -2.0
+offset_bottom = -141.667
+theme_override_fonts/font = SubResource("1")
 text = "King Of Nothing"
-align = 1
-valign = 1
+horizontal_alignment = 1
+vertical_alignment = 1
 uppercase = true
 
-[node name="tex_panelscore" type="TextureRect" parent="."]
-editor/display_folded = true
+[node name="tex_panelscore" type="TextureRect" parent="." unique_id=1210211146]
 visible = false
-modulate = Color( 1, 1, 1, 0.243137 )
+modulate = Color(1, 1, 1, 0.243137)
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 70.0
-margin_top = -10.0
-margin_right = 558.0
-margin_bottom = 364.0
-texture = ExtResource( 4 )
-expand = true
+offset_left = 70.0
+offset_top = -10.0
+offset_right = 558.0
+offset_bottom = 364.0
+texture = ExtResource("4")
+expand_mode = 1
 stretch_mode = 6
 
-[node name="VBoxContainer" type="VBoxContainer" parent="tex_panelscore"]
+[node name="VBoxContainer" type="VBoxContainer" parent="tex_panelscore" unique_id=265296327]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -121.0
-margin_top = -80.0
-margin_right = -56.0
-margin_bottom = 21.0
+offset_left = -121.0
+offset_top = -80.0
+offset_right = -56.0
+offset_bottom = 21.0
 
-[node name="Label" type="Label" parent="tex_panelscore/VBoxContainer"]
-margin_right = 65.0
-margin_bottom = 14.0
+[node name="Label" type="Label" parent="tex_panelscore/VBoxContainer" unique_id=27236128]
+layout_mode = 2
 text = "SCORE"
 
-[node name="Label3" type="Label" parent="tex_panelscore/VBoxContainer"]
-margin_top = 43.0
-margin_right = 65.0
-margin_bottom = 57.0
+[node name="Label3" type="Label" parent="tex_panelscore/VBoxContainer" unique_id=1684403590]
+layout_mode = 2
 size_flags_vertical = 6
 
-[node name="Label2" type="Label" parent="tex_panelscore/VBoxContainer"]
-margin_top = 87.0
-margin_right = 65.0
-margin_bottom = 101.0
+[node name="Label2" type="Label" parent="tex_panelscore/VBoxContainer" unique_id=837279070]
+layout_mode = 2
 text = "BEST"
 
-[node name="Cursor" type="Position2D" parent="."]
-position = Vector2( 777, 710 )
+[node name="Cursor" type="Marker2D" parent="." unique_id=1915769217]
+position = Vector2(777, 710)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Cursor"]
-autoplay = "wiggle"
-anims/poasp = SubResource( 2 )
-anims/wiggle = ExtResource( 5 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Cursor" unique_id=415885063]
+libraries/ = SubResource("AnimationLibrary_lgr22")
+autoplay = &"wiggle"
 
-[node name="cursor" type="Label" parent="Cursor"]
-margin_right = 30.0
-margin_bottom = 39.0
-rect_pivot_offset = Vector2( 15, 15 )
+[node name="cursor" type="Label" parent="Cursor" unique_id=1176942362]
+offset_right = 30.0
+offset_bottom = 39.0
+pivot_offset = Vector2(15, 15)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = ">"
 
-[node name="Options" type="GridContainer" parent="."]
+[node name="Options" type="GridContainer" parent="." unique_id=802015383]
+layout_mode = 0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_top = 196.0
-margin_bottom = 272.0
-custom_constants/vseparation = 23
+offset_top = 196.0
+offset_bottom = 272.0
+theme_override_constants/v_separation = 23
 columns = 3
-script = SubResource( 3 )
+script = SubResource("3")
 
-[node name="Play" type="Button" parent="Options"]
-margin_right = 166.0
-margin_bottom = 76.0
+[node name="Play" type="Button" parent="Options" unique_id=609644048]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
+theme_override_fonts/font = SubResource("4")
 text = "Play"
 
-[node name="Control" type="Control" parent="Options"]
-margin_left = 170.0
-margin_right = 336.0
-margin_bottom = 76.0
+[node name="Control" type="Control" parent="Options" unique_id=969318014]
+layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Quit" type="Button" parent="Options"]
-margin_left = 340.0
-margin_right = 506.0
-margin_bottom = 76.0
+[node name="Quit" type="Button" parent="Options" unique_id=1261964914]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
+theme_override_fonts/font = SubResource("4")
 text = "Quit"
 
-[node name="anim" type="AnimationPlayer" parent="."]
-playback_speed = 1.5
-anims/show = SubResource( 5 )
+[node name="anim" type="AnimationPlayer" parent="." unique_id=846577651]
+libraries/ = SubResource("AnimationLibrary_trn2v")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1951518873]
 
-[node name="Focus" type="AudioStreamPlayer" parent="."]
+[node name="Focus" type="AudioStreamPlayer" parent="." unique_id=948772623]
 
-[node name="Selected" type="AudioStreamPlayer" parent="."]
+[node name="Selected" type="AudioStreamPlayer" parent="." unique_id=72448002]
 
-[node name="ScoreBoard" parent="." instance=ExtResource( 6 )]
-position = Vector2( 0, 744.667 )
-scale = Vector2( 1, 1 )
+[node name="ScoreBoard" parent="." unique_id=292138701 instance=ExtResource("6")]
+position = Vector2(0, 744.667)
+scale = Vector2(1, 1)
 
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2( 250, 445 )
+[node name="Node2D" type="Node2D" parent="." unique_id=183698792]
+position = Vector2(250, 445)
 
-[node name="icon" type="Sprite" parent="Node2D"]
-position = Vector2( -1.5809, 3.16179 )
-scale = Vector2( 1.09881, 0.901194 )
-texture = ExtResource( 7 )
+[node name="icon" type="Sprite2D" parent="Node2D" unique_id=874581046]
+position = Vector2(-1.5809, 3.16179)
+scale = Vector2(1.09881, 0.901194)
+texture = ExtResource("7")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D/icon"]
-autoplay = "Dance"
-anims/Dance = SubResource( 6 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D/icon" unique_id=1433351502]
+libraries/ = SubResource("AnimationLibrary_03owx")
+autoplay = &"Dance"
 
 [connection signal="focus" from="Options" to="." method="_on_Options_focus"]
 [connection signal="pressed" from="Options/Play" to="." method="_on_Play_pressed"]

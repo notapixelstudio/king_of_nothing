@@ -1,6 +1,6 @@
 extends Control
 
-onready var buttons = $margin_container/v_box_container
+@onready var buttons = $margin_container/v_box_container
 
 
 func _ready():
@@ -8,7 +8,7 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		get_tree().change_scene(global.from_scene)
+		get_tree().change_scene_to_file(global.from_scene)
 
 
 func _on_Label_focus_entered():

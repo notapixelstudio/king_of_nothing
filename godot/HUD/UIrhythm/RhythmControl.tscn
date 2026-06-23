@@ -1,54 +1,54 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://HUD/UIrhythm/RhythmControl.gd" type="Script" id=1]
-[ext_resource path="res://HUD/UIrhythm/slider.png" type="Texture" id=2]
-[ext_resource path="res://HUD/UIrhythm/target.png" type="Texture" id=3]
+[ext_resource path="res://HUD/UIrhythm/slider.png" type="Texture2D" id=2]
+[ext_resource path="res://HUD/UIrhythm/target.png" type="Texture2D" id=3]
 [ext_resource path="res://assets/audio/Derek_Volker-Chess_Battle.ogg" type="AudioStream" id=4]
 
 [node name="RhythmControl" type="Control"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 2.0
-margin_top = -36.0
-margin_right = -4.0
-margin_bottom = -20.0
-rect_clip_content = true
+offset_left = 2.0
+offset_top = -36.0
+offset_right = -4.0
+offset_bottom = -20.0
+clip_contents = true
 script = ExtResource( 1 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 0.237854
-margin_right = 0.237854
+offset_left = 0.237854
+offset_right = 0.237854
 color = Color( 0.121569, 0.121569, 0.121569, 1 )
 
-[node name="right" type="Position2D" parent="."]
+[node name="right" type="Marker2D" parent="."]
 editor/display_folded = true
 position = Vector2( 142.328, 46.776 )
 
-[node name="slider1" type="Sprite" parent="right"]
+[node name="slider1" type="Sprite2D" parent="right"]
 texture = ExtResource( 2 )
 
-[node name="slider2" type="Sprite" parent="right"]
+[node name="slider2" type="Sprite2D" parent="right"]
 texture = ExtResource( 2 )
 
-[node name="left" type="Position2D" parent="."]
+[node name="left" type="Marker2D" parent="."]
 editor/display_folded = true
 position = Vector2( 144.318, 45.4492 )
 
-[node name="slider1" type="Sprite" parent="left"]
+[node name="slider1" type="Sprite2D" parent="left"]
 texture = ExtResource( 2 )
 
-[node name="slider2" type="Sprite" parent="left"]
+[node name="slider2" type="Sprite2D" parent="left"]
 position = Vector2( 141.972, 44.4492 )
 texture = ExtResource( 2 )
 
-[node name="center" type="Position2D" parent="."]
+[node name="center" type="Marker2D" parent="."]
 editor/display_folded = true
 position = Vector2( 143.655, 42.132 )
 
-[node name="target" type="Sprite" parent="center"]
+[node name="target" type="Sprite2D" parent="center"]
 texture = ExtResource( 3 )
 
 [node name="SoundtrackBeat" type="AudioStreamPlayer" parent="."]

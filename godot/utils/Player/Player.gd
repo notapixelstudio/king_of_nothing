@@ -46,7 +46,7 @@ func _unhandled_input(event):
 		_calculate_swipe(get_global_mouse_position())
 
 func wait_and_release(direction):
-	yield(get_tree().create_timer(tolerance*2), 'timeout')
+	await get_tree().create_timer(tolerance*2).timeout
 	keys[direction] = false
 		
 const THRESHOLD = 50     
@@ -75,10 +75,10 @@ func _calculate_swipe(swipe_end):
 func check_key(event, k):
 	if event.is_action_pressed('ui_'+k):
 		keys[k] = true
-		yield(get_tree().create_timer(tolerance*2), 'timeout')
+		await get_tree().create_timer(tolerance*2).timeout
 		keys[k] = false
 	elif event.is_action_released('ui_'+k):
-		yield(get_tree().create_timer(tolerance), 'timeout')
+		await get_tree().create_timer(tolerance).timeout
 		keys[k] = false
 	
 # CONTROL KEYS
@@ -93,7 +93,7 @@ func get_movedir():
 func _on_TouchScreenButton4_pressed():
 	keys["up"] = true
 	keys["left"] = true
-	yield(get_tree().create_timer(tolerance*2), 'timeout')
+	await get_tree().create_timer(tolerance*2).timeout
 	keys["up"] = false
 	keys["left"] = false
 	
@@ -102,7 +102,7 @@ func _on_TouchScreenButton4_pressed():
 func _on_TouchScreenButton11_pressed():
 	keys["down"] = true
 	keys["left"] = true
-	yield(get_tree().create_timer(tolerance*2), 'timeout')
+	await get_tree().create_timer(tolerance*2).timeout
 	keys["down"] = false
 	keys["left"] = false
 
@@ -110,7 +110,7 @@ func _on_TouchScreenButton11_pressed():
 func _on_TouchScreenButton6_pressed():
 	keys["up"] = true
 	keys["right"] = true
-	yield(get_tree().create_timer(tolerance*2), 'timeout')
+	await get_tree().create_timer(tolerance*2).timeout
 	keys["up"] = false
 	keys["right"] = false
 
@@ -118,6 +118,6 @@ func _on_TouchScreenButton6_pressed():
 func _on_TouchScreenButton10_pressed():
 	keys["down"] = true
 	keys["right"] = true
-	yield(get_tree().create_timer(tolerance*2), 'timeout')
+	await get_tree().create_timer(tolerance*2).timeout
 	keys["down"] = false
 	keys["right"] = false

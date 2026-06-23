@@ -1,69 +1,68 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene format=3 uid="uid://cu5d3mdvdddoq"]
 
-[ext_resource path="res://Piece.gd" type="Script" id=1]
-[ext_resource path="res://assets/pieces/black_pawn.png" type="Texture" id=2]
-[ext_resource path="res://assets/check.png" type="Texture" id=3]
+[ext_resource type="Script" uid="uid://cl26uxnuqanse" path="res://Piece.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bjg02branxcvt" path="res://assets/pieces/black_pawn.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://urljgpqm4pac" path="res://assets/check.png" id="3"]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id="1"]
 resource_name = "Dance"
 length = 0.3
 step = 0.05
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.05, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [ Vector2( 0.5, 0.5 ), Vector2( 0.625, 0.375 ), Vector2( 0.5, 0.5 ) ]
+"values": [Vector2(0.5, 0.5), Vector2(0.625, 0.375), Vector2(0.5, 0.5)]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath(".:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.05, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.05, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( -8, 16 ), Vector2( 0, 0 ) ]
+"values": [Vector2(0, 0), Vector2(-8, 16), Vector2(0, 0)]
 }
 
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 12.9988
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4wtm1"]
+_data = {
+&"Dance": SubResource("1")
+}
+
+[sub_resource type="CapsuleShape2D" id="2"]
+radius = 0.0473194
 height = 0.0946388
 
-[node name="Piece" type="KinematicBody2D"]
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="Piece" type="CharacterBody2D" unique_id=1354043299]
+script = ExtResource("1")
 
-[node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 2 )
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1291256025]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2")
 centered = false
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
-autoplay = "Dance"
-anims/Dance = SubResource( 1 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=1255736317]
+libraries/ = SubResource("AnimationLibrary_4wtm1")
+autoplay = &"Dance"
 
-[node name="Check" type="Sprite" parent="Sprite"]
+[node name="Check" type="Sprite2D" parent="Sprite2D" unique_id=1037028616]
 visible = false
-position = Vector2( -32, -66 )
-scale = Vector2( 1.5, 1.5 )
-texture = ExtResource( 3 )
+position = Vector2(-32, -66)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3")
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=457597136]
 visible = false
-position = Vector2( 0.328964, 0.264893 )
-scale = Vector2( 2.2661, 2.54267 )
-shape = SubResource( 2 )
-
-[node name="Tween" type="Tween" parent="."]
-
+position = Vector2(0.328964, 0.264893)
+scale = Vector2(2.2661, 2.54267)
+shape = SubResource("2")

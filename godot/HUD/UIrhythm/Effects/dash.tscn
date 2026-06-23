@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Effects/Effect.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://icon.png" type="Texture2D" id=2]
 
 [sub_resource type="Curve" id=1]
 
@@ -16,7 +16,7 @@ flags = 4
 width = 2048
 curve = SubResource( 1 )
 
-[sub_resource type="ParticlesMaterial" id=3]
+[sub_resource type="ParticleProcessMaterial" id=3]
 
 render_priority = 0
 trail_divisor = 1
@@ -69,7 +69,7 @@ flags = 4
 width = 2048
 curve = SubResource( 4 )
 
-[sub_resource type="ParticlesMaterial" id=6]
+[sub_resource type="ParticleProcessMaterial" id=6]
 
 render_priority = 0
 trail_divisor = 1
@@ -113,9 +113,9 @@ _sections_unfolded = [ "Angle", "Gravity", "Initial Velocity", "Scale" ]
 
 rotation = -0.261799
 script = ExtResource( 1 )
-_sections_unfolded = [ "Process Material", "Time", "Transform", "Visibility" ]
+_sections_unfolded = [ "Process Material", "Time", "Transform3D", "Visibility" ]
 
-[node name="Particles2D" type="Particles2D" parent="." index="0"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." index="0"]
 
 modulate = Color( 1, 0.819608, 0, 1 )
 rotation = -2.35619
@@ -137,9 +137,9 @@ texture = null
 normal_map = null
 h_frames = 1
 v_frames = 1
-_sections_unfolded = [ "Process Material", "Textures", "Time", "Transform", "Visibility" ]
+_sections_unfolded = [ "Process Material", "Textures", "Time", "Transform3D", "Visibility" ]
 
-[node name="Particles2D2" type="Particles2D" parent="." index="1"]
+[node name="Particles2D2" type="GPUParticles2D" parent="." index="1"]
 
 modulate = Color( 1, 0.820313, 0, 1 )
 rotation = -0.261799
@@ -161,7 +161,7 @@ texture = null
 normal_map = null
 h_frames = 1
 v_frames = 1
-_sections_unfolded = [ "Transform", "Visibility" ]
+_sections_unfolded = [ "Transform3D", "Visibility" ]
 
 [node name="Timer" type="Timer" parent="." index="2"]
 
@@ -170,14 +170,14 @@ wait_time = 1.0
 one_shot = false
 autostart = true
 
-[node name="icon" type="Sprite" parent="." index="3"]
+[node name="icon" type="Sprite2D" parent="." index="3"]
 
 visible = false
 position = Vector2( 0, 8.9407e-008 )
 rotation = 0.523599
 scale = Vector2( 0.15625, 0.03125 )
 texture = ExtResource( 2 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Transform3D" ]
 
 [connection signal="timeout" from="Timer" to="." method="destroy"]
 

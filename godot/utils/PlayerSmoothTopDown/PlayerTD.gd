@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 # variables
 var MAX_SPEED = 500
@@ -13,7 +13,9 @@ func _physics_process(delta):
 		apply_friction(ACCELERATION * delta)
 	else:
 		apply_movement(axis * ACCELERATION * delta)
-	MOTION = move_and_slide(MOTION)
+	set_velocity(MOTION)
+	move_and_slide()
+	MOTION = velocity
 
 func get_input_axis():
 	var axis = Vector2.ZERO
@@ -29,4 +31,4 @@ func apply_friction(amount):
 
 func apply_movement(acceleration):
 	MOTION += acceleration
-	MOTION = MOTION.clamped(MAX_SPEED)
+	MOTION = MOTION.limit_length(MAX_SPEED)

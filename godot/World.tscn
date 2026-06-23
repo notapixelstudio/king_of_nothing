@@ -1,253 +1,229 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene format=4 uid="uid://b5lavg5p4048s"]
 
-[ext_resource path="res://World.gd" type="Script" id=1]
-[ext_resource path="res://Piece.tscn" type="PackedScene" id=2]
-[ext_resource path="res://gameover.tscn" type="PackedScene" id=3]
-[ext_resource path="res://winner.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/TileSet/ChessTileSetBoard.tres" type="TileSet" id=5]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=6]
-[ext_resource path="res://ScorePiece.tscn" type="PackedScene" id=7]
-[ext_resource path="res://assets/pieces/outline_rook.png" type="Texture" id=8]
-[ext_resource path="res://assets/pieces/outline_knight.png" type="Texture" id=9]
-[ext_resource path="res://assets/pieces/outline_bishop.png" type="Texture" id=10]
-[ext_resource path="res://assets/pieces/outline_queen.png" type="Texture" id=11]
-[ext_resource path="res://assets/pieces/white_king.png" type="Texture" id=12]
-[ext_resource path="res://HUD/UIrhythm/RhythmControl.tscn" type="PackedScene" id=13]
-[ext_resource path="res://HUD/UIrhythm/Effects/hit_confirm.tscn" type="PackedScene" id=14]
-[ext_resource path="res://HUD/UIrhythm/Effects/fail.tscn" type="PackedScene" id=15]
-[ext_resource path="res://assets/images/buttons/arrow.png" type="Texture" id=16]
-[ext_resource path="res://logic/shapeScreenButton.tres" type="Shape2D" id=17]
-[ext_resource path="res://assets/images/buttons/return.png" type="Texture" id=18]
+[ext_resource type="Script" uid="uid://bqkc6bvfx0tbq" path="res://World.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://cu5d3mdvdddoq" path="res://Piece.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://hg4a4gcol43y" path="res://gameover.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://winner.tscn" id="4"]
+[ext_resource type="TileSet" path="res://assets/TileSet/ChessTileSetBoard.tres" id="5"]
+[ext_resource type="PackedScene" path="res://Player.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://ScorePiece.tscn" id="7"]
+[ext_resource type="Texture2D" uid="uid://17vn4sxmdtlb" path="res://assets/pieces/outline_rook.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://d238g7wljeio" path="res://assets/pieces/outline_knight.png" id="9"]
+[ext_resource type="Texture2D" uid="uid://bos7j1qkclbn1" path="res://assets/pieces/outline_bishop.png" id="10"]
+[ext_resource type="Texture2D" uid="uid://b2l18mjjt616k" path="res://assets/pieces/outline_queen.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://dh80v0kbgq65a" path="res://assets/pieces/white_king.png" id="12"]
+[ext_resource type="PackedScene" path="res://HUD/UIrhythm/RhythmControl.tscn" id="13"]
+[ext_resource type="PackedScene" path="res://HUD/UIrhythm/Effects/hit_confirm.tscn" id="14"]
+[ext_resource type="PackedScene" path="res://HUD/UIrhythm/Effects/fail.tscn" id="15"]
+[ext_resource type="Texture2D" uid="uid://dwrsrduyqrh1o" path="res://assets/images/buttons/arrow.png" id="16"]
+[ext_resource type="Shape2D" path="res://logic/shapeScreenButton.tres" id="17"]
+[ext_resource type="Texture2D" uid="uid://btoxkyqmvmjtk" path="res://assets/images/buttons/return.png" id="18"]
 
-[node name="World" type="Node2D"]
-scale = Vector2( 0.75, 0.75 )
-script = ExtResource( 1 )
+[node name="World" type="Node2D" unique_id=171647639]
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1")
 PIECE_DEF_JSON = "res://logic/piece_def.gd"
-piece_scene = ExtResource( 2 )
-gameover_scene = ExtResource( 3 )
-win_scene = ExtResource( 4 )
+piece_scene = ExtResource("2")
+gameover_scene = ExtResource("3")
+win_scene = ExtResource("4")
 
-[node name="ChessBoard" type="Node2D" parent="."]
+[node name="ChessBoard" type="Node2D" parent="." unique_id=18797194]
 
-[node name="TileMap" type="TileMap" parent="ChessBoard"]
-tile_set = ExtResource( 5 )
-format = 1
-tile_data = PoolIntArray( -1, 0, 0, -65536, 1, 0, -65535, 0, 0, -65534, 1, 0, -65533, 0, 0, -65532, 1, 0, -65531, 0, 0, -65530, 1, 0, -65529, 0, 0, 65535, 1, 0, 0, 0, 0, 1, 1, 0, 2, 0, 0, 3, 1, 0, 4, 0, 0, 5, 1, 0, 6, 0, 0, 7, 1, 0, 131071, 0, 0, 65536, 1, 0, 65537, 0, 0, 65538, 1, 0, 65539, 0, 0, 65540, 1, 0, 65541, 0, 0, 65542, 1, 0, 65543, 0, 0, 196607, 1, 0, 131072, 0, 0, 131073, 1, 0, 131074, 0, 0, 131075, 1, 0, 131076, 0, 0, 131077, 1, 0, 131078, 0, 0, 131079, 1, 0, 262143, 0, 0, 196608, 1, 0, 196609, 0, 0, 196610, 1, 0, 196611, 0, 0, 196612, 1, 0, 196613, 0, 0, 196614, 1, 0, 196615, 0, 0, 327679, 1, 0, 262144, 0, 0, 262145, 1, 0, 262146, 0, 0, 262147, 1, 0, 262148, 0, 0, 262149, 1, 0, 262150, 0, 0, 262151, 1, 0, 393215, 0, 0, 327680, 1, 0, 327681, 0, 0, 327682, 1, 0, 327683, 0, 0, 327684, 1, 0, 327685, 0, 0, 327686, 1, 0, 327687, 0, 0, 458751, 1, 0, 393216, 0, 0, 393217, 1, 0, 393218, 0, 0, 393219, 1, 0, 393220, 0, 0, 393221, 1, 0, 393222, 0, 0, 393223, 1, 0, 524287, 0, 0, 458752, 1, 0, 458753, 0, 0, 458754, 1, 0, 458755, 0, 0, 458756, 1, 0, 458757, 0, 0, 458758, 1, 0, 458759, 0, 0, 589823, 1, 0, 524288, 0, 0, 524289, 1, 0, 524290, 0, 0, 524291, 1, 0, 524292, 0, 0, 524293, 1, 0, 524294, 0, 0, 524295, 1, 0, 655359, 0, 0, 589824, 1, 0, 589825, 0, 0, 589826, 1, 0, 589827, 0, 0, 589828, 1, 0, 589829, 0, 0, 589830, 1, 0, 589831, 0, 0, 720895, 1, 0, 655360, 0, 0, 655361, 1, 0, 655362, 0, 0, 655363, 1, 0, 655364, 0, 0, 655365, 1, 0, 655366, 0, 0, 655367, 1, 0, 786431, 0, 0, 720896, 1, 0, 720897, 0, 0, 720898, 1, 0, 720899, 0, 0, 720900, 1, 0, 720901, 0, 0, 720902, 1, 0, 720903, 0, 0, 786432, 0, 0, 786433, 1, 0, 786434, 0, 0, 786435, 1, 0, 786436, 0, 0, 786437, 1, 0, 786438, 0, 0, 786439, 1, 0 )
+[node name="TileMap" type="TileMapLayer" parent="ChessBoard" unique_id=1438303806]
+use_parent_material = true
+tile_map_data = PackedByteArray("AAABAAAAAQAAAAAAAAADAAAAAQAAAAAAAAAFAAAAAQAAAAAAAAAHAAAAAQAAAAAAAAAGAAEAAQAAAAAAAAAEAAEAAQAAAAAAAAACAAEAAQAAAAAAAAAAAAEAAQAAAAAAAAABAAIAAQAAAAAAAAADAAIAAQAAAAAAAAAFAAIAAQAAAAAAAAAHAAIAAQAAAAAAAAAHAAMAAAAAAAAAAAAGAAMAAQAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAQAAAAAAAAACAAMAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAQAAAAAAAAAAAABAAQAAQAAAAAAAAACAAQAAAAAAAAAAAADAAQAAQAAAAAAAAAEAAQAAAAAAAAAAAAFAAQAAQAAAAAAAAAGAAQAAAAAAAAAAAAHAAQAAQAAAAAAAAAHAAUAAAAAAAAAAAAGAAUAAQAAAAAAAAAFAAUAAAAAAAAAAAAEAAUAAQAAAAAAAAADAAUAAAAAAAAAAAACAAUAAQAAAAAAAAABAAUAAAAAAAAAAAAAAAUAAQAAAAAAAAAAAAYAAAAAAAAAAAABAAYAAQAAAAAAAAACAAYAAAAAAAAAAAADAAYAAQAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAQAAAAAAAAAGAAYAAAAAAAAAAAAHAAYAAQAAAAAAAAAHAAcAAAAAAAAAAAAGAAcAAQAAAAAAAAAFAAcAAAAAAAAAAAAEAAcAAQAAAAAAAAADAAcAAAAAAAAAAAACAAcAAQAAAAAAAAABAAcAAAAAAAAAAAAAAAcAAQAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAQAAAAAAAAACAAgAAAAAAAAAAAADAAgAAQAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAQAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAQAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAQAAAAAAAAAFAAkAAAAAAAAAAAAEAAkAAQAAAAAAAAADAAkAAAAAAAAAAAACAAkAAQAAAAAAAAABAAkAAAAAAAAAAAAAAAkAAQAAAAAAAAAAAAoAAAAAAAAAAAABAAoAAQAAAAAAAAACAAoAAAAAAAAAAAADAAoAAQAAAAAAAAAEAAoAAAAAAAAAAAAFAAoAAQAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAQAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAADAAEAAAAAAAAAAAABAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAACAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAAGAAIAAAAAAAAAAAADAAMAAAAAAAAAAAABAAMAAAAAAAAAAAACAAAAAAAAAAAAAAA=")
+tile_set = ExtResource("5")
 
-[node name="CursorMap" type="TileMap" parent="ChessBoard"]
-tile_set = ExtResource( 5 )
-format = 1
+[node name="CursorMap" type="TileMapLayer" parent="ChessBoard" unique_id=716842105]
+use_parent_material = true
+tile_set = ExtResource("5")
 
-[node name="PreviewMap" type="TileMap" parent="ChessBoard"]
-tile_set = ExtResource( 5 )
-format = 1
+[node name="PreviewMap" type="TileMapLayer" parent="ChessBoard" unique_id=658240375]
+use_parent_material = true
+tile_set = ExtResource("5")
 
-[node name="Tween" type="Tween" parent="ChessBoard"]
-
-[node name="Player" parent="ChessBoard" instance=ExtResource( 6 )]
+[node name="Player" parent="ChessBoard" unique_id=276154435 instance=ExtResource("6")]
+unique_name_in_owner = true
 color = "white"
-grid_pos = Vector2( 4, 4 )
+grid_pos = Vector2(4, 4)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1326942623]
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=539612163]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -11.0
-margin_top = 528.0
-margin_right = 6.0
-margin_bottom = 14.0
+offset_left = -11.0
+offset_top = 528.0
+offset_right = 6.0
+offset_bottom = 14.0
 
-[node name="ScoreBoard" type="Node2D" parent="CanvasLayer"]
-editor/display_folded = true
-position = Vector2( 0, 558 )
-scale = Vector2( 0.75, 0.75 )
+[node name="ScoreBoard" type="Node2D" parent="CanvasLayer" unique_id=1326908752]
+position = Vector2(0, 558)
+scale = Vector2(0.75, 0.75)
 
-[node name="Pawn0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 0, 2 )
-piece_type = "pawn"
-piece_index = 0
-taken = false
+[node name="Pawn0" parent="CanvasLayer/ScoreBoard" unique_id=661445872 instance=ExtResource("7")]
+position = Vector2(0, 2)
 
-[node name="Pawn1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 64, 0 )
-piece_type = "pawn"
+[node name="Pawn1" parent="CanvasLayer/ScoreBoard" unique_id=1299570924 instance=ExtResource("7")]
+position = Vector2(64, 0)
 piece_index = 1
-taken = false
 
-[node name="Pawn2" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 128, 0 )
-piece_type = "pawn"
+[node name="Pawn2" parent="CanvasLayer/ScoreBoard" unique_id=601024926 instance=ExtResource("7")]
+position = Vector2(128, 0)
 piece_index = 2
-taken = false
 
-[node name="Pawn3" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 192, 0 )
-piece_type = "pawn"
+[node name="Pawn3" parent="CanvasLayer/ScoreBoard" unique_id=1547888827 instance=ExtResource("7")]
+position = Vector2(192, 0)
 piece_index = 3
-taken = false
 
-[node name="Pawn4" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 256, 0 )
-piece_type = "pawn"
+[node name="Pawn4" parent="CanvasLayer/ScoreBoard" unique_id=1839190889 instance=ExtResource("7")]
+position = Vector2(256, 0)
 piece_index = 4
-taken = false
 
-[node name="Pawn5" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 320, 0 )
-piece_type = "pawn"
+[node name="Pawn5" parent="CanvasLayer/ScoreBoard" unique_id=2145112507 instance=ExtResource("7")]
+position = Vector2(320, 0)
 piece_index = 5
-taken = false
 
-[node name="Pawn6" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 384, 0 )
-piece_type = "pawn"
+[node name="Pawn6" parent="CanvasLayer/ScoreBoard" unique_id=1927595034 instance=ExtResource("7")]
+position = Vector2(384, 0)
 piece_index = 6
-taken = false
 
-[node name="Pawn7" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 448, 0 )
-piece_type = "pawn"
+[node name="Pawn7" parent="CanvasLayer/ScoreBoard" unique_id=1653447353 instance=ExtResource("7")]
+position = Vector2(448, 0)
 piece_index = 7
-taken = false
 
-[node name="Rook0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 0, 64 )
-texture = ExtResource( 8 )
+[node name="Rook0" parent="CanvasLayer/ScoreBoard" unique_id=431355902 instance=ExtResource("7")]
+position = Vector2(0, 64)
+texture = ExtResource("8")
 piece_type = "rook"
-piece_index = 0
-taken = false
 
-[node name="Knight0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 64, 64 )
-texture = ExtResource( 9 )
+[node name="Knight0" parent="CanvasLayer/ScoreBoard" unique_id=352428601 instance=ExtResource("7")]
+position = Vector2(64, 64)
+texture = ExtResource("9")
 piece_type = "knight"
-piece_index = 0
-taken = false
 
-[node name="Bishop0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 128, 64 )
-texture = ExtResource( 10 )
+[node name="Bishop0" parent="CanvasLayer/ScoreBoard" unique_id=1522658935 instance=ExtResource("7")]
+position = Vector2(128, 64)
+texture = ExtResource("10")
 piece_type = "bishop"
-piece_index = 0
-taken = false
 
-[node name="Queen0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 192, 64 )
-texture = ExtResource( 11 )
+[node name="Queen0" parent="CanvasLayer/ScoreBoard" unique_id=1235581176 instance=ExtResource("7")]
+position = Vector2(192, 64)
+texture = ExtResource("11")
 piece_type = "queen"
-piece_index = 0
-taken = false
 
-[node name="King0" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 256, 64 )
-texture = ExtResource( 12 )
+[node name="King0" parent="CanvasLayer/ScoreBoard" unique_id=1524735434 instance=ExtResource("7")]
+position = Vector2(256, 64)
+texture = ExtResource("12")
 piece_type = "king"
-piece_index = 0
 taken = true
 
-[node name="Bishop1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 320, 64 )
-texture = ExtResource( 10 )
+[node name="Bishop1" parent="CanvasLayer/ScoreBoard" unique_id=667390841 instance=ExtResource("7")]
+position = Vector2(320, 64)
+texture = ExtResource("10")
 piece_type = "bishop"
 piece_index = 1
-taken = false
 
-[node name="Knight1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 384, 64 )
-texture = ExtResource( 9 )
+[node name="Knight1" parent="CanvasLayer/ScoreBoard" unique_id=2051117851 instance=ExtResource("7")]
+position = Vector2(384, 64)
+texture = ExtResource("9")
 piece_type = "knight"
 piece_index = 1
-taken = false
 
-[node name="Rook1" parent="CanvasLayer/ScoreBoard" instance=ExtResource( 7 )]
-position = Vector2( 448, 64 )
-texture = ExtResource( 8 )
+[node name="Rook1" parent="CanvasLayer/ScoreBoard" unique_id=620376935 instance=ExtResource("7")]
+position = Vector2(448, 64)
+texture = ExtResource("8")
 piece_type = "rook"
 piece_index = 1
-taken = false
 
-[node name="RhythmControl" parent="CanvasLayer" instance=ExtResource( 13 )]
-margin_left = 0.0
-margin_top = -126.0
-margin_right = 0.0
-margin_bottom = -96.0
-hit_scene = ExtResource( 14 )
-fail_scene = ExtResource( 15 )
+[node name="RhythmControl" parent="CanvasLayer" unique_id=1589531943 instance=ExtResource("13")]
+layout_mode = 3
+anchors_preset = 12
+offset_left = 0.0
+offset_top = -126.0
+offset_right = 0.0
+offset_bottom = -96.0
+hit_scene = ExtResource("14")
+fail_scene = ExtResource("15")
 
-[node name="Stuff" type="Node2D" parent="CanvasLayer"]
-modulate = Color( 1, 1, 1, 0.498039 )
-position = Vector2( 96, 462 )
+[node name="Stuff" type="Node2D" parent="CanvasLayer" unique_id=2079244696]
+modulate = Color(1, 1, 1, 0.498039)
+position = Vector2(96, 462)
 
-[node name="TouchScreenButton4" type="TouchScreenButton" parent="CanvasLayer/Stuff"]
-position = Vector2( 32, 76 )
+[node name="TouchScreenButton4" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=1023650596]
+position = Vector2(32, 76)
 rotation = 3.92699
-normal = ExtResource( 16 )
-shape = ExtResource( 17 )
+texture_normal = ExtResource("16")
+shape = ExtResource("17")
 visibility_mode = 1
 
-[node name="TouchScreenButton9" type="TouchScreenButton" parent="CanvasLayer/Stuff"]
-position = Vector2( 64, 128 )
+[node name="TouchScreenButton9" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=1493137362]
+position = Vector2(64, 128)
 rotation = 3.14159
-normal = ExtResource( 16 )
-shape = ExtResource( 17 )
+texture_normal = ExtResource("16")
+shape = ExtResource("17")
 action = "ui_left"
 visibility_mode = 1
 
-[node name="TouchScreenButton11" type="TouchScreenButton" parent="CanvasLayer/Stuff"]
-position = Vector2( 76, 160 )
+[node name="TouchScreenButton11" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=927409646]
+position = Vector2(76, 160)
 rotation = 2.35619
-normal = ExtResource( 16 )
-shape = ExtResource( 17 )
+texture_normal = ExtResource("16")
+shape = ExtResource("17")
 visibility_mode = 1
 
-[node name="TouchScreenButton5" type="TouchScreenButton" parent="CanvasLayer/Stuff"]
-position = Vector2( 64, 64 )
+[node name="TouchScreenButton5" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=546637992]
+position = Vector2(64, 64)
 rotation = 4.71239
-normal = ExtResource( 16 )
-shape = ExtResource( 17 )
+texture_normal = ExtResource("16")
+shape = ExtResource("17")
 action = "ui_up"
 visibility_mode = 1
 
-[node name="TouchScreenButton7" type="TouchScreenButton" parent="CanvasLayer/Stuff"]
+[node name="TouchScreenButton7" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=2000860040]
 visible = false
-position = Vector2( 64, 64 )
-scale = Vector2( 0.626816, 0.626816 )
-normal = ExtResource( 18 )
-shape = ExtResource( 17 )
+position = Vector2(64, 64)
+scale = Vector2(0.626816, 0.626816)
+texture_normal = ExtResource("18")
+shape = ExtResource("17")
 visibility_mode = 1
 
-[node name="TouchScreenButton12" type="TouchScreenButton" parent="CanvasLayer/Stuff"]
-position = Vector2( 128, 128 )
+[node name="TouchScreenButton12" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=256460758]
+position = Vector2(128, 128)
 rotation = 1.5708
-normal = ExtResource( 16 )
-shape = ExtResource( 17 )
+texture_normal = ExtResource("16")
+shape = ExtResource("17")
 action = "ui_down"
 visibility_mode = 1
 
-[node name="TouchScreenButton6" type="TouchScreenButton" parent="CanvasLayer/Stuff"]
-position = Vector2( 116, 32 )
+[node name="TouchScreenButton6" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=727467004]
+position = Vector2(116, 32)
 rotation = 5.49779
-normal = ExtResource( 16 )
-shape = ExtResource( 17 )
+texture_normal = ExtResource("16")
+shape = ExtResource("17")
 visibility_mode = 1
 
-[node name="TouchScreenButton8" type="TouchScreenButton" parent="CanvasLayer/Stuff"]
-position = Vector2( 128, 64 )
-normal = ExtResource( 16 )
-shape = ExtResource( 17 )
+[node name="TouchScreenButton8" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=830718150]
+position = Vector2(128, 64)
+texture_normal = ExtResource("16")
+shape = ExtResource("17")
 action = "ui_right"
 visibility_mode = 1
 
-[node name="TouchScreenButton10" type="TouchScreenButton" parent="CanvasLayer/Stuff"]
-position = Vector2( 159, 115 )
+[node name="TouchScreenButton10" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=1575713109]
+position = Vector2(159, 115)
 rotation = 0.785398
-normal = ExtResource( 16 )
-shape = ExtResource( 17 )
+texture_normal = ExtResource("16")
+shape = ExtResource("17")
 visibility_mode = 1
 
+[node name="KillLastLineTimer" type="Timer" parent="." unique_id=1435882815]
+wait_time = 0.2
+autostart = true
+
 [connection signal="gameover" from="." to="." method="_on_World_gameover" flags=6]
-[connection signal="capture" from="ChessBoard/Player" to="." method="_on_Player_capture"]
+[connection signal="captured" from="ChessBoard/Player" to="." method="_on_Player_captured"]
 [connection signal="hit" from="ChessBoard/Player" to="CanvasLayer/RhythmControl" method="_on_Player_hit"]
 [connection signal="winner" from="ChessBoard/Player" to="." method="_on_Player_winner"]
 [connection signal="tick" from="CanvasLayer/RhythmControl" to="." method="_on_tick"]
@@ -255,3 +231,4 @@ visibility_mode = 1
 [connection signal="pressed" from="CanvasLayer/Stuff/TouchScreenButton11" to="ChessBoard/Player" method="_on_TouchScreenButton11_pressed"]
 [connection signal="pressed" from="CanvasLayer/Stuff/TouchScreenButton6" to="ChessBoard/Player" method="_on_TouchScreenButton6_pressed"]
 [connection signal="pressed" from="CanvasLayer/Stuff/TouchScreenButton10" to="ChessBoard/Player" method="_on_TouchScreenButton10_pressed"]
+[connection signal="timeout" from="KillLastLineTimer" to="." method="_on_kill_last_line_timer_timeout"]

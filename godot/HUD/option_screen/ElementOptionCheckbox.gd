@@ -1,7 +1,7 @@
 extends GenericOption
 
-onready var value_node = $ElementCheckbox
-onready var description_node = $ElementCheckbox
+@onready var value_node = $ElementCheckbox
+@onready var description_node = $ElementCheckbox
 
 func _process(delta):
 	description_node.text = label_description.to_upper()
@@ -15,7 +15,7 @@ func _ready():
 	_initialize()
 	
 func _initialize():
-	value_node.pressed = value
+	value_node.button_pressed = value
 
 
 func _on_ElementCheckbox_toggled(button_pressed):

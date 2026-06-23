@@ -8,17 +8,17 @@ signal value_changed
 
 ### Properties ###
 # Type could be {ON_OFF, NUMBER, ARRAY}
-export (OPTION_TYPE) var elem_type = OPTION_TYPE.ON_OFF
+@export var elem_type: OPTION_TYPE = OPTION_TYPE.ON_OFF
 # Flag if the value is global
-export (bool) var is_global = false
+@export var is_global: bool = false
 # path of element, defaul separator is "."
-export (String) var element_path 
+@export var element_path: String 
 # Text of the label that is going to appear on the Option
-export (String) var label_description
+@export var label_description: String
 
-export (NodePath) var node_owner_path
+@export var node_owner_path: NodePath
 
-var value setget _set_value
+var value : set = _set_value
 var variable_name: String
 var node_owner
 var min_value
@@ -26,7 +26,7 @@ var max_value
 var array_value
 
 func _ready():
-	var parent_subpath = element_path.find_last(".")
+	var parent_subpath = element_path.rfind(".")
 	var all_path = element_path.split(".")
 	
 	if parent_subpath > 0:

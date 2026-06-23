@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/piece_eat2.wav-86889ef73e3e02e78e2a320c0f39e38f.sample"
+type="AudioStreamWAV"
+uid="uid://cit04mumlqtvv"
+path="res://.godot/imported/piece_eat2.wav-86889ef73e3e02e78e2a320c0f39e38f.sample"
 
 [deps]
 
 source_file="res://assets/audio/piece_eat2.wav"
-dest_files=[ "res://.import/piece_eat2.wav-86889ef73e3e02e78e2a320c0f39e38f.sample" ]
+dest_files=["res://.godot/imported/piece_eat2.wav-86889ef73e3e02e78e2a320c0f39e38f.sample"]
 
 [params]
 
@@ -17,5 +18,7 @@ force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=true
 edit/normalize=true
-edit/loop=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
 compress/mode=0

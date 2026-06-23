@@ -1,21 +1,21 @@
 extends Control
 
-export var allowance := 0.3
-export var metronome_volume := -15
+@export var allowance := 0.3
+@export var metronome_volume := -15
 
 var time_per_tick := 1.0
 var time_since_last_tick := 0.0
 var is_active := false
 var is_already_hit := true
 
-onready var beat_slider_left : Node2D = $left
-onready var beat_slider_right : Node2D = $right
-onready var beat_slider_center : Node2D = $center
-onready var metronome_timer : Timer = $MetronomeTimer
-onready var metronome_sound : AudioStreamPlayer = $SoundtrackBeat
+@onready var beat_slider_left : Node2D = $left
+@onready var beat_slider_right : Node2D = $right
+@onready var beat_slider_center : Node2D = $center
+@onready var metronome_timer : Timer = $MetronomeTimer
+@onready var metronome_sound : AudioStreamPlayer = $SoundtrackBeat
 
-export var hit_scene: PackedScene
-export var fail_scene: PackedScene
+@export var hit_scene: PackedScene
+@export var fail_scene: PackedScene
 
 const DELAY_TICK = 0.3
 
@@ -53,11 +53,11 @@ func _process(delta):
 	var tick_percent = time_since_last_tick / time_per_tick
 	
 	
-	beat_slider_left.position.y = rect_size.y/2
+	beat_slider_left.position.y = size.y/2
 	beat_slider_left.position.x = 0
-	beat_slider_right.position.y = rect_size.y/2
-	beat_slider_right.position.x = rect_size.x
-	beat_slider_center.position = rect_size/2
+	beat_slider_right.position.y = size.y/2
+	beat_slider_right.position.x = size.x
+	beat_slider_center.position = size/2
 	time_since_last_tick += delta
 	
 	if $SoundtrackBeat.get_playback_position()/count_tick  >= time_per_tick:
@@ -65,11 +65,11 @@ func _process(delta):
 		print(count_tick, " ", time_since_last_tick)
 		_on_metronome_timer_timeout()
 	
-	beat_slider_left.get_node("slider1").position = rect_size * Vector2(tick_percent / 4.0,0)
-	beat_slider_left.get_node("slider2").position = rect_size * Vector2(tick_percent / 4.0 + 0.25,0)
+	beat_slider_left.get_node("slider1").position = size * Vector2(tick_percent / 4.0,0)
+	beat_slider_left.get_node("slider2").position = size * Vector2(tick_percent / 4.0 + 0.25,0)
 	
-	beat_slider_right.get_node("slider1").position = rect_size * Vector2(-tick_percent / 4.0,0)
-	beat_slider_right.get_node("slider2").position = rect_size * Vector2(-(tick_percent / 4.0 + 0.25),0)
+	beat_slider_right.get_node("slider1").position = size * Vector2(-tick_percent / 4.0,0)
+	beat_slider_right.get_node("slider2").position = size * Vector2(-(tick_percent / 4.0 + 0.25),0)
 
 #Called every time a metronome would tick
 func _on_metronome_timer_timeout():
@@ -87,18 +87,18 @@ func is_hitting() -> bool:
 
 
 func _on_Player_fail():
-	var fail = fail_scene.instance()
+	var fail = fail_scene.instantiate()
 	add_child(fail)
 	fail.global_position = get_node("center").global_position
-	fail.scale = rect_scale
+	fail.scale = scale
 	fail.modulate = modulate
 
 
 func _on_Player_hit():
-	var confirm = hit_scene.instance()
+	var confirm = hit_scene.instantiate()
 	add_child(confirm)
 	confirm.global_position = get_node("center").global_position
-	confirm.scale = rect_scale
+	confirm.scale = scale
 	confirm.modulate = modulate
 
 func stop():

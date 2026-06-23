@@ -8,9 +8,9 @@ signal hit
 # variables
 var speed = 250
 
-export var tile_size = 64
-export var type = "king" setget set_type
-export var color = "black" setget set_color
+@export var tile_size = 64
+@export var type = "king": set = set_type
+@export var color = "black": set = set_color
 
 func tick():
 	anim.play()
@@ -25,15 +25,15 @@ func set_color(value):
 	refresh()
 	
 func refresh():
-	$Sprite.texture = load('res://assets/pieces/'+color+'_'+type+'.png')
+	$Sprite2D.texture = load('res://assets/pieces/'+color+'_'+type+'.png')
 
-onready var anim = $Sprite/AnimationPlayer
-onready var target = grid_pos
+@onready var anim = $Sprite2D/AnimationPlayer
+@onready var target = grid_pos
 var last_pos = Vector2()
 var move_dir = Vector2()
-export var grid_pos = Vector2() setget change_grid
+@export var grid_pos = Vector2(): set = change_grid
 
-var captured = {
+var captured_pieces = {
 	"pawn": 0,
 	"bishop": 0,
 	"knight": 0,
@@ -41,7 +41,7 @@ var captured = {
 	"queen": 0
 }
 
-signal move
+signal moved
 signal winner
 
 func change_grid(new_value):
@@ -70,21 +70,24 @@ func move(pos, move_type,  tick = 0):
 		delta = 0.25
 	else:
 		delta = 0.15
-	emit_signal("move", last_pos, grid_pos)
+	moved.emit(last_pos, grid_pos)
 	if not get_parent():
 		return
-	($Tween as Tween).interpolate_property(self, "position", position, get_parent().get_parent().ij2xy(grid_pos.x, grid_pos.y), delta, Tween.TRANS_LINEAR, Tween.EASE_IN) 
-	$Tween.start()
+		
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property(self, "position", get_parent().get_parent().ij2xy(grid_pos.x, grid_pos.y), delta)
 	
-signal capture
+signal captured
 
 func capture(piece: Piece):
 	var type_captured = piece.type
-	emit_signal('capture', type_captured, captured[type_captured])
-	captured[type_captured] += 1
+	captured.emit(type_captured, captured_pieces[type_captured])
+	captured_pieces[type_captured] += 1
 	
 	# win condition
-	if captured["pawn"]>=8 and captured["bishop"]>=2 and captured["knight"]>=2 and captured["rook"]>=2 and captured["queen"]>=1:
+	if captured_pieces["pawn"]>=8 and captured_pieces["bishop"]>=2 and captured_pieces["knight"]>=2 and captured_pieces["rook"]>=2 and captured_pieces["queen"]>=1:
 		emit_signal("winner")
 	
 func nope():
@@ -100,7 +103,7 @@ var in_check = false
 func check(target_pos : Vector2, moves: Array):
 	
 	in_check = true
-	$Sprite/Check.visible = true
+	$Sprite2D/Check.visible = true
 	move_dir = target_pos - grid_pos
 	target = target_pos
 	
@@ -108,6 +111,6 @@ func check(target_pos : Vector2, moves: Array):
 	check_moves = moves
 
 func uncheck():
-	$Sprite/Check.visible = false
+	$Sprite2D/Check.visible = false
 	in_check = false
 	
