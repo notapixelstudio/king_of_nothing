@@ -25,7 +25,9 @@ global="*res://globals/global.gd"
 
 window/size/viewport_width=384
 window/size/viewport_height=854
+window/size/mode=3
 window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 window/handheld/orientation=1
 
 [gui]
@@ -134,4 +136,5 @@ click={
 
 [rendering]
 
+textures/vram_compression/import_etc2_astc=true
 quality/intended_usage/framebuffer_allocation=0
