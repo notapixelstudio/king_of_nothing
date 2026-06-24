@@ -1,0 +1,4 @@
+.godot
+
+android/build/*
+!android/build/AndroidManifest.xml
