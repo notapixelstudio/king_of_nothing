@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bqkc6bvfx0tbq" path="res://World.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://cu5d3mdvdddoq" path="res://Piece.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://hg4a4gcol43y" path="res://gameover.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://winner.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://bo6h2kenrdhxg" path="res://winner.tscn" id="4"]
 [ext_resource type="TileSet" path="res://assets/TileSet/ChessTileSetBoard.tres" id="5"]
 [ext_resource type="PackedScene" path="res://Player.tscn" id="6"]
 [ext_resource type="PackedScene" path="res://ScorePiece.tscn" id="7"]

@@ -105,3 +105,4 @@ func stop():
 	$left.visible = false
 	$right.visible = false
 	metronome_timer.stop()
+	set_process(false)

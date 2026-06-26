@@ -28,6 +28,7 @@ var dic_tiles = {
 var count_tick = 0
 const SCROLL_TICK = 5
 signal gameover
+var game_is_over := false
 
 @onready var player = $ChessBoard/Player
 func _ready():
@@ -194,6 +195,8 @@ func show_legal_moves(piece: Piece, legal_moves, map_to_show = $ChessBoard/Curso
 
 
 func _on_tick():
+	if game_is_over:
+		return
 	
 	count_tick+=1
 	if not count_tick % SCROLL_TICK:
@@ -320,6 +323,7 @@ func _on_Player_captured(type, index): # WARNING terrible name, this means "the 
 			score_piece.taken = true
 
 func _on_World_gameover():
+	game_is_over = true
 	$ChessBoard.remove_child(player)
 	$CanvasLayer/RhythmControl.stop()
 	var gameoverr = gameover_scene.instantiate()
@@ -327,10 +331,14 @@ func _on_World_gameover():
 
 
 func _on_Player_winner():
+	game_is_over = true
 	$CanvasLayer/RhythmControl.stop()
 	var winner = win_scene.instantiate()
 	$CanvasLayer.add_child(winner)
 
 
 func _on_kill_last_line_timer_timeout() -> void:
+	if game_is_over:
+		return
+		
 	kill_last_line()
