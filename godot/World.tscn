@@ -61,7 +61,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ScoreBoard" type="Node2D" parent="CanvasLayer" unique_id=1326908752]
-position = Vector2(0, 758)
+position = Vector2(0, 559)
 scale = Vector2(0.75, 0.75)
 
 [node name="Pawn0" parent="CanvasLayer/ScoreBoard" unique_id=661445872 instance=ExtResource("7")]
@@ -153,7 +153,7 @@ fail_scene = ExtResource("15")
 
 [node name="Stuff" type="Node2D" parent="CanvasLayer" unique_id=2079244696]
 modulate = Color(1, 1, 1, 0.498039)
-position = Vector2(96, 565)
+position = Vector2(96, 656)
 
 [node name="TouchScreenButton4" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=1023650596]
 position = Vector2(32, 76)
