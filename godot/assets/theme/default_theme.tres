@@ -5,3 +5,6 @@
 [resource]
 default_font = ExtResource("1_ba1rj")
 Button/font_sizes/font_size = 32
+Label/colors/font_color = Color(0.92156863, 0.8901961, 0.8117647, 1)
+Label/colors/font_outline_color = Color(0.23137255, 0.1882353, 0.18431373, 1)
+Label/constants/outline_size = 20
