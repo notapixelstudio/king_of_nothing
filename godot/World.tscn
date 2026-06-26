@@ -15,9 +15,23 @@
 [ext_resource type="PackedScene" path="res://HUD/UIrhythm/RhythmControl.tscn" id="13"]
 [ext_resource type="PackedScene" path="res://HUD/UIrhythm/Effects/hit_confirm.tscn" id="14"]
 [ext_resource type="PackedScene" path="res://HUD/UIrhythm/Effects/fail.tscn" id="15"]
-[ext_resource type="Texture2D" uid="uid://dwrsrduyqrh1o" path="res://assets/images/buttons/arrow.png" id="16"]
-[ext_resource type="Shape2D" path="res://logic/shapeScreenButton.tres" id="17"]
-[ext_resource type="Texture2D" uid="uid://btoxkyqmvmjtk" path="res://assets/images/buttons/return.png" id="18"]
+[ext_resource type="Texture2D" uid="uid://c2ofo5yiek7q" path="res://assets/images/buttons/arrows/up_left.png" id="16_6tx0c"]
+[ext_resource type="Texture2D" uid="uid://ckb7k4dm80lqj" path="res://assets/images/buttons/arrows/pressed_up_left.png" id="17_0to5b"]
+[ext_resource type="Shape2D" uid="uid://qohsvhg8knno" path="res://HUD/button_area.tres" id="18_aj1ai"]
+[ext_resource type="Texture2D" uid="uid://br0qjm820bp3w" path="res://assets/images/buttons/arrows/left.png" id="19_d7dfr"]
+[ext_resource type="Texture2D" uid="uid://caa8aot60rr32" path="res://assets/images/buttons/arrows/pressed_left.png" id="20_c2gv2"]
+[ext_resource type="Texture2D" uid="uid://7auebwnqpoat" path="res://assets/images/buttons/arrows/down_left.png" id="21_rp4qs"]
+[ext_resource type="Texture2D" uid="uid://excfcbdimuyn" path="res://assets/images/buttons/arrows/pressed_down_left.png" id="22_rhl3w"]
+[ext_resource type="Texture2D" uid="uid://cirt2okxpfqpn" path="res://assets/images/buttons/arrows/up.png" id="23_mnkyj"]
+[ext_resource type="Texture2D" uid="uid://dvvto8l1ex6au" path="res://assets/images/buttons/arrows/pressed_up.png" id="24_fif40"]
+[ext_resource type="Texture2D" uid="uid://bsjoomvnboow4" path="res://assets/images/buttons/arrows/down.png" id="25_6xgc5"]
+[ext_resource type="Texture2D" uid="uid://bpc7tdb5wxjla" path="res://assets/images/buttons/arrows/pressed_down.png" id="26_0vv3x"]
+[ext_resource type="Texture2D" uid="uid://dwfrpbjvswjmr" path="res://assets/images/buttons/arrows/up_right.png" id="27_fsfaj"]
+[ext_resource type="Texture2D" uid="uid://erbk7mduawhi" path="res://assets/images/buttons/arrows/pressed_up_right.png" id="28_yktx5"]
+[ext_resource type="Texture2D" uid="uid://ctcoer7srfewf" path="res://assets/images/buttons/arrows/right.png" id="29_88f54"]
+[ext_resource type="Texture2D" uid="uid://dnhc8412517si" path="res://assets/images/buttons/arrows/pressed_right.png" id="30_s3rcb"]
+[ext_resource type="Texture2D" uid="uid://cthrbuprs6jvv" path="res://assets/images/buttons/arrows/down_right.png" id="31_wf24g"]
+[ext_resource type="Texture2D" uid="uid://cqwp6qyjcc880" path="res://assets/images/buttons/arrows/pressed_down_right.png" id="32_8ios8"]
 
 [node name="World" type="Node2D" unique_id=171647639]
 scale = Vector2(0.75, 0.75)
@@ -152,75 +166,66 @@ hit_scene = ExtResource("14")
 fail_scene = ExtResource("15")
 
 [node name="Stuff" type="Node2D" parent="CanvasLayer" unique_id=2079244696]
-modulate = Color(1, 1, 1, 0.498039)
-position = Vector2(96, 656)
+position = Vector2(100, 656)
 
-[node name="TouchScreenButton4" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=1023650596]
-position = Vector2(32, 76)
-rotation = 3.92699
-texture_normal = ExtResource("16")
-shape = ExtResource("17")
-visibility_mode = 1
+[node name="UpLeft" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=1023650596]
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("16_6tx0c")
+texture_pressed = ExtResource("17_0to5b")
+shape = ExtResource("18_aj1ai")
 
-[node name="TouchScreenButton9" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=1493137362]
-position = Vector2(64, 128)
-rotation = 3.14159
-texture_normal = ExtResource("16")
-shape = ExtResource("17")
+[node name="Left" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=1493137362]
+position = Vector2(0, 64)
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("19_d7dfr")
+texture_pressed = ExtResource("20_c2gv2")
+shape = ExtResource("18_aj1ai")
 action = "ui_left"
-visibility_mode = 1
 
-[node name="TouchScreenButton11" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=927409646]
-position = Vector2(76, 160)
-rotation = 2.35619
-texture_normal = ExtResource("16")
-shape = ExtResource("17")
-visibility_mode = 1
+[node name="DownLeft" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=927409646]
+position = Vector2(0, 128)
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("21_rp4qs")
+texture_pressed = ExtResource("22_rhl3w")
+shape = ExtResource("18_aj1ai")
 
-[node name="TouchScreenButton5" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=546637992]
-position = Vector2(64, 64)
-rotation = 4.71239
-texture_normal = ExtResource("16")
-shape = ExtResource("17")
+[node name="Up" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=546637992]
+position = Vector2(64, 0)
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("23_mnkyj")
+texture_pressed = ExtResource("24_fif40")
+shape = ExtResource("18_aj1ai")
 action = "ui_up"
-visibility_mode = 1
 
-[node name="TouchScreenButton7" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=2000860040]
-visible = false
-position = Vector2(64, 64)
-scale = Vector2(0.626816, 0.626816)
-texture_normal = ExtResource("18")
-shape = ExtResource("17")
-visibility_mode = 1
-
-[node name="TouchScreenButton12" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=256460758]
-position = Vector2(128, 128)
-rotation = 1.5708
-texture_normal = ExtResource("16")
-shape = ExtResource("17")
+[node name="Bottom" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=256460758]
+position = Vector2(64, 128)
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("25_6xgc5")
+texture_pressed = ExtResource("26_0vv3x")
+shape = ExtResource("18_aj1ai")
 action = "ui_down"
-visibility_mode = 1
 
-[node name="TouchScreenButton6" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=727467004]
-position = Vector2(116, 32)
-rotation = 5.49779
-texture_normal = ExtResource("16")
-shape = ExtResource("17")
-visibility_mode = 1
+[node name="UpRight" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=727467004]
+position = Vector2(128, 0)
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("27_fsfaj")
+texture_pressed = ExtResource("28_yktx5")
+shape = ExtResource("18_aj1ai")
 
-[node name="TouchScreenButton8" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=830718150]
+[node name="Right" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=830718150]
 position = Vector2(128, 64)
-texture_normal = ExtResource("16")
-shape = ExtResource("17")
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("29_88f54")
+texture_pressed = ExtResource("30_s3rcb")
+shape = ExtResource("18_aj1ai")
 action = "ui_right"
-visibility_mode = 1
 
-[node name="TouchScreenButton10" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=1575713109]
-position = Vector2(159, 115)
-rotation = 0.785398
-texture_normal = ExtResource("16")
-shape = ExtResource("17")
-visibility_mode = 1
+[node name="DownRight" type="TouchScreenButton" parent="CanvasLayer/Stuff" unique_id=1575713109]
+position = Vector2(128, 128)
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("31_wf24g")
+texture_pressed = ExtResource("32_8ios8")
+shape = ExtResource("18_aj1ai")
 
 [node name="KillLastLineTimer" type="Timer" parent="." unique_id=1435882815]
 wait_time = 0.2
@@ -231,8 +236,8 @@ autostart = true
 [connection signal="hit" from="ChessBoard/Player" to="CanvasLayer/RhythmControl" method="_on_Player_hit"]
 [connection signal="winner" from="ChessBoard/Player" to="." method="_on_Player_winner"]
 [connection signal="tick" from="CanvasLayer/RhythmControl" to="." method="_on_tick"]
-[connection signal="pressed" from="CanvasLayer/Stuff/TouchScreenButton4" to="ChessBoard/Player" method="_on_TouchScreenButton4_pressed"]
-[connection signal="pressed" from="CanvasLayer/Stuff/TouchScreenButton11" to="ChessBoard/Player" method="_on_TouchScreenButton11_pressed"]
-[connection signal="pressed" from="CanvasLayer/Stuff/TouchScreenButton6" to="ChessBoard/Player" method="_on_TouchScreenButton6_pressed"]
-[connection signal="pressed" from="CanvasLayer/Stuff/TouchScreenButton10" to="ChessBoard/Player" method="_on_TouchScreenButton10_pressed"]
+[connection signal="pressed" from="CanvasLayer/Stuff/UpLeft" to="ChessBoard/Player" method="_on_TouchScreenButton4_pressed"]
+[connection signal="pressed" from="CanvasLayer/Stuff/DownLeft" to="ChessBoard/Player" method="_on_TouchScreenButton11_pressed"]
+[connection signal="pressed" from="CanvasLayer/Stuff/UpRight" to="ChessBoard/Player" method="_on_TouchScreenButton6_pressed"]
+[connection signal="pressed" from="CanvasLayer/Stuff/DownRight" to="ChessBoard/Player" method="_on_TouchScreenButton10_pressed"]
 [connection signal="timeout" from="KillLastLineTimer" to="." method="_on_kill_last_line_timer_timeout"]
