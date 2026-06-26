@@ -30,10 +30,6 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=1
 
-[gui]
-
-theme/custom_font="res://assets/theme/DefaultFont.tres"
-
 [input]
 
 ui_accept={

@@ -1,28 +1,8 @@
 [gd_scene format=3 uid="uid://hg4a4gcol43y"]
 
 [ext_resource type="Script" uid="uid://cajt1ea0boarl" path="res://gameover.gd" id="1"]
-[ext_resource type="FontFile" uid="uid://cb7x6q0afwk8s" path="res://assets/font/TESTN___.TTF" id="2"]
+[ext_resource type="Theme" uid="uid://sqspom2cwu21" path="res://assets/theme/default_theme.tres" id="2_eeur3"]
 [ext_resource type="Animation" path="res://assets/animations/wiggle.tres" id="3"]
-
-[sub_resource type="FontFile" id="4"]
-fallbacks = Array[Font]([ExtResource("2"), ExtResource("2")])
-subpixel_positioning = 0
-msdf_pixel_range = 14
-msdf_size = 128
-cache/0/variation_coordinates = {}
-cache/0/face_index = 0
-cache/0/embolden = 0.0
-cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
-cache/0/spacing_top = 0
-cache/0/spacing_bottom = 0
-cache/0/spacing_space = 0
-cache/0/spacing_glyph = 0
-cache/0/baseline_offset = 0.0
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
 
 [sub_resource type="Animation" id="1"]
 resource_name = "poasp"
@@ -104,7 +84,8 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 offset_top = -174.5
 offset_bottom = -117.5
-theme_override_fonts/font = SubResource("4")
+theme = ExtResource("2_eeur3")
+theme_override_font_sizes/font_size = 64
 text = "Game Over"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -145,12 +126,14 @@ script = SubResource("2")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("2_eeur3")
 text = "Retry"
 
 [node name="Quit" type="Button" parent="Options" unique_id=1790607953]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("2_eeur3")
 text = "Quit"
 
 [node name="anim" type="AnimationPlayer" parent="." unique_id=654668947]
