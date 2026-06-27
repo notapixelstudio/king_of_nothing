@@ -1,6 +1,5 @@
 extends CanvasItem
 
-@onready var cursor = $Cursor
 @export var game_scene: PackedScene
 
 func start() -> void:
@@ -15,9 +14,6 @@ func _ready():
 
 func _on_Options_focus(focus_node):
 	$Focus.play()
-	if not cursor.visible:
-		cursor.visible = true
-	cursor.position.x = $Options.position.x + focus_node.position.x - 30
 
 
 func _on_Play_pressed():
