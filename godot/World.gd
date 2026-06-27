@@ -14,7 +14,8 @@ var grid = []
 var list_pieces: Array = []
 var piece_defs : Dictionary = {}
 
-@export var time_per_tick: float = 0.5
+var bpm := 120
+var time_per_tick: float = 60.0/bpm
 
 # keys string in data json
 const MOVES = "moves"
@@ -32,7 +33,7 @@ var game_is_over := false
 
 @onready var player = $ChessBoard/Player
 func _ready():
-	
+	%RhythmControl.set_bpm(bpm)
 	
 	player.connect("moved", Callable(self, "_on_piece_moved").bind(player))
 	
@@ -277,6 +278,7 @@ func scroll():
 	# reset_cells($ChessBoard/CursorMap)
 	count_scroll +=1
 	var new_piece = piece_scene.instantiate()
+	new_piece.bpm = bpm
 	new_piece.connect("moved", Callable(self, "_on_enemy_moved").bind(new_piece))
 	if level_script_i < len(level_script):
 		new_piece.type = level_script[level_script_i]

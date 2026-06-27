@@ -154,6 +154,7 @@ piece_type = "rook"
 piece_index = 1
 
 [node name="RhythmControl" parent="CanvasLayer" unique_id=1589531943 instance=ExtResource("13")]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 12
 offset_left = 0.0

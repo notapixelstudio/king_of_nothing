@@ -6,7 +6,7 @@ signal fail
 signal hit
 
 # variables
-var speed = 250
+@export var bpm := 120
 
 @export var tile_size = 64
 @export var type = "king": set = set_type
@@ -65,11 +65,11 @@ func move(pos, move_type,  tick = 0):
 	
 	var delta
 	if move_type == 'scroll':
-		delta = 0.5
+		delta = 60.0/bpm
 	elif move_type == "attack":
-		delta = 0.25
+		delta = 0.5*60.0/bpm
 	else:
-		delta = 0.15
+		delta = 0.25*60.0/bpm
 	moved.emit(last_pos, grid_pos)
 	if not get_parent():
 		return

@@ -24,9 +24,6 @@ signal tick
 func get_is_active() -> bool:
 	return is_active
 
-func _ready():
-	set_bpm(120)
-
 func set_bpm(value : int):
 	if value == 0:
 		metronome_sound.volume_db = -100
