@@ -51,6 +51,7 @@ texture = ExtResource("2")
 centered = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=1255736317]
+unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_4wtm1")
 autoplay = &"Dance"
 

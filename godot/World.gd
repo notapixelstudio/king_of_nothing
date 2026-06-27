@@ -33,6 +33,8 @@ var game_is_over := false
 
 @onready var player = $ChessBoard/Player
 func _ready():
+	%Player.bpm = bpm
+	%Player.refresh_bpm()
 	%RhythmControl.set_bpm(bpm)
 	
 	player.connect("moved", Callable(self, "_on_piece_moved").bind(player))

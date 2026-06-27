@@ -52,6 +52,10 @@ func change_grid(new_value):
 # functions
 func _ready():
 	add_to_group("moving")
+	refresh_bpm()
+	
+func refresh_bpm():
+	%AnimationPlayer.speed_scale = bpm/120.0 # 120 bpm is the default
 
 	
 func move(pos, move_type,  tick = 0):
